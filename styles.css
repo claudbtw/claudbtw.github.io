@@ -157,10 +157,10 @@ body {
 }
 
 input[type="text"], input[type="range"] {
-    width: 100%; /* Ширина полів в обох частинах */
+    width: 100%;
 }
 button {
-    width: auto; /* Кнопки не повинні розтягуватися на всю ширину */
+    width: auto;
 }
 /* Поле введеня слів */
 input[type="text"] {
