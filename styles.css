@@ -1,0 +1,336 @@
+/* Основні стилі */
+body {
+    font-family: "Oswald", sans-serif;
+    display: flex;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background: #121419;
+    color: #FFFFFF;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.fixed-header {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    box-sizing: border-box;
+    padding: 0 50px 0px 50px;
+    top: 0;
+    height: 65px;
+    width: 100%;
+    background-color: #2d323e;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #121419;
+    width: 100%;
+    margin-top: 4%;
+    margin-bottom: 6%;
+}
+
+.text-box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #121419;
+    text-align: center;
+    padding: 0 10%;
+    margin-bottom: 2%;
+}
+
+.inputs-box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1E1E2F;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.text-header {
+    font-family: "Exo 2", sans-serif;
+    text-align: center;
+    font-weight: 700;
+    font-size: 3em;
+    color: #FFFFFF;
+    letter-spacing: 0.5px;
+}
+
+.text-header-secondary {
+    text-align: center;
+    margin-top: -6%;
+    font-size: 2em;
+    color: #FFFFFF;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.text-header-paragraph {
+    width: 25em;
+    margin-top: -3%;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+}
+
+.moon-icon {
+    display: flex;
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.moon-icon:hover {
+    transform: rotate(45deg);
+}
+
+.text-home {
+    font-size: 1.1rem;
+    color: #A0A0B0;
+    margin-right: 5.5em;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.text-home:hover {
+    color: #ffffff;
+}
+
+.upper-section, .middle-section, .bottom-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upper-section-secondary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    margin-bottom: 1em;
+}
+
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.text-generated-password {
+    margin-bottom: 0.2em;
+}
+
+.password-length-text {
+    margin-bottom: 0.2em;
+}
+
+#lengthValue {
+    margin-bottom: 0.5em;
+}
+
+input[type="text"], input[type="range"] {
+    width: 100%; /* Ширина полів в обох частинах */
+}
+button {
+    width: auto; /* Кнопки не повинні розтягуватися на всю ширину */
+}
+/* Поле введеня слів */
+input[type="text"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30%;
+    padding: 12px;
+    width: fit-content;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #1E1E2F;
+    color: #E0E0E0;
+    transition: border-color 0.3s ease;
+}
+input[type="text"]:focus {
+    -webkit-appearance: none;
+    appearance: none;
+    border-color: #FF6F61; 
+}
+
+/* Повзунок */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80;
+    padding: 3px;
+    height: 0;
+    background: #555;
+    border-radius: 5px;
+    margin: 10px 0;
+    outline: none;
+    margin-bottom: 30px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FF6F61;
+    cursor: pointer;
+}
+
+/* Чекбокси */
+input[type="checkbox"] {
+    box-sizing: border-box;
+    appearance: none;
+    margin-top: 2px;
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #C5D6E0;
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0px 2px 4px 0px rgba(7, 29, 43, 0.12) inset;
+    position: relative;
+    cursor: pointer;
+}
+input[type="checkbox"]:checked {
+    background-color: #FF6F61;
+    border-color: #FF6F61;
+}
+input[type="checkbox"]:checked::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 90%;
+    height: 90%;
+    background-color: white; /* Колір галочки */
+    clip-path: path("M9 19.414l-6.707-6.707 1.414-1.414L9 16.586 20.293 5.293l1.414 1.414");
+}
+.checkbox-complexity {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+/* Кнопка генерації пароля */
+button {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: #223446;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05); /* Плавний підйом при наведенні */
+}
+
+/* Виведення пароля */
+#outputPassword {
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+    font-weight: bold;
+    font-size: 1.4em;
+    color: aliceblue;
+}
+.container-secondary {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+
+
+
+.triangles {
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+}
+.triangle-left {
+    left: 0;
+}
+.triangle-right {
+    right: 0;
+}
+.triangle-left, .triangle-right {
+    position: absolute;
+    z-index: 1;
+    top: -100px;
+}
+
+.data-container-generator-info {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 400px;
+    background: #181A21;
+    top: 0;
+    z-index: 0;
+}
+
+.wavy-grid {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    position: relative;
+}
+
+/* Загальний стиль тексту */
+#wavy-grid-lines {
+    width: 100%;
+    height: auto;
+    position: absolute;
+}
+
+label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #E0E0E0;
+    font-weight: 500;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+
+h2 {
+    color: aliceblue;
+}
