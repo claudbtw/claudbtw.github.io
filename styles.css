@@ -1,38 +1,64 @@
 /* Основні стилі */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("./fonts/Inter-VariableFont_opsz\,wght.ttf");
+}
 body {
     font-family: "Oswald", sans-serif;
     display: flex;
     position: relative;
-    margin: 0;
-    padding: 0;
     background: #121419;
     color: #FFFFFF;
     min-height: 100vh;
     width: 100%;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+    overflow-x: hidden;
 }
 
 .fixed-header {
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
+    font-size: 1.15rem;
     box-sizing: border-box;
-    padding: 0 50px 0px 50px;
     top: 0;
-    height: 65px;
+    height: 55px;
     width: 100%;
-    background-color: #2d323e;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    background: #121419;
+    box-shadow: 0 0.1em #223446;
     z-index: 1000;
+    gap: 5.5em;
+}
+
+.text-header {
+    font-family: "Geologica";
+    text-align: center;
+    font-weight: 700;
+    font-size: 3em;
+    color: #FFFFFF;
+}
+
+.text-header-secondary {
+    font-family: "Inter";
+    text-align: center;
+    margin-top: 1%;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    font-weight: 250;
+}
+
+.text-header-paragraph {
+    width: 25em;
+    margin-top: 2%;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    font-weight: 200;
 }
 
 .container {
@@ -42,8 +68,7 @@ body {
     align-items: center;
     background: #121419;
     width: 100%;
-    margin-top: 4%;
-    margin-bottom: 6%;
+    margin-top: 7%;
 }
 
 .text-box-container {
@@ -54,7 +79,7 @@ body {
     background-color: #121419;
     text-align: center;
     padding: 0 10%;
-    margin-bottom: 2%;
+    margin-bottom: 3%;
 }
 
 .inputs-box-container {
@@ -62,63 +87,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #1E1E2F;
-    padding: 20px;
-    max-width: 600px;
-    margin: auto;
-    border-radius: 10px;
-}
-
-.text-header {
-    font-family: "Exo 2", sans-serif;
-    text-align: center;
-    font-weight: 700;
-    font-size: 3em;
-    color: #FFFFFF;
-    letter-spacing: 0.5px;
-}
-
-.text-header-secondary {
-    text-align: center;
-    margin-top: -6%;
-    font-size: 2em;
-    color: #FFFFFF;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-
-.text-header-paragraph {
-    width: 25em;
-    margin-top: -3%;
-    text-align: center;
-    font-size: 1.2em;
-    color: #FFFFFF;
-    font-weight: 200;
-    letter-spacing: 0.5px;
-}
-
-.moon-icon {
-    display: flex;
-    position: absolute;
-    right: 10%;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.moon-icon:hover {
-    transform: rotate(45deg);
-}
-
-.text-home {
-    font-size: 1.1rem;
-    color: #A0A0B0;
-    margin-right: 5.5em;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.text-home:hover {
-    color: #ffffff;
+    max-width: 100%;
 }
 
 .upper-section, .middle-section, .bottom-section {
@@ -133,156 +102,271 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 2em;
-    margin-bottom: 1em;
+    gap: 3em;
+   
 }
 
+.middle-section {
+    width: 100%;
+}
 .bottom-section {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
 }
 
-.text-generated-password {
-    margin-bottom: 0.2em;
-}
 
-.password-length-text {
-    margin-bottom: 0.2em;
-}
-
-#lengthValue {
-    margin-bottom: 0.5em;
-}
 
 input[type="text"], input[type="range"] {
-    width: 100%;
+    width: 90%
 }
-button {
-    width: auto;
-}
+
 /* Поле введеня слів */
-input[type="text"] {
+#inputText {
     -webkit-appearance: none;
+    outline: none;
     appearance: none;
-    width: 30%;
-    padding: 12px;
+    font-size: 1.1rem;
+    padding: 0.6em 3em 0.6em 3em;
     width: fit-content;
-    border: 1px solid #555;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 1px #555;
     border-radius: 8px;
-    background-color: #1E1E2F;
-    color: #E0E0E0;
-    transition: border-color 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.2);;
+    color: aliceblue;
 }
-input[type="text"]:focus {
+
+#generateButton {
     -webkit-appearance: none;
     appearance: none;
-    border-color: #FF6F61; 
+    font-size: 1.1rem;
+    padding: 0.6em 2em 0.6em 2em;
+    width: fit-content;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 1px #A4FFA4;
+    border-radius: 3em;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #E0E0E0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+#generateButton:hover {
+    transform: scale(1.02);
+    color: #121419;
+    background-color: #A4FFA4;
 }
 
 /* Повзунок */
+.password-length-box {
+    margin-top: 5em;
+    margin-bottom: 2em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-container {
+    position: relative;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+span {
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.2);;
+    color: aliceblue;
+    padding: 2px 5px 2px 5px;
+    margin: 0px 20px;
+    width: 70px;
+}
+
+#lengthValue {
+    position: absolute; /* Абсолютне позиціонування для значення */
+    top: -2.5em; /* Відстань від верхньої частини контейнера */
+    left: 50%; /* Центруємо по горизонталі */
+    transform: translateX(-50%); /* Переміщуємо на половину ширини */
+    color: white; /* Колір тексту значення (за потреби) */
+    text-align: center; /* Центруємо текст */
+}
+.password-length-text {
+    font-family: "Geologica";
+    font-weight: 350;
+    font-size: 1.3em;
+    margin-right: 1em;
+    letter-spacing: 0.5px;
+}
+
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    width: 80;
-    padding: 3px;
-    height: 0;
+    height: 6px;
+    width: 100%; /* Встановлюємо ширину 100% для контейнера */
     background: #555;
     border-radius: 5px;
-    margin: 10px 0;
     outline: none;
-    margin-bottom: 30px;
 }
+
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #FF6F61;
+    background: #A4FFA4;
     cursor: pointer;
 }
 
-/* Чекбокси */
+
+
+.checkbox-complexity {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1.5em;
+    column-gap: 5em;
+    justify-items: start;
+    margin-bottom: 3em;
+}
+.checkbox-complexity label {
+    box-sizing: border-box;
+    width: auto;
+}
+
 input[type="checkbox"] {
     box-sizing: border-box;
     appearance: none;
-    margin-top: 2px;
-    margin-right: 10px;
-    width: 24px;
-    height: 24px;
-    border: 1px solid #C5D6E0;
-    background-color: #fff;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-top: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0.1em solid #A4FFA4;
     border-radius: 7px;
     box-shadow: 0px 2px 4px 0px rgba(7, 29, 43, 0.12) inset;
     position: relative;
     cursor: pointer;
 }
-input[type="checkbox"]:checked {
-    background-color: #FF6F61;
-    border-color: #FF6F61;
-}
 input[type="checkbox"]:checked::before {
     content: '';
     position: absolute;
-    top: -1px;
-    left: 0;
-    width: 90%;
-    height: 90%;
-    background-color: white; /* Колір галочки */
-    clip-path: path("M9 19.414l-6.707-6.707 1.414-1.414L9 16.586 20.293 5.293l1.414 1.414");
+    top: 1px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    clip-path: path("M20.6097 5.20743C21.0475 5.54416 21.1294 6.17201 20.7926 6.60976L10.7926 19.6098C10.6172 19.8378 10.352 19.9793 10.0648 19.9979C9.77765 20.0166 9.49637 19.9106 9.29289 19.7072L4.29289 14.7072C3.90237 14.3166 3.90237 13.6835 4.29289 13.2929C4.68342 12.9024 5.31658 12.9024 5.70711 13.2929L9.90178 17.4876L19.2074 5.39034C19.5441 4.95258 20.172 4.87069 20.6097 5.20743Z");
 }
-.checkbox-complexity {
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
+.includeUppercase, .includeLowercase, .includeNumbers, .includeSymbols {
+    user-select: none;
+    font-family: "Geologica";
+    font-weight: 350;
 }
 
 /* Кнопка генерації пароля */
 button {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-family: "Geologica";
+    font-weight: 350;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
+    padding: 0.75rem;
     background-color: #223446;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-    transform: scale(1.05); /* Плавний підйом при наведенні */
 }
 
 /* Виведення пароля */
 #outputPassword {
-    margin-top: 0.3em;
-    margin-bottom: 0.6em;
+    -webkit-appearance: none;
+    outline: none;
+    appearance: none;
+    font-size: 1.1rem;
+    width: 20em;
+    height: 3em;
+    text-align: center;
+    border: none;
+    margin-bottom: 1em;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);;
     font-weight: bold;
     font-size: 1.4em;
     color: aliceblue;
 }
+
 .container-secondary {
     width: 100%;
     position: relative;
     box-sizing: border-box;
     display: flex;
-    align-items: flex-end;
     flex-direction: column;
 }
 
-
+/* Дроп-даун меню*/
+.toggleSymbols {
+    margin-left: 0.7em;
+    background-color: rgba(0, 0, 0, 0.1);;
+    box-shadow: inset 0 0 0 1px #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    width: 34px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+img {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+.dropDown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    top: 100%;
+    left: 17px;
+    border-radius: 0.7em;
+}
+.dropdown-content label {
+    appearance: none;
+    color: aliceblue;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+    border-radius: 0.7em;
+}
+.dropdown-content label:hover {
+    background-color: #a3a3a3;
+    color:#121419;
+}
+.show {
+    display: block;
+}
 
 
 .triangles {
+    position: sticky;
     box-sizing: border-box;
     width: 100%;
-    position: relative;
+    margin-top: 7%;
 }
 .triangle-left {
     left: 0;
@@ -298,39 +382,79 @@ button:hover {
 
 .data-container-generator-info {
     box-sizing: border-box;
-    width: 100vw;
-    height: 400px;
-    background: #181A21;
-    top: 0;
-    z-index: 0;
-}
-
-.wavy-grid {
     display: flex;
-    justify-content: center;
-    align-content: center;
-    width: 100%;
-    position: relative;
-}
-
-/* Загальний стиль тексту */
-#wavy-grid-lines {
-    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
     height: auto;
-    position: absolute;
+    background: #181A21;
+    text-align: start
 }
 
+.text-data-header {
+    text-align: center;
+    width: 50%;
+    margin-bottom: 2%
+}
+.text-data-header h1 {
+    width: 100%;
+    font-family: "Geologica", sans-serif;
+    font-size: 3.3em;
+    font-weight: 550;
+}
+.text-data-main {
+    text-align: start;
+    width: 40vw;
+    margin-bottom: 5%;
+}
+.text-data-main h2 {
+    margin-bottom: 1em;
+    font-family: "Geologica", sans-serif;
+    font-size: 1.2em;
+    font-weight: 100;
+}
 label {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     color: #E0E0E0;
     font-weight: 500;
-    font-size: 1.2em;
+    font-size: 1.1em;
     cursor: pointer;
-    margin-bottom: 1em;
+    gap: 0.5rem;
 }
 
 h2 {
     color: aliceblue;
+}
+
+.text-generated-password, .password-length-text {
+    margin-bottom: 0.2em;
+}
+
+.moon-icon {
+    display: flex;
+    position: absolute;
+    right: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.moon-icon:hover {
+    transform: rotate(45deg);
+}
+
+.text-fixed-header {
+    color: #A0A0B0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.text-fixed-header:hover {
+    color: #ffffff;
+}
+
+.text-header, .text-header-secondary, .text-header-paragraph {
+    letter-spacing: 0.5px;
 }
