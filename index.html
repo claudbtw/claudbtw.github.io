@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+    <title>Генератор паролів</title>
     <style>
     </style>
 </head>
@@ -39,7 +40,7 @@
 
                     <div class="upper-section">
                         <div class="upper-section-secondary">
-                            <input type="text" class="inputText" id="inputText" placeholder="Введіть текст українською" value="ЧемпіонаТ ІнвентоР">
+                            <input type="text" class="inputText" id="inputText" placeholder="Введіть текст українською" value="чемПІОнат інвЕнТор">
                             <button id="generateButton">Згенерувати пароль</button>
                         </div>
                     </div>
@@ -48,8 +49,8 @@
                         <div class="password-length-box">
                             <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
                             <div class="slider-container">
-                                <span id="lengthValue">19</span>
-                                <input type="range" id="passwordLength" min="1" max="40" value="19">
+                                <span class="lengthValue" id="lengthValue">19</span>
+                                <input type="range" id="passwordLength" min="8" max="25" value="19">
                             </div>
                         </div>
                         
@@ -57,107 +58,182 @@
                             <label class="includeUppercase" for="includeUppercase">
                                 <input type="checkbox" id="includeUppercase" checked> Великі літери
                             </label>
-                            <label class="includeLowercase" for="includeLowercase">
-                                <input type="checkbox" id="includeLowercase" checked> Маленькі літери
+
+                            
+                            <label class="includeSpaceReplacements" for="includeSpaceReplacements">
+                                <input type="checkbox" id="includeSpaceReplacements" checked> Символи-роздільники
+                                <div class="space-dropdown-menu">
+                                    <button onclick="toggleSpaceDropdown()" class="toggleSpaceReplacements">
+                                        <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                                    </button>
+                                    <div id="space-dropdown-content" class="space-dropdown-content">
+                                        <div class="space-dropdown-content-inside">
+                                            <label><input type="checkbox" class="spaceDot" id="spaceDot" checked> .</label>
+                                            <label><input type="checkbox" class="spaceMinus" id="spaceMinus" checked> -</label>
+                                            <label><input type="checkbox" class="spaceUnderscore" id="spaceUnderscore" checked> _</label>
+                                            <label><input type="checkbox" class="spaceColon" id="spaceColon" checked> :</label>
+                                            <label><input type="checkbox" class="spaceSemicolon" id="spaceSemicolon" checked> ;</label>
+                                            <label><input type="checkbox" class="spaceSlash" id="spaceSlash" checked> /</label>
+                                        </div>
+                                    </div>
+                                </div>                                
                             </label>
+
                             <label class="includeNumbers" for="includeNumbers">
                                 <input type="checkbox" id="includeNumbers" checked> Цифри
-                            </label>
-                            <label class="includeSymbols" for="includeSymbols">
-                                <input type="checkbox" id="includeSymbols" checked> Символи
-                                <div class="dropDown">
-                                    <button onclick="myFunction()" class="toggleSymbols">
-                                        <img src="./fonts/arrow-down-339-svgrepo-com.svg">
+                                <div class="numbers-dropdown-menu">
+                                    <button onclick="toggleNumbersDropdown()" class="toggleNumbers">
+                                        <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
                                     </button>
-                                    <div id="myDropdown" class="dropdown-content">
-                                        <label for="includeAtSymbol">
-                                            <input type="checkbox" id="includeAtSymbol" checked> @
-                                        </label>
-                                        <label for="includeDollarSymbol">
-                                            <input type="checkbox" id="includeDollarSymbol" checked> $
-                                        </label>
-                                        <label for="includePercentSymbol">
-                                            <input type="checkbox" id="includePercentSymbol" checked> %
-                                        </label>
+                                    <div id="numbers-dropdown-content" class="numbers-dropdown-content">
+                                        <div class="numbers-dropdown-content-inside">
+                                            <label for="includeZero"><input type="checkbox" id="includeZero" checked> 0</label>
+                                            <label for="includeOne"><input type="checkbox" id="includeOne" checked> 1</label>
+                                            <label for="includeThree"><input type="checkbox" id="includeThree" checked> 3</label>
+                                            <label for="includeFour"><input type="checkbox" id="includeFour" checked> 4</label>
+                                            <label for="includeFive"><input type="checkbox" id="includeFive" checked> 5</label>
+                                            <label for="includeSix"><input type="checkbox" id="includeSix" checked> 6</label>
+                                            <label for="includeSeven"><input type="checkbox" id="includeSeven" checked> 7</label>
+                                        </div>
                                     </div>
                                 </div>
                             </label>
-    
-                            
 
+                            <label class="includeSymbols" for="includeSymbols">
+                                <input type="checkbox" id="includeSymbols" checked> Символи
+                                <div class="symbols-dropdown-menu">
+                                    <button onclick="toggleSymbolsDropdown()" class="toggleSymbols">
+                                        <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                                    </button>
+                                    <div id="symbols-dropdown-content" class="symbols-dropdown-content">
+                                        <div class="symbols-dropdown-content-inside">
+                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked> @</label>
+                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked> $</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked> %</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked> W</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            
                         </div>
                     </div>
                 
                     <div class="bottom-section">
                         <!-- <label class="text-generated-password">Згенерований пароль:</label> -->
-                        <input type="text" id="outputPassword" placeholder="Тут буде показано пароль" readonly>
+                        <div id="outputPassword" contenteditable="true"></div>
                         <button id="copyButton">Копіювати</button>
                     </div>
                 </div>                
         </div>
+        <div class="polygon-wrap">
+            <div class="lime-svg-polygon">
+                <div class="data-cards-complexity">
     
-        
-        <div class="container-secondary">
-            <div class="triangles">
-                <div class="triangle-left">
-                    <svg height="100" width="1500">
-                          <polygon fill="#181A21" points="0,0 0,100 1500,100" class="triangle" />
-                    </svg>
+                    <div class="card" id="card-one">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NOSVxIzCCcajA4maAJ53ObJ7hggReDUh2w&s">
+                        <h4>Eset</h4>
+                        <p><a>Відвідати...</a></p>
+                    </div>
+                    <div class="card" id="card-two">
+                        <img src="https://1000logos.net/wp-content/uploads/2020/09/Avast-Logo-2014.png">
+                        <h4>Eset</h4>
+                        <p><a>Відвідати...</a></p>
+                    </div>
+                    <div class="card" id="card-three">
+                        <img src="https://i.pcmag.com/imagery/reviews/017J2F0SqocSaCiuU25mVZe-46.fit_lim.size_1050x591.v1701449178.png">
+                        <h4>Eset</h4>
+                        <p><a>Відвідати...</a></p>
+                    </div>
+                    <div class="card" id="card-four">
+                        <img src="https://i.pcmag.com/imagery/reviews/066pfhdQmzHcmyEMaZtToWq-77..v1653509931.jpg">
+                        <h4>Eset</h4>
+                        <p><a>Відвідати...</a></p>
+                    </div>
+                    
+                    
                 </div>
-                <div class="triangle-right">
-                    <svg height="100" width="1500">
-                        <polygon fill="#181A21" points="1500,0 1500,100 0,100" class="triangle" />
-                    </svg>                
-                </div>
-            </div>               
-
-            <div class="data-container-generator-info">
-                    <div class="text-data-header">
-                        <h1>Як працює цей алгоритм генерації паролів</h1>
-                    </div>
-                    <div class="text-data-main">
-                        <h2>
-                        Алгоритм створення пароля використовує різні правила, такі як випадкове використання великих і малих букв, цифр та спеціальних символів.
-                        Генерування символів та цифр відбувається шляхом транслітерації українських літер на схожі за видом, тобто аналогічні символи та цифри.
-                        </h2>
-                        <h2><strong>Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$".</strong></h2>
-                        <h2>Вибір символів, які можна використовувати алгоритму, можна налаштувати в спадному меню біля вибору символів.</h2>
-                        <h2>
-                                При активній генерації як великих, так і малих літер, 
-                                <strong>великі літери будуть розташовуватися на початку та в кінці пароля,</strong> щоб полегшити його запам'ятовування.
-                        </h2>
-                        <h2>Ви можете налаштовувати довжину пароля та інші параметри для збільшення його надійності.</h2>
-                        <h2>
-                                Введені користувачем великі літери <strong>будуть зберігати свій регістр при транслітерації їх у пароль.</strong>
-                        </h2>
-                    </div>
-                    <div class="text-data-header">
-                        <h1>Чому важливо мати надійний пароль?</h1>
-                    </div>
-                    <div class="text-data-main">
-                        <h2>
-                            Надійний пароль — це ваш захист від несанкціонованого доступу до ваших облікових записів. 
-                            Він повинен бути достатньо складним, аби хакери не змогли його легко вгадати або зламати.
-                            Поєднання букв, цифр та символів допоможе створити сильний пароль, який складно підібрати навіть за допомогою спеціальних алгоритмів.
-                        </h2>
-                    </div>
-                    <div class="text-data-header">
-                        <h1>Про автора сайту</h1>
-                    </div>
-                    <div class="text-data-main">
-                        <h2>
-                            За допомогою багатого вибору умов та правил, алгоритми транслітерації зможуть перетворити ваші слова на надійний та сильний пароль, який буде легко запам'ятати.
-                        </h2>
-                    </div>
             </div>
         </div>
+        
+        
+        <div class="container-secondary">
+            
+            <div class="data-container-generator-info">
+                <div class="text-data-header">
+                    <h1>Як працює мій алгоритм генерації паролів?</h1>
+                </div>
+                <div class="text-data-main">
+                    <h2>
+                        Алгоритм створення пароля використовує різні правила, такі як використання великих літер, цифр та спеціальних символів.
+                    </h2>&nbsp;
+                    <h2>
+                        Великі літери завжди будуть на початку кожного слова, а якщо ви ввели лише одне слово, то на початку та в кінці. Це полегшить їхнє запам'ятовування.
+                        <strong>Великі літери, які ви вводите, зберігатимуть свій регістр при транслітерації їх у пароль.</strong>
+                    </h2>&nbsp;
+                    <h2>
+                        Генерування символів та цифр відбувається шляхом транслітерації українських літер на схожі за видом, тобто аналогічні символи та цифри.
+                    </h2>&nbsp;
+                    <h2>
+                        <strong>Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$".</strong>
+                    </h2>&nbsp;
+                    <h2>Вибір цифр та символів, які можна використовувати алгоритму, можна налаштувати в спадному меню біля вибору символів.</h2>&nbsp;
+                    <h2>Ви можете налаштовувати довжину пароля та інші параметри для збільшення його надійності.</h2>
+                </div>
+
+
+                <div class="text-data-header">
+                    <h1>Чому важливо мати надійний пароль?</h1>
+                </div>
+                <div class="text-data-main">
+                    <h2>
+                        Створення надійного пароля — це перший і найважливіший крок у забезпеченні безпеки від несанкціонованого взлому ваших облікових записів. 
+                    </h2>&nbsp;
+                    <h2>
+                        Перша й основна причина — <strong>захист від злому.</strong>
+                        Надійний пароль робить ваші акаунти менш вразливими до атак, як-от перебір паролів або словникові атаки.
+                    </h2>&nbsp;
+                    <h2>
+                        Друга причина — конфіденційність даних. Паролі захищають вашу особисту інформацію, фінанси, фото, переписки й інші чутливі дані. 
+                        Якщо ваш пароль слабкий, це може призвести до <strong>серйозних наслідків,</strong> як-от викрадення інформації чи втрати доступу до акаунтів.
+                    </h2>&nbsp;
+                    <h2>
+                        Мій генератор дозволяє створювати унікальні паролі на основі введеної фрази та обраних параметрів, 
+                        таких як додавання різних символів, цифр чи великих літер, що забезпечує високий рівень захисту.
+                    </h2>&nbsp;
+                    <h2>
+                        Надійний пароль допомагає:
+                    </h2>
+                    <ul id="ul-strong-password">
+                        <li>
+                            <h2><strong>Захистити від атак брутфорсом</strong> — метод перебору комбінацій стає майже безрезультатним.</h2>
+                        </li>
+                        <li>
+                            <h2><strong>Уникнути фінансових втрат</strong> через крадіжку акаунтів.</h2>
+                        </li>
+                        <li>
+                            <h2><strong>Захистити репутацію</strong> в разі витоку даних.</h2>
+                    </ul>&nbsp;
+                    <h2>
+                        Мій генератор дозволяє створювати унікальні паролі на основі введеної фрази та обраних параметрів, 
+                        таких як додавання різних символів, цифр чи великих літер, що забезпечує високий рівень захисту.
+                    </h2>
+                </div>
+
+
+                <div class="text-data-header">
+                    <h1>Про автора сайту</h1>
+                </div>
+                <div class="text-data-main">
+                    <h2>
+                        За допомогою багатого вибору умов та правил, алгоритми транслітерації зможуть перетворити ваші слова на надійний та сильний пароль, який буде легко запам'ятати.
+                    </h2>
+                </div>
+            </div>
+            
+            
+        </div>
     </div>
-
-
-
-
-
-
 
     <script src="scripts.js"></script>
 </body>
