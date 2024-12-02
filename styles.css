@@ -128,7 +128,7 @@ body {
     min-width: 100%;
 }
 .triangle-wrap {
-    background-image: url(./fonts/blue-triangle-container.svg);
+    background-image: url(/fonts/blue-triangle-container.svg);
     min-width: 100%;
     height: auto;
     background-repeat: no-repeat;
