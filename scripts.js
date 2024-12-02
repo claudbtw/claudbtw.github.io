@@ -4,10 +4,28 @@ document.getElementById("generateButton").addEventListener("click", function() {
     const includeUppercase = document.getElementById("includeUppercase").checked;
     const includeNumbers = document.getElementById("includeNumbers").checked;
     const includeSymbols = document.getElementById("includeSymbols").checked;
+    const includeSpaceReplacements = document.getElementById("includeSpaceReplacements").checked;
+
+    // Стан вибору кожного символа
     const includeAtSymbol = document.getElementById("includeAtSymbol").checked;
     const includeDollarSymbol = document.getElementById("includeDollarSymbol").checked;
     const includePercentSymbol = document.getElementById("includePercentSymbol").checked;
-    const includeLowercase = document.getElementById("includeLowercase").checked;
+    const includeW = document.getElementById("includeW").checked;
+    // Стан вибору кожного числа
+    const includeZero = document.getElementById("includeZero").checked;
+    const includeOne = document.getElementById("includeOne").checked;
+    const includeThree = document.getElementById("includeThree").checked;
+    const includeFour = document.getElementById("includeFour").checked;
+    const includeFive = document.getElementById("includeFive").checked;
+    const includeSix = document.getElementById("includeSix").checked;
+    const includeSeven = document.getElementById("includeSeven").checked;
+    // Стан вибору кожного символу-роздільника
+    const includeDot = document.getElementById("spaceDot").checked;
+    const includeMinus = document.getElementById("spaceMinus").checked;
+    const includeUnderscore = document.getElementById("spaceUnderscore").checked;
+    const includeColon = document.getElementById("spaceColon").checked;
+    const includeSemicolon = document.getElementById("spaceSemicolon").checked;
+    const includeSlash = document.getElementById("spaceSlash").checked;
 
     if (inputText === "") {
         alert("Поле введення тексту не може бути порожнім. Будь ласка, введіть текст.");
@@ -15,30 +33,12 @@ document.getElementById("generateButton").addEventListener("click", function() {
     }
     
     const transliterated = transliterate(inputText);
-    const password = generatePassword(transliterated, passwordLength, includeUppercase, includeNumbers, includeSymbols, includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeLowercase);
-    document.getElementById("outputPassword").value = password;
+    const password = generatePassword(transliterated, passwordLength, includeUppercase, includeSpaceReplacements, includeNumbers, includeSymbols,
+                                      includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeW,
+                                      includeZero, includeOne, includeThree, includeFour, includeFive, includeSix, includeSeven,
+                                      includeDot, includeMinus, includeUnderscore, includeColon, includeSemicolon, includeSlash);
+    document.getElementById("outputPassword").innerHTML = password;
 });
-
-const checkboxUppercase = document.getElementById('includeUppercase');
-const checkboxLowercase = document.getElementById('includeLowercase');
-
-function toggleCheckboxes() {
-  if (!checkboxUppercase.checked) {
-    checkboxLowercase.disabled = true;
-  } else {
-    checkboxLowercase.disabled = false;
-  }
-
-  if (!checkboxLowercase.checked) {
-    checkboxUppercase.disabled = true;
-  } else {
-    checkboxUppercase.disabled = false;
-  }
-}
-
-checkboxUppercase.addEventListener('change', toggleCheckboxes);
-checkboxLowercase.addEventListener('change', toggleCheckboxes);
-toggleCheckboxes();
 
 document.getElementById("inputText").addEventListener("input", function() {
     const inputText = this.value.trim();
@@ -53,24 +53,94 @@ document.getElementById("passwordLength").addEventListener("input", function() {
     document.getElementById("lengthValue").textContent = this.value;
 });
 
-// Дропдаун меню для вибору символів
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+// Дропдаун меню
+function toggleNumbersDropdown() {
+    document.getElementById("numbers-dropdown-content").classList.toggle("showNumbers");
+}
+function toggleSymbolsDropdown() {
+  document.getElementById("symbols-dropdown-content").classList.toggle("showSymbols");
+}
+function toggleSpaceDropdown() {
+    document.getElementById("space-dropdown-content").classList.toggle("showSpaceReplacements");
 }
 
 window.onclick = function(event) {
-    if (!event.target.matches('.toggleSymbols') && !event.target.closest('.dropdown-content')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+    if (!event.target.matches(".toggleNumbers") && !event.target.closest(".numbers-dropdown-content")) {
+        var numbersDropdowns = document.getElementsByClassName("numbers-dropdown-content");
+        for (var i = 0; i < numbersDropdowns.length; i++) {
+            var openNumbersDropdown = numbersDropdowns[i];
+            if (openNumbersDropdown.classList.contains("showNumbers")) {
+                openNumbersDropdown.classList.remove("showNumbers");
+            }
+        }
+    }
+    if (!event.target.matches(".toggleSymbols") && !event.target.closest(".symbols-dropdown-content")) {
+        var symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
+        for (var i = 0; i < symbolsDropdowns.length; i++) {
+            var openSymbolsDropdown = symbolsDropdowns[i];
+            if (openSymbolsDropdown.classList.contains("showSymbols")) {
+                openSymbolsDropdown.classList.remove("showSymbols");
+            }
+        }
+    }
+    if (!event.target.matches(".toggleSpaceReplacements") && !event.target.closest(".space-dropdown-content")) {
+        var spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
+        for (var i = 0; i < spaceDropdowns.length; i++) {
+            var openSpacesDropdown = spaceDropdowns[i];
+            if (openSpacesDropdown.classList.contains("showSpaceReplacements")) {
+                openSpacesDropdown.classList.remove("showSpaceReplacements");
             }
         }
     }
 };
 
-// Функції
+// Виключення/включення чекбоксів
+const majorSymbolCheckbox = document.getElementById("includeSymbols");
+const minorSymbolCheckboxes = document.querySelectorAll(".symbols-dropdown-content input[type='checkbox']");
+majorSymbolCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorSymbolCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorSymbolCheckboxes.forEach(checkboxes => {
+    checkboxes.addEventListener("change", function () {
+        const anyChecked = Array.from(minorSymbolCheckboxes).some(checkbox => checkbox.checked);
+        majorSymbolCheckbox.checked = anyChecked;
+    });
+});
+
+const majorNumberCheckbox = document.getElementById("includeNumbers");
+const minorNumberCheckboxes = document.querySelectorAll(".numbers-dropdown-content input[type='checkbox']");
+majorNumberCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorNumberCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorNumberCheckboxes.forEach(checkboxes => {
+    checkboxes.addEventListener("change", function () {
+        const anyChecked = Array.from(minorNumberCheckboxes).some(checkbox => checkbox.checked);
+        majorNumberCheckbox.checked = anyChecked;
+    });
+});
+
+const majorSpaceCheckbox = document.getElementById("includeSpaceReplacements");
+const minorSpaceCheckboxes = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
+majorSpaceCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorSpaceCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorSpaceCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+        const anyChecked = Array.from(minorSpaceCheckboxes).some(checkbox => checkbox.checked);
+        majorSpaceCheckbox.checked = anyChecked;
+    });
+});
+
+// Функції транслітерації
 function transliterate(text) {
     const transliterationMap = {
         "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
@@ -85,14 +155,47 @@ function transliterate(text) {
     return text.split("").map(char => transliterationMap[char] || char).join("");
 }
 
-function generatePassword(transliterated, length, includeUppercase, includeNumbers, includeSymbols, includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeLowercase) {
-    const replacementsNumbers = {
-        "z": "3", "i": "1", "o": "0", "s": "5", "ch": "4", "sh": "w",
-        "Z": "3", "I": "1", "O": "0", "S": "5", "CH": "4", "SH": "W",
-    };
+function generatePassword(transliterated, length, includeUppercase, includeSpaceReplacements, includeNumbers, includeSymbols,
+                          includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeW,
+                          includeZero, includeOne, includeThree, includeFour, includeFive, includeSix, includeSeven,
+                          includeDot, includeMinus, includeUnderscore, includeColon, includeSemicolon, includeSlash) {
+    const replacementsNumbers = {};
     const replacementsSymbols = {};
+    const spaceReplacements = [];
+
+    // Вибір чисел
+    if (includeZero) {
+        replacementsNumbers["o"] = "0";
+        replacementsNumbers["O"] = "0";
+    }
     
-    // Враховуємо вибір символів
+    if (includeOne) {
+        replacementsNumbers["i"] = "1";
+        replacementsNumbers["I"] = "1";
+    }
+    
+    if (includeThree) {
+        replacementsNumbers["z"] = "3";
+        replacementsNumbers["Z"] = "3";
+    }
+    if (includeFour) {
+        replacementsNumbers["ch"] = "4";
+        replacementsNumbers["CH"] = "4";
+    }
+    if (includeFive) {
+        replacementsNumbers["s"] = "5";
+        replacementsNumbers["S"] = "5";
+    }
+    if (includeSix) {
+        replacementsNumbers["v"] = "6";
+        replacementsNumbers["V"] = "6";
+    }
+    if (includeSeven) {
+        replacementsNumbers["t"] = "7";
+        replacementsNumbers["T"] = "7";
+    }
+
+    // Вибір символів
     if (includeAtSymbol) {
         replacementsSymbols["a"] = "@";
         replacementsSymbols["A"] = "@";
@@ -105,90 +208,143 @@ function generatePassword(transliterated, length, includeUppercase, includeNumbe
         replacementsSymbols["f"] = "%";
         replacementsSymbols["F"] = "%";
     }
+    if (includeW) {
+        replacementsSymbols["sh"] = "w";
+        replacementsSymbols["SH"] = "W";
+    }
 
-    const spaceReplacements = [".", "-", "_"];
+    // Вибір символів-роздільників
+    if (includeDot) spaceReplacements.push(".");
+    if (includeMinus) spaceReplacements.push("-");
+    if (includeUnderscore) spaceReplacements.push("_");
+    if (includeColon) spaceReplacements.push(":");
+    if (includeSemicolon) spaceReplacements.push(";");
+    if (includeSlash) spaceReplacements.push("/");
 
-    let password = '';
-    let skipNext = false;
-
-    for (let i = 0; i < transliterated.length && password.length < length; i++) {
+    let password = "";
+    let i = 0;
+    
+    while (i < transliterated.length && password.length < length) {
         let char = transliterated[i];
-
-        // Пропускаємо обробку наступного символу, якщо вже обробляли парні літери (ch або sh)
-        if (skipNext) {
-            skipNext = false;
+        let nextChar = transliterated[i + 1] || "";
+        let randomNumber = Math.random();
+    
+        // Обробка багатосимвольних замін
+        if ((char + nextChar === "ch" || char + nextChar === "CH") && includeNumbers && replacementsNumbers["ch"] && randomNumber < 0.3) {
+            password += replacementsNumbers["ch"];
+            i += 2;
             continue;
         }
-
-        let nextChar = transliterated[i + 1] || '';
-        let randomNumber = Math.random();
-
-        // Обробка "ch" або "sh"
-        if (char === 'c' && nextChar === 'h' && randomNumber < 0.5 && includeNumbers) {
-            password += '4';
-            skipNext = true;
-        } else if (char === 'C' && nextChar === 'H' && randomNumber < 0.5 && includeNumbers) {
-            password += '4';
-            skipNext = true;
-        } else if (char === 's' && nextChar === 'h' && randomNumber < 0.5 && includeNumbers) {
-            password += 'w';
-            skipNext = true;
-        } else if (char === 'S' && nextChar === 'H' && randomNumber < 0.5 && includeNumbers) {
-            password += 'W';
-            skipNext = true;
-        } else if (char === " ") {
+        if ((char + nextChar === "sh" || char + nextChar === "SH") && includeSymbols && replacementsSymbols["sh"] && randomNumber > 0.70) {
+            password += replacementsSymbols["sh"];
+            i += 2;
+            continue;
+        }
+        
+        // Обробка стандартних замін
+        if (char === " " && !includeSpaceReplacements) {
+            i++;
+            continue;
+        }
+        if (char === " " && includeSpaceReplacements) {
             password += spaceReplacements[Math.floor(Math.random() * spaceReplacements.length)];
-        } else if (includeNumbers && replacementsNumbers[char] && randomNumber < 0.5) {
+            i++;
+            continue;
+        }
+        if (includeNumbers && replacementsNumbers[char] && randomNumber < 0.5) {
             password += replacementsNumbers[char];
         } else if (includeSymbols && replacementsSymbols[char] && randomNumber > 0.65) {
             password += replacementsSymbols[char];
+        } else if (!includeUppercase) {
+            password += char.toLowerCase();
         } else {
-            if (includeLowercase && !includeUppercase) {
-                password += char.toLowerCase();
-            } else if (includeUppercase && !includeLowercase) {
-                password += char.toUpperCase();
-            } else {
-                password += char;
-            }
+            password += char;
         }
+        i++;
     }
-
-    // Доповнення символів до пароля, при необхідності
-    if (password.length < length) {
-        while (password.length < length) {
-            let randomChar = "";
-            let randomNumber = Math.random();
-
-            if (!includeUppercase && !includeNumbers && !includeSymbols) {
-                randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-            } else if (includeSymbols && randomNumber > 0.75) {
-                const symbols = Object.values(replacementsSymbols);
-                randomChar = symbols[Math.floor(Math.random() * symbols.length)];
-            } else if (includeNumbers && randomNumber < 0.25) {
-                randomChar = Math.floor(Math.random() * 10).toString();
-            } else {
-                randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-            }
-            password += randomChar;
+    
+    while (password.length < length) {
+        let randomChar = "";
+        let randomNumber = Math.random();
+    
+        if (!includeUppercase && !includeNumbers && !includeSymbols) {
+            randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+        } else if (includeSymbols && randomNumber > 0.75) {
+            const symbols = Object.values(replacementsSymbols);
+            randomChar = symbols[Math.floor(Math.random() * symbols.length)];
+        } else if (includeNumbers && randomNumber < 0.25) {
+            randomChar = Math.floor(Math.random() * 10).toString();
+        } else {
+            randomChar = String.fromCharCode(Math.floor(Math.random() * 26) + 97);
         }
+        password += randomChar;
     }
-
+    
     if (includeUppercase && password.length > 0) {
         let firstLetter = password[0].toUpperCase();
         let lastLetter = password.slice(-1).toUpperCase();
         let middleSection = password.slice(1, -1);
-
+    
         password = firstLetter + middleSection + lastLetter;
-    }    
-
+    }
+    
     return password;
 }
+
+
+
+// Генерація пароля при зміні значення на повзунку
+document.getElementById("passwordLength").addEventListener("input", function() {
+    const inputText = document.getElementById("inputText").value.trim();
+    const passwordLength = this.value;
+    const includeUppercase = document.getElementById("includeUppercase").checked;
+    const includeNumbers = document.getElementById("includeNumbers").checked;
+    const includeSymbols = document.getElementById("includeSymbols").checked;
+    const includeSpaceReplacements = document.getElementById("includeSpaceReplacements").checked;
+
+    const includeAtSymbol = document.getElementById("includeAtSymbol").checked;
+    const includeDollarSymbol = document.getElementById("includeDollarSymbol").checked;
+    const includePercentSymbol = document.getElementById("includePercentSymbol").checked;
+    const includeW = document.getElementById("includeW").checked;
+
+    const includeZero = document.getElementById("includeZero").checked;
+    const includeOne = document.getElementById("includeOne").checked;
+    const includeThree = document.getElementById("includeThree").checked;
+    const includeFour = document.getElementById("includeFour").checked;
+    const includeFive = document.getElementById("includeFive").checked;
+    const includeSix = document.getElementById("includeSix").checked;
+    const includeSeven = document.getElementById("includeSeven").checked;
+
+    const includeDot = document.getElementById("spaceDot").checked;
+    const includeMinus = document.getElementById("spaceMinus").checked;
+    const includeUnderscore = document.getElementById("spaceUnderscore").checked;
+    const includeColon = document.getElementById("spaceColon").checked;
+    const includeSemicolon = document.getElementById("spaceSemicolon").checked;
+    const includeSlash = document.getElementById("spaceSlash").checked;
+
+    if (inputText === "") {
+        document.getElementById("outputPassword").innerHTML = "";
+        return;
+    }
+
+    const transliterated = transliterate(inputText);
+    const password = generatePassword(transliterated, passwordLength, includeUppercase, includeSpaceReplacements, includeNumbers, includeSymbols, 
+                                      includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeW,
+                                      includeZero, includeOne, includeThree, includeFour, includeFive, includeSix, includeSeven,
+                                      includeDot, includeMinus, includeUnderscore, includeColon, includeSemicolon, includeSlash);
+
+    document.getElementById("outputPassword").innerHTML = password;
+});
+
+
+
+
 
 
 // Копіювання пароля
 document.getElementById("copyButton").addEventListener("click", function() {
     const passwordField = document.getElementById("outputPassword");
     passwordField.select();
-    passwordField.setSelectionRange(0, 99999);
+    passwordField.setSelectionRange(0, 100);
     document.execCommand("copy");
 });
