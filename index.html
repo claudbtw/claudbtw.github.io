@@ -40,7 +40,7 @@
 
                     <div class="upper-section">
                         <div class="upper-section-secondary">
-                            <input type="text" class="inputText" id="inputText" placeholder="Введіть текст українською" value="чемПІОнат інвЕнТор">
+                            <input type="text" class="inputText" id="inputText" maxlength="25" placeholder="Введіть текст українською" value="чемПІОнат інвЕнТор">
                             <button id="generateButton">Згенерувати пароль</button>
                         </div>
                     </div>
@@ -107,10 +107,10 @@
                                     </button>
                                     <div id="symbols-dropdown-content" class="symbols-dropdown-content">
                                         <div class="symbols-dropdown-content-inside">
-                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked> @</label>
-                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked> $</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked> %</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked> W</label>
+                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked>a - @</label>
+                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked>s - $</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked>f - %</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked>sh - W</label>
                                         </div>
                                     </div>
                                 </div>
@@ -120,9 +120,23 @@
                     </div>
                 
                     <div class="bottom-section">
-                        <!-- <label class="text-generated-password">Згенерований пароль:</label> -->
                         <div id="outputPassword" contenteditable="true"></div>
-                        <button id="copyButton">Копіювати</button>
+                        <div class="button-container">
+                            <button id="copyButton">Копіювати</button>
+                            <button id="mailButton">Відіслати на пошту</button>
+                        </div>
+                    </div>
+                    
+                    <div id="modal-window-email" class="modal-window-email">
+                        <div class="modal-content">
+                            <span id="close-modal-button" class="close-modal-button">&times;</span>
+                            <form id="form">
+                                <input type="hidden" name="generated_password" id="generated_password">
+                                <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва сайту, для використання пароля">
+                                <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
+                                <button type="submit" id="sendMailButton">Надіслати</button>
+                            </form>
+                        </div>
                     </div>
                 </div>                
         </div>
@@ -245,6 +259,16 @@
         </div>
     </div>
 
+
+
+
+
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script>
+        emailjs.init('A1vFINPNxYpferYaH')
+    </script>
     <script src="scripts.js"></script>
 </body>
 </html>
