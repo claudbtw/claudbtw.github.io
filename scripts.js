@@ -230,12 +230,12 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         let randomNumber = Math.random();
     
         // Обробка багатосимвольних замін
-        if ((char + nextChar === "ch" || char + nextChar === "CH") && includeNumbers && replacementsNumbers["ch"] && randomNumber < 0.3) {
+        if ((char + nextChar === "ch" || char + nextChar === "CH") && includeNumbers && replacementsNumbers["ch"] && randomNumber < 0.4) {
             password += replacementsNumbers["ch"];
             i += 2;
             continue;
         }
-        if ((char + nextChar === "sh" || char + nextChar === "SH") && includeSymbols && replacementsSymbols["sh"] && randomNumber > 0.70) {
+        if ((char + nextChar === "sh" || char + nextChar === "SH") && includeSymbols && replacementsSymbols["sh"] && randomNumber > 0.6) {
             password += replacementsSymbols["sh"];
             i += 2;
             continue;
@@ -253,7 +253,7 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         }
         if (includeNumbers && replacementsNumbers[char] && randomNumber < 0.5) {
             password += replacementsNumbers[char];
-        } else if (includeSymbols && replacementsSymbols[char] && randomNumber > 0.65) {
+        } else if (includeSymbols && replacementsSymbols[char] && randomNumber > 0.5) {
             password += replacementsSymbols[char];
         } else if (!includeUppercase) {
             password += char.toLowerCase();
@@ -337,14 +337,64 @@ document.getElementById("passwordLength").addEventListener("input", function() {
 });
 
 
+const mailButton = document.getElementById('mailButton');
+const closeModalButton = document.getElementById('close-modal-button');
+const modal = document.getElementById('modal-window-email');
+
+mailButton.addEventListener('click', () => {
+    if (outputPassword.innerText.trim() === '') {
+        alert('Ви не згенерували пароль'); // Показуємо попередження
+    } else {
+        modal.classList.add('active'); // Відкриваємо модальне вікно, якщо пароль є
+    }
+});
+
+closeModalButton.addEventListener('click', () => {
+    modal.classList.remove('active');
+});
+
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.classList.remove('active');
+    }
+});
 
 
+const sendEmailButton = document.getElementById('sendMailButton');
+
+document.getElementById('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    sendEmailButton.innerText = 'Надсилається...';
+
+    const passwordDiv = document.getElementById('outputPassword');
+    const passwordText = passwordDiv.innerText;
+    document.getElementById('generated_password').value = passwordText;
+    console.log(passwordText)
+
+    const serviceID = 'default_service';
+    const templateID = 'template_6jdout7';
+
+    emailjs.sendForm(serviceID, templateID, this).then(() => {
+        sendEmailButton.innerText = 'Надіслати';
+        alert('Відправлено!');
+    }, 
+    (err) => {
+        sendEmailButton.value = 'Надіслати';
+        alert(JSON.stringify(err));
+    });
+});
 
 
 // Копіювання пароля
 document.getElementById("copyButton").addEventListener("click", function() {
-    const passwordField = document.getElementById("outputPassword");
-    passwordField.select();
-    passwordField.setSelectionRange(0, 100);
-    document.execCommand("copy");
+    const textToCopy = document.getElementById('outputPassword').innerText;
+    const tempInput = document.createElement('input');
+
+    document.body.appendChild(tempInput);
+    tempInput.value = textToCopy;
+    tempInput.select();
+    document.execCommand('copy');
+    
+    document.body.removeChild(tempInput);
 });
