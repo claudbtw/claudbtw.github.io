@@ -380,6 +380,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
     emailjs.sendForm(serviceID, templateID, this).then(() => {
         sendEmailButton.innerText = 'Надіслати';
         alert('Відправлено!');
+        modal.classList.remove('active');
     }, 
     (err) => {
         sendEmailButton.value = 'Надіслати';
