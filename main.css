@@ -153,6 +153,7 @@ body {
     align-items: center;
 }
 .card {
+    position: relative;
     text-decoration: none;
     box-sizing: border-box;
     display: flex;
@@ -182,10 +183,27 @@ body {
     font-size: 2em;
     margin-bottom: 0.5em;
 }
+.card p {
+    margin-top: 5.5em;
+    font-weight: 400;
+}
 .card-text {
     padding-top: 1.35em;
     width: 13.5em;
     box-shadow: 0 -1px 0 #949494;
+}
+.card::after {
+    content: '➔';
+    position: absolute;
+    right: 1.5em;
+    bottom: 1.5em;
+    font-size: 24px;
+    color: black;
+    transition: transform 0.3s;
+}
+
+.card:hover::after {
+    transform: translateX(15px);
 }
 .data-cards-complexity img {
     padding: 0 0.5em;
@@ -747,5 +765,5 @@ li a {
 /* Активний стан модального вікна */
 .modal-window-email.active {
     display: block;
-    background-color: rgba(0, 0, 0, 0.5); /* Затемнення фону */
+    background-color: rgba(0, 0, 0, 0.5);
 }
