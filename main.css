@@ -499,6 +499,7 @@ button {
     transition: transform 0.3s ease, background-color 0.3s ease-in-out;
 }
 #sendMailButton {
+    box-shadow: inset 0 0 0 2px #435a72;
     transition: background-color 0.2s ease-in-out;
 }
 #copyButton:hover, #mailButton:hover {
