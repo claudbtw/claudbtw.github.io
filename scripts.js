@@ -53,92 +53,6 @@ document.getElementById("passwordLength").addEventListener("input", function() {
     document.getElementById("lengthValue").textContent = this.value;
 });
 
-// Дропдаун меню
-function toggleNumbersDropdown() {
-    document.getElementById("numbers-dropdown-content").classList.toggle("showNumbers");
-}
-function toggleSymbolsDropdown() {
-  document.getElementById("symbols-dropdown-content").classList.toggle("showSymbols");
-}
-function toggleSpaceDropdown() {
-    document.getElementById("space-dropdown-content").classList.toggle("showSpaceReplacements");
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches(".toggleNumbers") && !event.target.closest(".numbers-dropdown-content")) {
-        var numbersDropdowns = document.getElementsByClassName("numbers-dropdown-content");
-        for (var i = 0; i < numbersDropdowns.length; i++) {
-            var openNumbersDropdown = numbersDropdowns[i];
-            if (openNumbersDropdown.classList.contains("showNumbers")) {
-                openNumbersDropdown.classList.remove("showNumbers");
-            }
-        }
-    }
-    if (!event.target.matches(".toggleSymbols") && !event.target.closest(".symbols-dropdown-content")) {
-        var symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
-        for (var i = 0; i < symbolsDropdowns.length; i++) {
-            var openSymbolsDropdown = symbolsDropdowns[i];
-            if (openSymbolsDropdown.classList.contains("showSymbols")) {
-                openSymbolsDropdown.classList.remove("showSymbols");
-            }
-        }
-    }
-    if (!event.target.matches(".toggleSpaceReplacements") && !event.target.closest(".space-dropdown-content")) {
-        var spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
-        for (var i = 0; i < spaceDropdowns.length; i++) {
-            var openSpacesDropdown = spaceDropdowns[i];
-            if (openSpacesDropdown.classList.contains("showSpaceReplacements")) {
-                openSpacesDropdown.classList.remove("showSpaceReplacements");
-            }
-        }
-    }
-};
-
-// Виключення/включення чекбоксів
-const majorSymbolCheckbox = document.getElementById("includeSymbols");
-const minorSymbolCheckboxes = document.querySelectorAll(".symbols-dropdown-content input[type='checkbox']");
-majorSymbolCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
-    minorSymbolCheckboxes.forEach(checkboxes => {
-        checkboxes.checked = isChecked;
-    });
-});
-minorSymbolCheckboxes.forEach(checkboxes => {
-    checkboxes.addEventListener("change", function () {
-        const anyChecked = Array.from(minorSymbolCheckboxes).some(checkbox => checkbox.checked);
-        majorSymbolCheckbox.checked = anyChecked;
-    });
-});
-
-const majorNumberCheckbox = document.getElementById("includeNumbers");
-const minorNumberCheckboxes = document.querySelectorAll(".numbers-dropdown-content input[type='checkbox']");
-majorNumberCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
-    minorNumberCheckboxes.forEach(checkboxes => {
-        checkboxes.checked = isChecked;
-    });
-});
-minorNumberCheckboxes.forEach(checkboxes => {
-    checkboxes.addEventListener("change", function () {
-        const anyChecked = Array.from(minorNumberCheckboxes).some(checkbox => checkbox.checked);
-        majorNumberCheckbox.checked = anyChecked;
-    });
-});
-
-const majorSpaceCheckbox = document.getElementById("includeSpaceReplacements");
-const minorSpaceCheckboxes = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
-majorSpaceCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
-    minorSpaceCheckboxes.forEach(checkboxes => {
-        checkboxes.checked = isChecked;
-    });
-});
-minorSpaceCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener("change", function () {
-        const anyChecked = Array.from(minorSpaceCheckboxes).some(checkbox => checkbox.checked);
-        majorSpaceCheckbox.checked = anyChecked;
-    });
-});
 
 // Функції транслітерації
 function transliterate(text) {
@@ -187,8 +101,8 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         replacementsNumbers["S"] = "5";
     }
     if (includeSix) {
-        replacementsNumbers["v"] = "6";
-        replacementsNumbers["V"] = "6";
+        replacementsNumbers["b"] = "6";
+        replacementsNumbers["B"] = "6";
     }
     if (includeSeven) {
         replacementsNumbers["t"] = "7";
@@ -336,6 +250,94 @@ document.getElementById("passwordLength").addEventListener("input", function() {
     document.getElementById("outputPassword").innerHTML = password;
 });
 
+// Виключення/включення чекбоксів
+const majorSymbolCheckbox = document.getElementById("includeSymbols");
+const minorSymbolCheckboxes = document.querySelectorAll(".symbols-dropdown-content input[type='checkbox']");
+majorSymbolCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorSymbolCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorSymbolCheckboxes.forEach(checkboxes => {
+    checkboxes.addEventListener("change", function () {
+        const anyChecked = Array.from(minorSymbolCheckboxes).some(checkbox => checkbox.checked);
+        majorSymbolCheckbox.checked = anyChecked;
+    });
+});
+
+const majorNumberCheckbox = document.getElementById("includeNumbers");
+const minorNumberCheckboxes = document.querySelectorAll(".numbers-dropdown-content input[type='checkbox']");
+majorNumberCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorNumberCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorNumberCheckboxes.forEach(checkboxes => {
+    checkboxes.addEventListener("change", function () {
+        const anyChecked = Array.from(minorNumberCheckboxes).some(checkbox => checkbox.checked);
+        majorNumberCheckbox.checked = anyChecked;
+    });
+});
+
+const majorSpaceCheckbox = document.getElementById("includeSpaceReplacements");
+const minorSpaceCheckboxes = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
+majorSpaceCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorSpaceCheckboxes.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorSpaceCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function () {
+        const anyChecked = Array.from(minorSpaceCheckboxes).some(checkbox => checkbox.checked);
+        majorSpaceCheckbox.checked = anyChecked;
+    });
+});
+
+
+// Дропдаун меню
+function toggleNumbersDropdown() {
+    document.getElementById("numbers-dropdown-content").classList.toggle("showNumbers");
+}
+function toggleSymbolsDropdown() {
+  document.getElementById("symbols-dropdown-content").classList.toggle("showSymbols");
+}
+function toggleSpaceDropdown() {
+    document.getElementById("space-dropdown-content").classList.toggle("showSpaceReplacements");
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches(".toggleNumbers") && !event.target.closest(".numbers-dropdown-content")) {
+        var numbersDropdowns = document.getElementsByClassName("numbers-dropdown-content");
+        for (var i = 0; i < numbersDropdowns.length; i++) {
+            var openNumbersDropdown = numbersDropdowns[i];
+            if (openNumbersDropdown.classList.contains("showNumbers")) {
+                openNumbersDropdown.classList.remove("showNumbers");
+            }
+        }
+    }
+    if (!event.target.matches(".toggleSymbols") && !event.target.closest(".symbols-dropdown-content")) {
+        var symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
+        for (var i = 0; i < symbolsDropdowns.length; i++) {
+            var openSymbolsDropdown = symbolsDropdowns[i];
+            if (openSymbolsDropdown.classList.contains("showSymbols")) {
+                openSymbolsDropdown.classList.remove("showSymbols");
+            }
+        }
+    }
+    if (!event.target.matches(".toggleSpaceReplacements") && !event.target.closest(".space-dropdown-content")) {
+        var spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
+        for (var i = 0; i < spaceDropdowns.length; i++) {
+            var openSpacesDropdown = spaceDropdowns[i];
+            if (openSpacesDropdown.classList.contains("showSpaceReplacements")) {
+                openSpacesDropdown.classList.remove("showSpaceReplacements");
+            }
+        }
+    }
+};
+
 
 const mailButton = document.getElementById('mailButton');
 const closeModalButton = document.getElementById('close-modal-button');
@@ -343,9 +345,9 @@ const modal = document.getElementById('modal-window-email');
 
 mailButton.addEventListener('click', () => {
     if (outputPassword.innerText.trim() === '') {
-        alert('Ви не згенерували пароль'); // Показуємо попередження
+        alert('Ви не згенерували пароль');
     } else {
-        modal.classList.add('active'); // Відкриваємо модальне вікно, якщо пароль є
+        modal.classList.add('active');
     }
 });
 
@@ -385,6 +387,34 @@ document.getElementById('form').addEventListener('submit', function(event) {
     });
 });
 
+document.querySelectorAll('.text-fixed-header a').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const targetID = this.getAttribute('href');
+
+        const target = document.querySelector(targetID);
+
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+
+document.querySelectorAll('#scroll-link').forEach(function(link) {
+    link.addEventListener('click', function(event) {
+        event.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        
+        window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+        });
+    });
+});
+
+  
 
 // Копіювання пароля
 document.getElementById("copyButton").addEventListener("click", function() {
