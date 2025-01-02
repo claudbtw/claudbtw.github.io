@@ -11,7 +11,7 @@ document.getElementById("generateButton").addEventListener("click", function() {
     const includeDollarSymbol = document.getElementById("includeDollarSymbol").checked;
     const includePercentSymbol = document.getElementById("includePercentSymbol").checked;
     const includeW = document.getElementById("includeW").checked;
-    // Стан вибору кожного числа
+    // Стан вибору кожної цифри
     const includeZero = document.getElementById("includeZero").checked;
     const includeOne = document.getElementById("includeOne").checked;
     const includeThree = document.getElementById("includeThree").checked;
@@ -37,20 +37,9 @@ document.getElementById("generateButton").addEventListener("click", function() {
                                       includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeW,
                                       includeZero, includeOne, includeThree, includeFour, includeFive, includeSix, includeSeven,
                                       includeDot, includeMinus, includeUnderscore, includeColon, includeSemicolon, includeSlash);
+
     document.getElementById("outputPassword").innerHTML = password;
-});
-
-document.getElementById("inputText").addEventListener("input", function() {
-    const inputText = this.value.trim();
-    const transliteratedText = transliterate(inputText);
-    const passwordLength = transliteratedText.length;
-
-    document.getElementById("passwordLength").value = passwordLength;
-    document.getElementById("lengthValue").textContent = passwordLength;
-});
-
-document.getElementById("passwordLength").addEventListener("input", function() {
-    document.getElementById("lengthValue").textContent = this.value;
+    document.getElementById("generated_password").value = password;
 });
 
 
@@ -77,7 +66,7 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     const replacementsSymbols = {};
     const spaceReplacements = [];
 
-    // Вибір чисел
+    // Вибір цифр
     if (includeZero) {
         replacementsNumbers["o"] = "0";
         replacementsNumbers["O"] = "0";
@@ -206,7 +195,6 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
 }
 
 
-
 // Генерація пароля при зміні значення на повзунку
 document.getElementById("passwordLength").addEventListener("input", function() {
     const inputText = document.getElementById("inputText").value.trim();
@@ -248,7 +236,9 @@ document.getElementById("passwordLength").addEventListener("input", function() {
                                       includeDot, includeMinus, includeUnderscore, includeColon, includeSemicolon, includeSlash);
 
     document.getElementById("outputPassword").innerHTML = password;
+    document.getElementById("generated_password").value = password;
 });
+
 
 // Виключення/включення чекбоксів
 const majorSymbolCheckbox = document.getElementById("includeSymbols");
@@ -281,20 +271,6 @@ minorNumberCheckboxes.forEach(checkboxes => {
     });
 });
 
-const majorSpaceCheckbox = document.getElementById("includeSpaceReplacements");
-const minorSpaceCheckboxes = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
-majorSpaceCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
-    minorSpaceCheckboxes.forEach(checkboxes => {
-        checkboxes.checked = isChecked;
-    });
-});
-minorSpaceCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener("change", function () {
-        const anyChecked = Array.from(minorSpaceCheckboxes).some(checkbox => checkbox.checked);
-        majorSpaceCheckbox.checked = anyChecked;
-    });
-});
 
 
 // Дропдаун меню
@@ -310,27 +286,27 @@ function toggleSpaceDropdown() {
 
 window.onclick = function(event) {
     if (!event.target.matches(".toggleNumbers") && !event.target.closest(".numbers-dropdown-content")) {
-        var numbersDropdowns = document.getElementsByClassName("numbers-dropdown-content");
-        for (var i = 0; i < numbersDropdowns.length; i++) {
-            var openNumbersDropdown = numbersDropdowns[i];
+        let numbersDropdowns = document.getElementsByClassName("numbers-dropdown-content");
+        for (let i = 0; i < numbersDropdowns.length; i++) {
+            let openNumbersDropdown = numbersDropdowns[i];
             if (openNumbersDropdown.classList.contains("showNumbers")) {
                 openNumbersDropdown.classList.remove("showNumbers");
             }
         }
     }
     if (!event.target.matches(".toggleSymbols") && !event.target.closest(".symbols-dropdown-content")) {
-        var symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
-        for (var i = 0; i < symbolsDropdowns.length; i++) {
-            var openSymbolsDropdown = symbolsDropdowns[i];
+        let symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
+        for (let i = 0; i < symbolsDropdowns.length; i++) {
+            let openSymbolsDropdown = symbolsDropdowns[i];
             if (openSymbolsDropdown.classList.contains("showSymbols")) {
                 openSymbolsDropdown.classList.remove("showSymbols");
             }
         }
     }
     if (!event.target.matches(".toggleSpaceReplacements") && !event.target.closest(".space-dropdown-content")) {
-        var spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
-        for (var i = 0; i < spaceDropdowns.length; i++) {
-            var openSpacesDropdown = spaceDropdowns[i];
+        let spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
+        for (let i = 0; i < spaceDropdowns.length; i++) {
+            let openSpacesDropdown = spaceDropdowns[i];
             if (openSpacesDropdown.classList.contains("showSpaceReplacements")) {
                 openSpacesDropdown.classList.remove("showSpaceReplacements");
             }
@@ -339,6 +315,7 @@ window.onclick = function(event) {
 };
 
 
+// Відправка пароля на пошту
 const mailButton = document.getElementById('mailButton');
 const closeModalButton = document.getElementById('close-modal-button');
 const modal = document.getElementById('modal-window-email');
@@ -388,12 +365,126 @@ document.getElementById('form').addEventListener('submit', function(event) {
     });
 });
 
+  
+
+// Копіювання пароля
+document.getElementById("copyButton").addEventListener("click", function() {
+    const password = document.getElementById('outputPassword').innerText;
+
+    if (!password) {
+        alert("Пароль не згенеровано.");
+        return;
+    }
+
+    navigator.clipboard.writeText(password).then(() => {
+        alert("Пароль успішно скопійовано!");
+    }).catch(err => {
+        console.error("Failed to copy password:", err);
+        alert("Не вдалося скопіювати пароль. Зпробуйте ще раз, будь ласка.");
+    });
+});
+
+
+
+const passwordDiv = document.getElementById('outputPassword');
+const passwordText = passwordDiv.innerText;
+document.getElementById('generated_password').value = generated_password;
+
+// Ентропія
+const charSets = {
+    lowercase: 26,
+    uppercase: 26,
+    digits: 10,
+    special: 32,
+};
+
+function calculateEntropy(generated_password) {
+    let length = generated_password.length;
+    if (length === 0) return 0;
+
+    let charPool = 0;
+    if (/[a-z]/.test(generated_password)) charPool += charSets.lowercase;
+    if (/[A-Z]/.test(generated_password)) charPool += charSets.uppercase;
+    if (/\d/.test(generated_password)) charPool += charSets.digits;
+    if (/[^a-zA-Z\d]/.test(generated_password)) charPool += charSets.special;
+
+    return length * Math.log2(charPool);
+}
+
+function updateStrengthIndicator(entropy) {
+    const div = document.getElementById("outputPassword");
+    const message = document.getElementById("strengthMessage");
+
+    let color, text;
+
+    if (entropy == 0) {
+        div.style.boxShadow = "";
+        text = "";
+    } else if (entropy < 34) {
+        color = "red";
+        text = "Very Weak";
+    } else if (entropy < 60) {
+        color = "yellow";
+        text = "Medium";
+    } else if (entropy < 90) {
+        color = "lightgreen";
+        text = "Strong";
+    } else {
+        color = "green";
+        text = "Very Strong";
+    }
+
+    div.style.boxShadow = `0 0 10px ${color}`;
+    message.textContent = text;
+    message.style.color = color;
+}
+
+
+const outputPasswordElement = document.getElementById("outputPassword");
+
+function updatePasswordEntropy() {
+    const password = outputPasswordElement.innerText.trim();
+    if (password) {
+        const entropy = calculateEntropy(password);
+        updateStrengthIndicator(entropy);
+        console.log(`Згенерований пароль: ${password}`);
+        console.log(`Ентропія пароля: ${Math.round(entropy)} біт`);
+    } else {
+        updateStrengthIndicator(0);
+        console.log("Поле пароля порожнє.");
+    }
+}
+
+const observer = new MutationObserver(() => {
+    updatePasswordEntropy();
+});
+
+observer.observe(outputPasswordElement, { childList: true, subtree: true, characterData: true });
+
+
+
+
+// Інше
+document.getElementById("inputText").addEventListener("input", function() {
+    const inputText = this.value.trim();
+    const transliteratedText = transliterate(inputText);
+    const passwordLength = transliteratedText.length;
+
+    document.getElementById("passwordLength").value = passwordLength;
+    document.getElementById("lengthValue").textContent = passwordLength;
+});
+
+document.getElementById("passwordLength").addEventListener("input", function() {
+    document.getElementById("lengthValue").textContent = this.value;
+});
+
+
+// Плавне проматування по сторінці
 document.querySelectorAll('.text-fixed-header a').forEach(link => {
     link.addEventListener('click', function (event) {
         event.preventDefault();
 
         const targetID = this.getAttribute('href');
-
         const target = document.querySelector(targetID);
 
         if (target) {
@@ -401,7 +492,6 @@ document.querySelectorAll('.text-fixed-header a').forEach(link => {
         }
     });
 });
-
 
 document.querySelectorAll('#scroll-link').forEach(function(link) {
     link.addEventListener('click', function(event) {
@@ -413,19 +503,4 @@ document.querySelectorAll('#scroll-link').forEach(function(link) {
             behavior: 'smooth'
         });
     });
-});
-
-  
-
-// Копіювання пароля
-document.getElementById("copyButton").addEventListener("click", function() {
-    const textToCopy = document.getElementById('outputPassword').innerText;
-    const tempInput = document.createElement('input');
-
-    document.body.appendChild(tempInput);
-    tempInput.value = textToCopy;
-    tempInput.select();
-    document.execCommand('copy');
-    
-    document.body.removeChild(tempInput);
 });
