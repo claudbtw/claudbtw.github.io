@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="secondary.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+    <title>Генератор паролів</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="fixed-header">
+        <p class="text-fixed-header">
+            <a href="#header" id="scroll-link">
+                Головна сторінка
+            </a>
+        </p>
+        <p class="text-fixed-header-page">
+            <a href="index.html">
+                Головний генератор
+            </a>
+        </p>
+        <p class="text-fixed-header-page">
+            <a href="importance.html">
+                Важливість надійного пароля
+            </a>
+        </p>
+        <p class="text-fixed-header">
+            <a href="#symbols-transliterate-list" id="scroll-link">
+                Список символів транслітерації
+            </a>
+        </p>
+        <p class="text-fixed-header">
+            <a href="#author-information">
+                Про автора
+            </a>
+        </p>
+   <!-- <svg class="moon-icon" height="25px" width="25px" viewBox="0 0 47.539 47.539"><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path style="fill:#d2cfe7;" d="M24.997,47.511C11.214,47.511,0,36.298,0,22.515C0,12.969,5.314,4.392,13.869,0.132 c0.385-0.191,0.848-0.117,1.151,0.186s0.381,0.766,0.192,1.15C13.651,4.64,12.86,8.05,12.86,11.601 c0,12.681,10.316,22.997,22.997,22.997c3.59,0,7.033-0.809,10.236-2.403c0.386-0.191,0.848-0.117,1.151,0.186 c0.304,0.303,0.381,0.766,0.192,1.15C43.196,42.153,34.597,47.511,24.997,47.511z M12.248,3.372C5.862,7.608,2,14.709,2,22.515 c0,12.68,10.316,22.996,22.997,22.996c7.854,0,14.981-3.898,19.207-10.343c-2.668,0.95-5.464,1.43-8.346,1.43 c-13.783,0-24.997-11.214-24.997-24.997C10.861,8.761,11.327,6.005,12.248,3.372z"></path> </g> </g> </g>
+        </svg> -->
+    </div>
+
+    <main>
+        <div class="container">
+            <div id="header" class="text-box-container">
+                <h1 class="text-header">Зручний генератор паролів</h1>
+                <h2 class="text-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
+                <h3 class="text-header-paragraph">
+                    <a href="#section-nav-two" id="scroll-link">
+                        Як це працює?
+                    </a>
+                </h3>
+                <!-- <h3 class="text-header-paragraph">За допомогою багатого вибору умов та правил, алгоритми транслітерації зможуть перетворити ваші слова на надійний та сильний пароль, який буде легко запам'ятати
+                </h3> -->
+            </div>
+            
+            <div class="inputs-box-container">
+
+                <div class="upper-section">
+                    <div class="upper-section-secondary">
+                        <input type="text" class="inputText" id="inputText" maxlength="50" placeholder="Введіть текст українською" value="Добрий день моя улюблена Україно">
+                        <button id="generateButton">Згенерувати пароль</button>
+                    </div>
+                </div>
+
+                <div class="middle-section">
+                    <div class="password-length-box">
+                        <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
+                        <div class="slider-container">
+                            <span class="lengthValue" id="lengthValue">15</span>
+                            <input type="range" id="passwordLength" min="1" max="25" value="15">
+                        </div>
+                    </div>
+                    
+                    <div class="checkbox-complexity">
+                        <label class="includeUppercase" for="includeUppercase">
+                            <input type="checkbox" id="includeUppercase" checked> Великі літери
+                        </label>
+
+
+                        <label class="includeNumbers" for="includeNumbers">
+                            <input type="checkbox" id="includeNumbers" checked> Цифри
+                            <input type="text" class="inputNumber" id="inputNumber" maxlength="10" placeholder="Введіть число" value="20250201">
+                        </label>
+
+                        <label class="includeSymbols" for="includeSymbols">
+                            <input type="checkbox" id="includeSymbols" checked> Символи
+                        </label>
+                        
+                    </div>
+                </div>
+            
+                <div class="bottom-section">
+                    <div class="password-container">
+                        <div id="outputPassword" contenteditable="true"></div>
+                        <div class="strength_message" id="strengthMessage"></div>
+                    </div>
+                    <div class="button-container">
+                        <button id="copyButton">Копіювати</button>
+                        <button id="mailButton">Відіслати на пошту</button>
+                    </div>
+                </div>
+                
+                <div id="modal-window-email" class="modal-window-email">
+                    <div class="modal-content">
+                        <span id="close-modal-button" class="close-modal-button">&times;</span>
+                        <form id="form">
+                            <input type="hidden" name="generated_password" id="generated_password">
+                            <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва додатку, для використання пароля">
+                            <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
+                            <input type="text" name="url-mail-text" id="url-mail-text" class="url-mail-text" placeholder="Посилання на сайт">
+                            <button type="submit" id="sendMailButton">Надіслати</button>
+                        </form>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="polygon-wrap">
+            <div class="lime-svg-polygon">
+                <div class="data-cards-complexity">
+                    
+                    <a class="card" id="card-one" href="https://www.eset.com/ua/home/generator-paroley/?srsltid=AfmBOooAYyHSWmLRiwNkODiCisl1h4qzR_2vEAg18taG3oWdBWRlDE2m">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NOSVxIzCCcajA4maAJ53ObJ7hggReDUh2w&s">
+                        <div class="card-text">
+                            <h4>Eset</h4>
+                            <p>Відвідати...</p>
+                        </div>
+                    </a>
+                    <a class="card" id="card-two" href="https://www.avast.ua/random-password-generator#pc">
+                        <img src="https://1000logos.net/wp-content/uploads/2020/09/Avast-Logo-2014.png">
+                        <div class="card-text">
+                            <h4>Avast</h4>
+                            <p>Відвідати...</p>
+                        </div>
+                    </a>
+                    <a class="card" id="card-three" href="https://www.expressvpn.com/ua/password-generator">
+                        <img src="https://i.pcmag.com/imagery/reviews/017J2F0SqocSaCiuU25mVZe-46.fit_lim.size_1050x591.v1701449178.png">
+                        <div class="card-text">
+                            <h4>Express VPN</h4>
+                            <p>Відвідати...</p>
+                        </div>
+                    </a>
+                    <a class="card" id="card-four" href="https://proton.me/pass/password-generator">
+                        <img src="https://i.pcmag.com/imagery/reviews/066pfhdQmzHcmyEMaZtToWq-77..v1653509931.jpg">
+                        <div class="card-text">
+                            <h4>Proton VPN</h4>
+                            <p>Відвідати...</p>
+                        </div>
+                    </a>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="triangle-wrap">
+            <span style="visibility: hidden;">TEXT</span>
+        </div>
+        <div class="container-secondary">
+            
+            <div id="section-nav-two" class="data-container-generator-info">
+                <div class="text-data-header">
+                    <h1>Як працює мій алгоритм генерації паролів?</h1>
+                </div>
+                <div class="text-data-main">
+                    <h2>
+                        Алгоритм створення пароля використовує різні правила, такі як використання великих літер, цифр та спеціальних символів.
+                    </h2> 
+                    <h2>
+                        Великі літери завжди будуть на початку кожного слова, а якщо ви ввели лише одне слово, то на початку та в кінці. Це полегшить їхнє запам'ятовування.
+                        <strong>
+                            Великі літери, які ви вводите, зберігатимуть свій регістр при транслітерації їх у пароль.
+                        </strong>
+                    </h2> 
+                    <h2>
+                        Генерування символів та цифр відбувається шляхом транслітерації українських літер на схожі за видом, тобто аналогічні символи та цифри.
+                    </h2> 
+                    <h2>
+                        <strong>Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$".</strong>
+                    </h2> 
+                    <h2>Вибір цифр та символів, які можна використовувати алгоритму, можна налаштувати в спадному меню біля вибору символів.</h2> 
+                    <h2>Ви можете налаштовувати довжину пароля та інші параметри для збільшення його надійності.</h2>
+                </div>
+
+                <div id="symbols-transliterate-list" class="text-data-header-grid">
+                    <h1>Список символів та чисел для транслітерації</h1>
+                </div>
+                <div class="grid-symbols-numbers">
+                    <div class="text-data-symbols-list">
+                        <h2 class="symbols-list">
+                            а, А  -  @
+                        </h2>
+                        <h2 class="symbols-list">
+                            с, С  -  $
+                        </h2>
+                        <h2 class="symbols-list">
+                            ф, Ф -  %
+                        </h2>
+                        <h2 class="symbols-list">
+                            ш, Ш  -  w, W
+                        </h2>
+                    </div>
+                    <div class="text-data-numbers-list">
+                        <h2 class="numbers-list">
+                            о, О  -  0
+                        </h2>
+                        <h2 class="numbers-list">
+                            і, І  -  1
+                        </h2>
+                        <h2 class="numbers-list">
+                            з, З  -  3
+                        </h2>
+                        <h2 class="numbers-list">
+                            ч, Ч  -  4
+                        </h2>
+                        <h2 class="numbers-list">
+                            с, С  -  5
+                        </h2>
+                        <h2 class="numbers-list">
+                            б, Б  -  6
+                        </h2>
+                        <h2 class="numbers-list">
+                            т, Т  -  7
+                        </h2>
+                    </div>
+                </div>
+                    
+                
+                
+
+
+                <div id="author-information" class="text-data-header">
+                    <h1>Про автора сайту</h1>
+                </div>
+                <div class="text-data-main">
+                    <h2>
+                        <strong>
+                            Автор сайту
+                        </strong>
+                    </h2>
+                    <h2>
+                        Максим Драгомарецький
+                    </h2>
+                    <h2 style="margin-bottom: 60px;">
+                        Учень 11 класу Наукового ліцею "Політ" при Обласному коледжі "Кременчуцької
+                        гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради
+                    </h2>
+                    <h2>
+                        <strong>
+                            Консультант
+                        </strong>
+                    </h2>
+                    <h2>
+                        Лисенко Тетяна Іванівна
+                    </h2>
+                    <h2>
+                        Викладач з програмування Обласного коледжу "Кременчуцької гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради
+                    </h2>
+                </div>
+            </div>
+            
+            
+        </div>
+
+        <footer id="footer">
+            <div class="footer-block-text-main">
+                <h2>
+                    <strong class="strong-h2" style="color: aliceblue;">
+                        Генератор паролів
+                    </strong>
+                </h2>
+            </div>
+            <div class="footer-block-text-secondary">
+                <p>
+                    +380-50-808-1116
+                </p>
+                <p>
+                    prostoribamaxam@gmail.com
+                </p>
+            </div>
+    
+            <div class="footer-block-text-one">
+                <p class="text-footer">
+                    <a href="#header" id="scroll-link">
+                        Головна сторінка
+                    </a>
+                </p>
+                <p class="text-footer">
+                    <a href="importance.html">
+                        Важливість надійного пароля
+                    </a>
+                </p>
+            </div>
+    
+            <div class="footer-block-text-two">
+                <p class="text-footer" style="margin-right: -2em">
+                    <a href="#symbols-transliterate-list" id="scroll-link">
+                        Список символів транслітерації
+                    </a>
+                </p>
+                <p class="text-footer">
+                    <a href="#author-information">
+                        Про автора
+                    </a>
+                </p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="scripts-second-generator.js"></script>
+</body>
+</html>
