@@ -20,13 +20,13 @@
             </a>
         </p>
         <p class="text-fixed-header-page">
-            <a href="importance.html">
-                Важливість надійного пароля
+            <a href="second-generator.html">
+                Другий генератор
             </a>
         </p>
-        <p class="text-fixed-header">
-            <a href="#section-nav-two" id="scroll-link">
-                Як це працює?
+        <p class="text-fixed-header-page">
+            <a href="importance.html">
+                Важливість надійного пароля
             </a>
         </p>
         <p class="text-fixed-header">
@@ -43,12 +43,17 @@
         </svg> -->
     </div>
 
-    <div class="content">
+    <main>
 
         <div class="container">
                 <div id="header" class="text-box-container">
                     <h1 class="text-header">Зручний генератор паролів</h1>
                     <h2 class="text-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
+                    <h3 class="text-header-paragraph">
+                        <a href="#section-nav-two" id="scroll-link">
+                            Як це працює?
+                        </a>
+                    </h3>
                     <!-- <h3 class="text-header-paragraph">За допомогою багатого вибору умов та правил, алгоритми транслітерації зможуть перетворити ваші слова на надійний та сильний пароль, який буде легко запам'ятати
                     </h3> -->
                 </div>
@@ -59,7 +64,7 @@
 
                     <div class="upper-section">
                         <div class="upper-section-secondary">
-                            <input type="text" class="inputText" id="inputText" maxlength="25" placeholder="Введіть текст українською">
+                            <input type="text" class="inputText" id="inputText" maxlength="25" placeholder="Введіть текст українською" value="чемПІОнат інвЕнТор">
                             <button id="generateButton">Згенерувати пароль</button>
                         </div>
                     </div>
@@ -69,7 +74,7 @@
                             <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
                             <div class="slider-container">
                                 <span class="lengthValue" id="lengthValue">19</span>
-                                <input type="range" id="passwordLength" min="6" max="25" value="6">
+                                <input type="range" id="passwordLength" min="6" max="25" value="19">
                             </div>
                         </div>
                         
@@ -126,10 +131,10 @@
                                     </button>
                                     <div id="symbols-dropdown-content" class="symbols-dropdown-content">
                                         <div class="symbols-dropdown-content-inside">
-                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked> @</label>
-                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked> $</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked> %</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked> W</label>
+                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked>a - @</label>
+                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked>s - $</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked>f - %</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked>sh - W</label>
                                         </div>
                                     </div>
                                 </div>
@@ -139,7 +144,10 @@
                     </div>
                 
                     <div class="bottom-section">
-                        <div id="outputPassword" contenteditable="true"></div>
+                        <div class="password-container">
+                            <div id="outputPassword" contenteditable="true"></div>
+                            <div class="strength_message" id="strengthMessage"></div>
+                        </div>
                         <div class="button-container">
                             <button id="copyButton">Копіювати</button>
                             <button id="mailButton">Відіслати на пошту</button>
@@ -205,7 +213,7 @@
             
             <div id="section-nav-two" class="data-container-generator-info">
                 <div class="text-data-header">
-                    <h1>Як працює мій алгоритм генерації паролів?</h1>
+                    <h1>Як працює цей алгоритм генерації паролів?</h1>
                 </div>
                 <div class="text-data-main">
                     <h2>
@@ -350,7 +358,7 @@
                 </p>
             </div>
         </footer>
-    </div>
+    </main>
 
 
 
