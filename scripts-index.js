@@ -535,7 +535,7 @@ function updateStrengthIndicator(entropy) {
         width = "100%";
         color = "green";
         text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
-        textPass = `Може бути створено 387420489 різних паролів`;
+        textPass = `Може бути створено 193536 різних паролів`;
     }
 
     strengthBar.style.width = width;
