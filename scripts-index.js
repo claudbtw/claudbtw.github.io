@@ -194,79 +194,81 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     return password;
 }
 
-function countPossiblePasswords(transliterated, options) {
-    const {
-        includeUppercase,
-        includeNumbers,
-        includeSymbols,
-        replacementsNumbers,
-        replacementsSymbols
-    } = options;
+function countPasswordCombinations(phrase, includeUppercase, includeNumbers, includeSymbols, includeAtSymbol,
+                                  includeDollarSymbol, includePercentSymbol, includeW, includeZero, includeOne,
+                                  includeThree, includeFour, includeFive, includeSix, includeSeven) {
+    const replacementsNumbers = {
+        "o": includeZero ? ["o", "0"] : ["o"],
+        "O": includeZero && includeUppercase ? ["O", "0"] : ["O"],
+        "i": includeOne ? ["i", "1"] : ["i"],
+        "I": includeOne && includeUppercase ? ["I", "1"] : ["I"],
+        "z": includeThree ? ["z", "3"] : ["z"],
+        "Z": includeThree && includeUppercase ? ["Z", "3"] : ["Z"],
+        "ch": includeFour ? ["ch", "4"] : ["ch"],
+        "CH": includeFour && includeUppercase ? ["CH", "4"] : ["CH"],
+        "s": includeFive ? ["s", "5"] : ["s"],
+        "S": includeFive && includeUppercase ? ["S", "5"] : ["S"],
+        "b": includeSix ? ["b", "6"] : ["b"],
+        "B": includeSix && includeUppercase ? ["B", "6"] : ["B"],
+        "t": includeSeven ? ["t", "7"] : ["t"],
+        "T": includeSeven && includeUppercase ? ["T", "7"] : ["T"]
+    };
 
-    let possibilities = 1;
-    const length = transliterated.length;
+    const replacementsSymbols = {
+        "a": includeAtSymbol ? ["a", "@"] : ["a"],
+        "A": includeAtSymbol && includeUppercase ? ["A", "@"] : ["A"],
+        "s": includeDollarSymbol ? ["s", "$"] : ["s"],
+        "S": includeDollarSymbol && includeUppercase ? ["S", "$"] : ["S"],
+        "f": includePercentSymbol ? ["f", "%"] : ["f"],
+        "F": includePercentSymbol && includeUppercase ? ["F", "%"] : ["F"],
+        "sh": includeW ? ["sh", "w"] : ["sh"],
+        "SH": includeW && includeUppercase ? ["SH", "W"] : ["SH"]
+    };
 
-    // Множник для великих літер
-    if (includeUppercase) {
-        const firstChar = transliterated[0];
-        const lastChar = transliterated[length - 1];
-        
-        // Перевірка першої літери
-        if (!replacementsNumbers[firstChar] && !replacementsSymbols[firstChar]) {
-            possibilities *= 2; // маленька або велика літера
+    let totalCombinations = 1;
+    let i = 0;
+
+    while (i < phrase.length) {
+        let char = phrase[i];
+        let nextChar = phrase[i + 1] || "";
+        let variants = [char];
+
+        // Перевірка для багатосимвольних замін ("ch", "sh")
+        if ((char + nextChar) in replacementsNumbers) {
+            variants = replacementsNumbers[char + nextChar];
+            i += 2;
+        } else if ((char + nextChar) in replacementsSymbols) {
+            variants = replacementsSymbols[char + nextChar];
+            i += 2;
+        } else {
+            // Перевірка для односимвольних замін
+            if (replacementsNumbers[char]) {
+                variants = replacementsNumbers[char];
+            } else if (replacementsSymbols[char]) {
+                variants = replacementsSymbols[char];
+            }
+            i++;
         }
-        
-        // Перевірка останньої літери
-        if (length > 1 && !replacementsNumbers[lastChar] && !replacementsSymbols[lastChar]) {
-            possibilities *= 2; // маленька або велика літера
+
+        // Якщо дозволені великі літери, додаємо їх до варіантів
+        if (includeUppercase && char.toLowerCase() !== char.toUpperCase()) {
+            let uppercaseVariant = char.toUpperCase();
+            if (!variants.includes(uppercaseVariant)) {
+                variants.push(uppercaseVariant);
+            }
         }
+
+        totalCombinations *= variants.length;
     }
 
-    // Перебір кожної літери у фразі (крім першої та останньої)
-    for (let i = 1; i < length - 1; i++) {
-        const char = transliterated[i];
-        let charPossibilities = 1;
-
-        // Додавання варіантів для цифр
-        if (includeNumbers && replacementsNumbers[char]) {
-            charPossibilities++;
-        }
-
-        // Додавання варіантів для символів
-        if (includeSymbols && replacementsSymbols[char]) {
-            charPossibilities++;
-        }
-
-        possibilities *= charPossibilities;
-    }
-
-    return possibilities;
+    return totalCombinations;
 }
 
 // Приклад виклику функції
-const transliterated = "CHemp10n@T";
-const options = {
-    includeUppercase: true,
-    includeNumbers: true,
-    includeSymbols: true,
-    replacementsNumbers: {
-        "o": "0",
-        "i": "1",
-        "z": "3",
-        "ch": "4",
-        "s": "5",
-        "b": "6",
-        "t": "7"
-    },
-    replacementsSymbols: {
-        "a": "@",
-        "s": "$",
-        "f": "%",
-        "sh": "w"
-    }
-};
+let phrase = "chempionat";
+let combinations = countPasswordCombinations(phrase, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true);
+console.log("Кількість можливих комбінацій:", combinations);
 
-console.log("Кількість можливих паролів:", countPossiblePasswords(transliterated, options));
 
 
 
@@ -348,6 +350,20 @@ minorNumberCheckboxes.forEach(checkboxes => {
     });
 });
 
+const majorSymbolReplacementsCheckbox = document.getElementById("includeSpaceReplacements");
+const minorSymbolReplacementsCheckbox = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
+majorSymbolReplacementsCheckbox.addEventListener("change", function () {
+    const isChecked = this.checked;
+    minorSymbolReplacementsCheckbox.forEach(checkboxes => {
+        checkboxes.checked = isChecked;
+    });
+});
+minorSymbolReplacementsCheckbox.forEach(checkboxes => {
+    checkboxes.addEventListener("change", function () {
+        const anyChecked = Array.from(minorSymbolReplacementsCheckbox).some(checkbox => checkbox.checked);
+        majorSymbolReplacementsCheckbox.checked = anyChecked;
+    });
+});
 
 
 // Дропдаун меню
@@ -517,7 +533,7 @@ function updateStrengthIndicator(entropy) {
     } else if (entropy >= 96) {
         width = "100%";
         color = "green";
-        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
+        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт, кількість можливих паролів: 387420489`;
     }
 
     strengthBar.style.width = width;
