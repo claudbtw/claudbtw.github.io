@@ -34,6 +34,7 @@ document.getElementById("generateButton").addEventListener("click", function () 
 
     const entropy = calculateEntropy(password);
     updateStrengthIndicator(entropy);
+    
 });
 
 
@@ -267,27 +268,28 @@ function calculateEntropy(generated_password) {
 
 function updateStrengthIndicator(entropy) {
     const strengthBar = document.getElementById("strengthBar");
-    const message = document.getElementById("strengthMessage");
+    const strengthMessage = document.getElementById("strengthMessage");
+    const strengthQuantity = document.getElementById("strengthQuantity");
 
-    let color, width, text;
-    if (entropy < 1) {
+    let color, width, text, textPass = "Кількість можливих паролів";
+
+    if (entropy <= 1) {
         width = "0%";
         color = "rgba(180, 180, 180, 0.5)";
         text = "Сила пароля";
-    }
-    if (entropy > 1 & entropy <= 34) {
+    } else if (entropy > 1 && entropy <= 34) {
         width = "20%";
         color = "red";
         text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy > 34 & entropy <= 54) {
+    } else if (entropy > 34 && entropy <= 54) {
         width = "40%";
         color = "yellow";
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy > 54 & entropy < 70) {
+    } else if (entropy > 54 && entropy < 70) {
         width = "60%";
         color = "yellow";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy >= 70 & entropy < 96) {
+    } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
         color = "lightgreen";
         text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
@@ -295,13 +297,17 @@ function updateStrengthIndicator(entropy) {
         width = "100%";
         color = "green";
         text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
+        textPass = `Може бути створено 387420489 різних паролів`;
     }
 
     strengthBar.style.width = width;
     strengthBar.style.backgroundColor = color;
 
-    message.textContent = text;
-    message.style.color = color;
+    strengthMessage.textContent = text;
+    strengthMessage.style.color = color;
+
+    strengthQuantity.textContent = textPass;
+    strengthQuantity.style.color = color;
 }
 
 function calculateCrackTime(entropy, attemptsPerSecond = 1e12) {
