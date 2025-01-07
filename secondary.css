@@ -149,7 +149,7 @@ main {
 }
 #inputText {
     line-height: 1.6em;
-    height: 3em;
+    height: 2em;
     overflow: hidden;
     resize: none;
     transition: height 0.1s ease;
