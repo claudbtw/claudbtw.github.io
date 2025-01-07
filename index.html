@@ -131,10 +131,10 @@
                                     </button>
                                     <div id="symbols-dropdown-content" class="symbols-dropdown-content">
                                         <div class="symbols-dropdown-content-inside">
-                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked>a - @</label>
-                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked>s - $</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked>f - %</label>
-                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked>sh - W</label>
+                                            <label for="includeAtSymbol"><input type="checkbox" id="includeAtSymbol" checked> @</label>
+                                            <label for="includeDollarSymbol"><input type="checkbox" id="includeDollarSymbol" checked> $</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includePercentSymbol" checked> %</label>
+                                            <label for="includePercentSymbol"><input type="checkbox" id="includeW" checked> W</label>
                                         </div>
                                     </div>
                                 </div>
@@ -146,7 +146,14 @@
                     <div class="bottom-section">
                         <div class="password-container">
                             <div id="outputPassword" contenteditable="true"></div>
-                            <div class="strength_message" id="strengthMessage"></div>
+                            <div id="strengthBarContainer">
+                                <div id="strengthBar"></div>
+                            </div>
+                            <div id="strengthValueContainer">
+                                <p id="strengthMessage">Сила пароля</p>
+                                <div class="horizontal-line"></div>
+                                <p id="strengthTime">Час для взлому</p>
+                            </div>
                         </div>
                         <div class="button-container">
                             <button id="copyButton">Копіювати</button>
