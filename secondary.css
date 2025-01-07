@@ -90,7 +90,7 @@ main {
     align-items: center;
     background-color: #121419;
     text-align: center;
-    margin-bottom: 4em;
+    margin-bottom: 3em;
 }
 
 .inputs-box-container {
@@ -134,22 +134,61 @@ main {
     -webkit-appearance: none;
     outline: none;
     appearance: none;
-    word-break: break-all;
     font-family: "Geologica", sans-serif;
     font-size: 1rem;
-    width: 20em;
+    width: 20.5em;
     min-height: 2em;
-    max-width: 100%;
+    max-height: 6em;
     padding: 0.4em 1.7em 0.7em 1.7em;
     text-align: center;
     border: none;
     box-shadow: inset 0 0 0 1px #555;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);;
+    background-color: rgba(0, 0, 0, 0.2);
     color: aliceblue;
 }
+#inputText {
+    line-height: 1.6em;
+    height: 3em;
+    overflow: hidden;
+    resize: none;
+    transition: height 0.1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 #inputNumber {
-    width: 8em;
+    width: 8.5em;
+    padding: 0.4em 1.5em 0.4em 1.5em;
+}
+#strengthBarContainer {
+    height: 5px;
+    width: 38.em;
+    background-color: rgba(80, 80, 80, 0.25);
+    border-radius: 0 0 8px 8px;
+}
+#strengthBar {
+    height: 100%;
+    width: 0;
+    border-radius: 0 0 8px 8px;
+    background-color: red;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+#strengthMessage {
+    margin-top: 7px;
+    font-family: "Geologica", sans-serif;
+    color: rgba(180, 180, 180, 0.4);
+    font-size: 16px;
+    text-align: center;
+}
+#strengthTime {
+    margin-top: 7px;
+    margin-bottom: 5px;
+    font-family: "Geologica", sans-serif;
+    color: rgba(180, 180, 180, 0.4);
+    font-size: 16px;
+    text-align: center;
 }
 
 #generateButton {
@@ -415,7 +454,7 @@ input[type="range"]::-webkit-slider-thumb {
     grid-auto-rows: auto;
     grid-gap: 1.5em;
     justify-items: start;
-    margin-bottom: 3em;
+    margin-bottom: 2em;
 }
 .checkbox-complexity label {
     box-sizing: border-box;
@@ -486,9 +525,8 @@ button {
     max-width: 100%;
     padding: 0.5em 1.7em 0.6em 1.7em;
     border: none;
-    margin-bottom: 1em;
     box-shadow: inset 0 0 0 1px #555;
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
     background-color: rgba(0, 0, 0, 0.2);;
     color: aliceblue;
 }
