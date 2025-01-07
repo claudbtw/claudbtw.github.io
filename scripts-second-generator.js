@@ -7,7 +7,10 @@ document.getElementById("generateButton").addEventListener("click", function () 
     const passwordLength = document.getElementById("passwordLength").value;
     const inputNumber = document.getElementById("inputNumber").value.trim();
 
-    
+    if (inputText === "") {
+        alert("Поле введення тексту не може бути порожнім. Будь ласка, введіть текст.");
+        return;
+    }
 
     const transliterated = transliterate(inputText);
     let password = transliterated;
