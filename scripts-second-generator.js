@@ -1,50 +1,3 @@
-// Відстежуємо зміни в полях і оновлюємо повзунок
-function updateSlider() {
-    const inputText = document.getElementById("inputText").value.trim();
-    const inputNumber = document.getElementById("inputNumber").value.trim();
-    const includeSymbols = document.getElementById("includeSymbols").checked;
-
-    let sliderValue = 0;
-
-    if (inputText) {
-        const words = inputText.trim().split(' ').filter(word => word.length > 0);
-        sliderValue += words.length;
-
-        for (let word of words) {
-            if (word.includes('ч') || word.includes('Ч')) {
-                sliderValue += 2;
-            }
-            if (word.includes('ш') || word.includes('Ш')) {
-                sliderValue += 2;
-            }
-            if (word.includes('щ') || word.includes('Щ')) {
-                sliderValue += 4;
-            }
-        }
-    }
-
-    if (inputNumber) {
-        let digits = '';
-        for (let i = 0; i < inputNumber.length; i++) {
-            if (inputNumber[i] >= '0' && inputNumber[i] <= '9') {
-                digits += inputNumber[i];
-            }
-        }
-        sliderValue += digits.length;
-    }
-
-    if (includeSymbols) {
-        sliderValue += 2;
-    }
-
-    document.getElementById("passwordLength").value = sliderValue;
-    document.getElementById("lengthValue").textContent = sliderValue;
-}
-
-document.getElementById("inputText").addEventListener("input", updateSlider);
-document.getElementById("inputNumber").addEventListener("input", updateSlider);
-document.getElementById("includeSymbols").addEventListener("change", updateSlider);
-
 // Генерація пароля
 document.getElementById("generateButton").addEventListener("click", function () {
     const inputText = document.getElementById("inputText").value.trim();
@@ -54,10 +7,7 @@ document.getElementById("generateButton").addEventListener("click", function () 
     const passwordLength = document.getElementById("passwordLength").value;
     const inputNumber = document.getElementById("inputNumber").value.trim();
 
-    if (inputText === "") {
-        alert("Поле введення тексту не може бути порожнім. Будь ласка, введіть текст.");
-        return;
-    }
+    
 
     const transliterated = transliterate(inputText);
     let password = transliterated;
@@ -78,18 +28,23 @@ document.getElementById("generateButton").addEventListener("click", function () 
 
     document.getElementById("outputPassword").innerHTML = password;
     document.getElementById("generated_password").value = password;
+
+    const entropy = calculateEntropy(password);
+    updateStrengthIndicator(entropy);
 });
+
+
 
 function transliterate(text) {
     const transliterationMap = {
-        "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
-        "з": "z", "и": "y", "і": "i", "ї": "yi", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", 
-        "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "ts",
-        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya",
-        "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH",
-        "З": "Z", "И": "Y", "І": "I", "Ї": "YI", "Й": "I", "К": "K", "Л": "L", "М": "M", "Н": "N",
-        "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "TS",
-        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA"
+        "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "e", "ж": "z",
+        "з": "z", "и": "y", "і": "i", "ї": "y", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", 
+        "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "t",
+        "ч": "c", "ш": "s", "щ": "s", "ю": "u", "я": "y",
+        "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "E", "Ж": "Z",
+        "З": "Z", "И": "Y", "І": "I", "Ї": "Y", "Й": "I", "К": "K", "Л": "L", "М": "M", "Н": "N",
+        "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "T",
+        "Ч": "C", "Ш": "S", "Щ": "S", "Ю": "U", "Я": "Y"
     };
     return text.split(' ')
         .map(word => word[0]?.toLowerCase() || '')
@@ -97,9 +52,6 @@ function transliterate(text) {
         .join('');
 }
 
-const text = "Добрий день моя улюбленна Україно";
-const result = transliterate(text);
-console.log(result);  // ["d", "d", "m", "u", "u"]
 
 
 function transliterateFirstLetters(text) {
@@ -143,14 +95,14 @@ function insertNumbersBetween(password, numbers, includeSymbols) {
 
 function applyUppercase(letters) {
     const lettersArray = Array.from(letters);
-    const randomChoice = Math.random() < 0.5 ? 0 : lettersArray.length - 1;
-    lettersArray[randomChoice] = lettersArray[randomChoice].toUpperCase();
-
+    if (lettersArray.length > 0) {
+        lettersArray[0] = lettersArray[0].toUpperCase();
+    }
+    if (lettersArray.length > 1) {
+        lettersArray[lettersArray.length - 1] = lettersArray[lettersArray.length - 1].toUpperCase();
+    }
     return lettersArray.join('');
 }
-
-const uppercaseResult = applyUppercase(result);
-console.log(uppercaseResult);
 
 
 function addRandomSymbols(password) {
@@ -163,15 +115,56 @@ function addRandomSymbols(password) {
     }
 }
 
+// Відстежуємо зміни в полях і оновлюємо повзунок
+let previousInputNumberLength = 0;
+
+function updateSlider() {
+    const inputText = document.getElementById("inputText").value.trim();
+    const includeNumbers = document.getElementById("includeNumbers").checked;
+    const inputNumber = document.getElementById("inputNumber").value.trim();
+    const includeSymbols = document.getElementById("includeSymbols").checked;
+
+    let sliderValue = 0;
+
+    if (inputText) {
+        const words = inputText.split(' ').filter(word => word.length > 0);
+        sliderValue += words.length;
+    }
+
+    if (includeNumbers) {
+        sliderValue += inputNumber.length;
+    }
+
+    if (includeSymbols) {
+        sliderValue += 2;
+    }
+
+    document.getElementById("passwordLength").value = sliderValue;
+    document.getElementById("lengthValue").textContent = sliderValue;
+
+    previousInputNumberLength = inputNumber.length;
+}
+
+// Обробка зміни стану чекбокса includeNumbers
+function handleIncludeNumbersChange() {
+    const includeNumbers = document.getElementById("includeNumbers").checked;
+    const inputNumber = document.getElementById("inputNumber").value.trim();
+
+    if (!includeNumbers) {
+        const slider = document.getElementById("passwordLength");
+        slider.value -= inputNumber.length;
+        document.getElementById("lengthValue").textContent = slider.value;
+    }
+
+    updateSlider();
+}
+
+document.getElementById("inputText").addEventListener("input", updateSlider);
+document.getElementById("inputNumber").addEventListener("input", updateSlider);
+document.getElementById("includeNumbers").addEventListener("change", handleIncludeNumbersChange);
+document.getElementById("includeSymbols").addEventListener("change", updateSlider);
 
 
-
-
-
-
-document.getElementById("passwordLength").addEventListener("input", function() {
-    document.getElementById("lengthValue").textContent = this.value;
-});
 
 // Відправка пароля на пошту
 const mailButton = document.getElementById('mailButton');
@@ -270,32 +263,85 @@ function calculateEntropy(generated_password) {
 }
 
 function updateStrengthIndicator(entropy) {
-    const div = document.getElementById("outputPassword");
+    const strengthBar = document.getElementById("strengthBar");
     const message = document.getElementById("strengthMessage");
 
-    let color, text;
-
-    if (entropy == 0) {
-        div.style.boxShadow = "";
-        text = "";
-    } else if (entropy < 34) {
+    let color, width, text;
+    if (entropy < 1) {
+        width = "0%";
+        color = "rgba(180, 180, 180, 0.5)";
+        text = "Сила пароля";
+    }
+    if (entropy > 1 & entropy <= 34) {
+        width = "20%";
         color = "red";
-        text = "Very Weak";
-    } else if (entropy < 60) {
+        text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 34 & entropy <= 54) {
+        width = "40%";
         color = "yellow";
-        text = "Medium";
-    } else if (entropy < 90) {
+        text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 54 & entropy < 70) {
+        width = "60%";
+        color = "yellow";
+        text = `Середній, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 70 & entropy < 96) {
+        width = "80%";
         color = "lightgreen";
-        text = "Strong";
-    } else {
+        text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 96) {
+        width = "100%";
         color = "green";
-        text = "Very Strong";
+        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
     }
 
-    div.style.boxShadow = `0 0 10px ${color}`;
+    strengthBar.style.width = width;
+    strengthBar.style.backgroundColor = color;
+
     message.textContent = text;
     message.style.color = color;
 }
+
+function calculateCrackTime(entropy, attemptsPerSecond = 1e12) {
+    if (entropy <= 0) return "Пароль неможливо зламати.";
+
+    const combinations = Math.pow(2, entropy);
+    const timeInSeconds = combinations / attemptsPerSecond;
+
+    const secondsInMinute = 60;
+    const secondsInHour = secondsInMinute * 60;
+    const secondsInDay = secondsInHour * 24;
+    const secondsInMonth = secondsInDay * 30;
+    const secondsInYear = secondsInDay * 365;
+
+    if (timeInSeconds < secondsInMinute) {
+        return "секунди";
+    } else if (timeInSeconds < secondsInHour) {
+        return "хвилини";
+    } else if (timeInSeconds < secondsInDay) {
+        return "години";
+    } else if (timeInSeconds < secondsInMonth) {
+        return "дні";
+    } else if (timeInSeconds < secondsInYear) {
+        return "місяці";
+    } else {
+        const timeInYears = timeInSeconds / secondsInYear;
+
+        if (timeInYears < 1) {
+            return "менше року";
+        } else if (timeInYears < 100) {
+            return "роки";
+        } else if (timeInYears < 1000) {
+            return "століття";
+        } else if (timeInYears < 1e6) {
+            return "тисячоліття";
+        } else if (timeInYears < 1e9) {
+            return "мільйони років";
+        } else {
+            return "мільярди років";
+        }
+    }
+}
+
 
 
 const outputPasswordElement = document.getElementById("outputPassword");
@@ -305,13 +351,23 @@ function updatePasswordEntropy() {
     if (password) {
         const entropy = calculateEntropy(password);
         updateStrengthIndicator(entropy);
+
+        const crackTime = calculateCrackTime(entropy);
+
         console.log(`Згенерований пароль: ${password}`);
         console.log(`Ентропія пароля: ${Math.round(entropy)} біт`);
+        console.log(`Оцінений час зламу: ${crackTime}`);
+        
+        const crackTimeElement = document.getElementById("strengthTime");
+        crackTimeElement.textContent = `Час зламу: ${crackTime}`;
     } else {
         updateStrengthIndicator(0);
         console.log("Поле пароля порожнє.");
+        const crackTimeElement = document.getElementById("strengthTime");
+        crackTimeElement.textContent = "Час взлому";
     }
 }
+
 
 const observer = new MutationObserver(() => {
     updatePasswordEntropy();
@@ -319,8 +375,40 @@ const observer = new MutationObserver(() => {
 
 observer.observe(outputPasswordElement, { childList: true, subtree: true, characterData: true });
 
+document.getElementById("inputText").addEventListener("input", function () {
+    const inputText = document.getElementById("inputText").value.trim();
+    const transliterated = transliterate(inputText);
+    let password = transliterated;
+
+    if (inputText == "") {
+        document.getElementById("outputPassword").textContent = "";
+        password = "";
+
+        return
+    }
+});
 
 
+
+
+// Інше
+document.getElementById("passwordLength").addEventListener("input", function() {
+    document.getElementById("lengthValue").textContent = this.value;
+});
+
+const inputText = document.getElementById('inputText');
+
+inputText.addEventListener('input', () => {
+    const length = inputText.value.length;
+
+    if (length > 80) {
+        inputText.style.height = '4.5em';
+    } else if (length > 40) {
+        inputText.style.height = '3em';
+    } else {
+        inputText.style.height = '2em';
+    }
+});
 
 
 // Плавне проматування по сторінці
