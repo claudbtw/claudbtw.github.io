@@ -194,6 +194,83 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     return password;
 }
 
+function countPossiblePasswords(transliterated, options) {
+    const {
+        includeUppercase,
+        includeNumbers,
+        includeSymbols,
+        replacementsNumbers,
+        replacementsSymbols
+    } = options;
+
+    let possibilities = 1;
+    const length = transliterated.length;
+
+    // Множник для великих літер
+    if (includeUppercase) {
+        const firstChar = transliterated[0];
+        const lastChar = transliterated[length - 1];
+        
+        // Перевірка першої літери
+        if (!replacementsNumbers[firstChar] && !replacementsSymbols[firstChar]) {
+            possibilities *= 2; // маленька або велика літера
+        }
+        
+        // Перевірка останньої літери
+        if (length > 1 && !replacementsNumbers[lastChar] && !replacementsSymbols[lastChar]) {
+            possibilities *= 2; // маленька або велика літера
+        }
+    }
+
+    // Перебір кожної літери у фразі (крім першої та останньої)
+    for (let i = 1; i < length - 1; i++) {
+        const char = transliterated[i];
+        let charPossibilities = 1;
+
+        // Додавання варіантів для цифр
+        if (includeNumbers && replacementsNumbers[char]) {
+            charPossibilities++;
+        }
+
+        // Додавання варіантів для символів
+        if (includeSymbols && replacementsSymbols[char]) {
+            charPossibilities++;
+        }
+
+        possibilities *= charPossibilities;
+    }
+
+    return possibilities;
+}
+
+// Приклад виклику функції
+const transliterated = "CHemp10n@T";
+const options = {
+    includeUppercase: true,
+    includeNumbers: true,
+    includeSymbols: true,
+    replacementsNumbers: {
+        "o": "0",
+        "i": "1",
+        "z": "3",
+        "ch": "4",
+        "s": "5",
+        "b": "6",
+        "t": "7"
+    },
+    replacementsSymbols: {
+        "a": "@",
+        "s": "$",
+        "f": "%",
+        "sh": "w"
+    }
+};
+
+console.log("Кількість можливих паролів:", countPossiblePasswords(transliterated, options));
+
+
+
+
 
 // Генерація пароля при зміні значення на повзунку
 document.getElementById("passwordLength").addEventListener("input", function() {
@@ -412,31 +489,83 @@ function calculateEntropy(generated_password) {
 }
 
 function updateStrengthIndicator(entropy) {
-    const div = document.getElementById("outputPassword");
+    const strengthBar = document.getElementById("strengthBar");
     const message = document.getElementById("strengthMessage");
 
-    let color, text;
-
-    if (entropy == 0) {
-        div.style.boxShadow = "";
-        text = "";
-    } else if (entropy < 34) {
+    let color, width, text;
+    if (entropy < 1) {
+        width = "0%";
+        color = "rgba(180, 180, 180, 0.5)";
+        text = "Сила пароля";
+    }
+    if (entropy > 1 & entropy <= 34) {
+        width = "20%";
         color = "red";
-        text = "Very Weak";
-    } else if (entropy < 60) {
+        text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 34 & entropy <= 54) {
+        width = "40%";
         color = "yellow";
-        text = "Medium";
-    } else if (entropy < 90) {
+        text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 54 & entropy < 70) {
+        width = "60%";
+        color = "yellow";
+        text = `Середній, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 70 & entropy < 96) {
+        width = "80%";
         color = "lightgreen";
-        text = "Strong";
-    } else {
+        text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 96) {
+        width = "100%";
         color = "green";
-        text = "Very Strong";
+        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
     }
 
-    div.style.boxShadow = `0 0 10px ${color}`;
+    strengthBar.style.width = width;
+    strengthBar.style.backgroundColor = color;
+
     message.textContent = text;
     message.style.color = color;
+}
+
+function calculateCrackTime(entropy, attemptsPerSecond = 1e12) {
+    if (entropy <= 0) return "Пароль неможливо зламати.";
+
+    const combinations = Math.pow(2, entropy);
+    const timeInSeconds = combinations / attemptsPerSecond;
+
+    const secondsInMinute = 60;
+    const secondsInHour = secondsInMinute * 60;
+    const secondsInDay = secondsInHour * 24;
+    const secondsInMonth = secondsInDay * 30;
+    const secondsInYear = secondsInDay * 365;
+
+    if (timeInSeconds < secondsInMinute) {
+        return "секунди";
+    } else if (timeInSeconds < secondsInHour) {
+        return "хвилини";
+    } else if (timeInSeconds < secondsInDay) {
+        return "години";
+    } else if (timeInSeconds < secondsInMonth) {
+        return "дні";
+    } else if (timeInSeconds < secondsInYear) {
+        return "місяці";
+    } else {
+        const timeInYears = timeInSeconds / secondsInYear;
+
+        if (timeInYears < 1) {
+            return "менше року";
+        } else if (timeInYears < 100) {
+            return "роки";
+        } else if (timeInYears < 1000) {
+            return "століття";
+        } else if (timeInYears < 1e6) {
+            return "тисячоліття";
+        } else if (timeInYears < 1e9) {
+            return "мільйони років";
+        } else {
+            return "мільярди років";
+        }
+    }
 }
 
 
@@ -447,19 +576,42 @@ function updatePasswordEntropy() {
     if (password) {
         const entropy = calculateEntropy(password);
         updateStrengthIndicator(entropy);
+
+        const crackTime = calculateCrackTime(entropy);
+
         console.log(`Згенерований пароль: ${password}`);
         console.log(`Ентропія пароля: ${Math.round(entropy)} біт`);
+        console.log(`Оцінений час зламу: ${crackTime}`);
+        
+        const crackTimeElement = document.getElementById("strengthTime");
+        crackTimeElement.textContent = `Час зламу: ${crackTime}`;
     } else {
         updateStrengthIndicator(0);
         console.log("Поле пароля порожнє.");
+        const crackTimeElement = document.getElementById("strengthTime");
+        crackTimeElement.textContent = "Час взлому";
     }
 }
+
 
 const observer = new MutationObserver(() => {
     updatePasswordEntropy();
 });
 
 observer.observe(outputPasswordElement, { childList: true, subtree: true, characterData: true });
+
+document.getElementById("inputText").addEventListener("input", function () {
+    const inputText = document.getElementById("inputText").value.trim();
+    const transliterated = transliterate(inputText);
+    let password = transliterated;
+
+    if (inputText == "") {
+        document.getElementById("outputPassword").textContent = "";
+        password = "";
+
+        return
+    }
+});
 
 
 
