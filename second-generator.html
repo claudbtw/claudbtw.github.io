@@ -62,7 +62,7 @@
 
                 <div class="upper-section">
                     <div class="upper-section-secondary">
-                        <input type="text" class="inputText" id="inputText" maxlength="50" placeholder="Введіть текст українською" value="Добрий день моя улюблена Україно">
+                        <textarea class="inputText" id="inputText" maxlength="100" placeholder="Введіть текст українською">ой яка чудова українська мова. є в ній ліс, лісок, лісочок, хаща, гай, діброва</textarea>
                         <button id="generateButton">Згенерувати пароль</button>
                     </div>
                 </div>
@@ -71,8 +71,8 @@
                     <div class="password-length-box">
                         <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
                         <div class="slider-container">
-                            <span class="lengthValue" id="lengthValue">15</span>
-                            <input type="range" id="passwordLength" min="1" max="25" value="15">
+                            <span class="lengthValue" id="lengthValue">24</span>
+                            <input type="range" id="passwordLength" min="1" max="35" value="24">
                         </div>
                     </div>
                     
@@ -84,7 +84,7 @@
 
                         <label class="includeNumbers" for="includeNumbers">
                             <input type="checkbox" id="includeNumbers" checked> Цифри
-                            <input type="text" class="inputNumber" id="inputNumber" maxlength="10" placeholder="Введіть число" value="20250201">
+                            <input type="text" class="inputNumber" id="inputNumber" maxlength="15" placeholder="Введіть число" value="20250201">
                         </label>
 
                         <label class="includeSymbols" for="includeSymbols">
@@ -97,7 +97,14 @@
                 <div class="bottom-section">
                     <div class="password-container">
                         <div id="outputPassword" contenteditable="true"></div>
-                        <div class="strength_message" id="strengthMessage"></div>
+                        <div id="strengthBarContainer">
+                            <div id="strengthBar"></div>
+                        </div>
+                        <div id="strengthValueContainer">
+                            <p id="strengthMessage">Сила пароля</p>
+                            <div class="horizontal-line"></div>
+                            <p id="strengthTime">Час для взлому</p>
+                        </div>
                     </div>
                     <div class="button-container">
                         <button id="copyButton">Копіювати</button>
