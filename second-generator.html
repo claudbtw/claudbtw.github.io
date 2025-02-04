@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="secondary.css">
+    <link rel="stylesheet" href="second-generator.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -21,12 +21,7 @@
             </a>
         </p>
         <p class="text-fixed-header-page">
-            <a href="index.html">
-                Leetspeak
-            </a>
-        </p>
-        <p class="text-fixed-header-page">
-            <a href="importance.html">
+            <a href="password-importance.html">
                 Важливість надійного пароля
             </a>
         </p>
@@ -45,9 +40,16 @@
     </div>
 
     <main>
+        <div class="button-box-complexity">
+            <button id="leetspeak-button">Leetspeak</button>
+            <button id="letter_number-button">Літеро-цифровий</button>
+            <button id="mneme-button">Мнемонімічний</button>
+            <button id="random-button">Випадковий</button>
+        </div>
+
         <div class="container">
             <div id="header" class="text-box-container">
-                <h1 class="text-header">Генератор паролів <strong>TranslitPass</strong></h1>
+                <h1 class="text-header">Літеро-цифровий генератор</h1>
                 <h2 class="text-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
                 <h3 class="text-header-paragraph">
                     <a href="#section-nav-two" id="scroll-link">
@@ -62,7 +64,9 @@
 
                 <div class="upper-section">
                     <div class="upper-section-secondary">
-                        <textarea class="inputText" id="inputText" maxlength="100" placeholder="Введіть текст українською"></textarea>
+                        <textarea class="inputText" id="inputText" maxlength="100" placeholder="Введіть текст українською" 
+                        spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+
                         <button id="generateButton">Згенерувати пароль</button>
                     </div>
                 </div>
@@ -103,7 +107,6 @@
                         <div id="strengthValueContainer">
                             <p id="strengthMessage">Сила пароля</p>
                             <div class="horizontal-line"></div>
-                            <p id="strengthQuantity">Кількість можливих паролів</p>
                             <p id="strengthTime">Час для взлому</p>
                         </div>
                     </div>
@@ -127,6 +130,8 @@
                 </div>
             </div>        
         </div>
+
+
         <div class="polygon-wrap">
             <div class="lime-svg-polygon">
                 <div class="data-cards-complexity">
@@ -298,7 +303,7 @@
                     </a>
                 </p>
                 <p class="text-footer">
-                    <a href="importance.html">
+                    <a href="password-importance.html">
                         Важливість надійного пароля
                     </a>
                 </p>
@@ -319,6 +324,6 @@
         </footer>
     </main>
 
-    <script src="scripts-second-generator.js"></script>
+    <script src="second-generator-scripts.js"></script>
 </body>
 </html>

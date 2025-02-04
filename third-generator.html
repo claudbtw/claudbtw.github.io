@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index-main.css">
+    <link rel="stylesheet" href="third-generator.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -48,7 +48,7 @@
         <div class="container">
             
             <div id="header" class="text-box-container">
-                <h1 class="text-header">Генератор паролів <strong>TranslitPass</strong></h1>
+                <h1 class="text-header">Мнемонімічний генератор</h1>
                 <h2 class="text-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
                 <h3 class="text-header-paragraph">
                     <a href="#section-nav-two" id="scroll-link">
@@ -82,9 +82,6 @@
                     </div>
                     
                     <div class="checkbox-complexity">
-                        <label class="includeUppercase" for="includeUppercase">
-                            <input type="checkbox" id="includeUppercase" checked> Великі літери
-                        </label>
                         
                         <label class="includeSpaceReplacements" for="includeSpaceReplacements">
                             <input type="checkbox" class="password-option" id="includeSpaceReplacements" checked> Символи-роздільники
@@ -105,28 +102,6 @@
                                     </div>
                                 </div>
                             </div>                                
-                        </label>
-
-                        <label class="includeNumbers" for="includeNumbers">
-                            <input type="checkbox" class="password-option" id="includeNumbers" checked> Цифри
-                            <div class="numbers-dropdown-menu">
-                                <button onclick="toggleNumbersDropdown()" class="toggleNumbers">
-                                    <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
-                                </button>
-                                <div id="numbers-dropdown-content" class="numbers-dropdown-content">
-                                    <div class="numbers-dropdown-content-inside">
-                                        <label><input type="checkbox" id="includeZero" class="includeZero password-option" checked> 0</label>
-                                        <label><input type="checkbox" id="includeOne" class="includeOne password-option" checked> 1</label>
-                                        <label><input type="checkbox" id="includeThree" class="includeThree password-option" checked> 3</label>
-                                        <label><input type="checkbox" id="includeFour" class="includeFour password-option" checked> 4</label>
-                                        <label><input type="checkbox" id="includeFive" class="includeFive password-option" checked> 5</label>
-                                        <label><input type="checkbox" id="includeSix" class="includeSix password-option" checked> 6</label>
-                                        <label><input type="checkbox" id="includeSeven" class="includeSeven password-option" checked> 7</label>
-                                        <label><input type="checkbox" id="includeEight" class="includeEight password-option" checked> 8</label>
-                                        <label><input type="checkbox" id="includeNine" class="includeNine password-option" checked> 9</label>
-                                    </div>
-                                </div>
-                            </div>
                         </label>
 
                         <label class="includeSymbols password-option" for="includeSymbols">
@@ -160,7 +135,6 @@
                         <div id="strengthValueContainer">
                             <p id="strengthMessage">Сила пароля</p>
                             <div class="horizontal-line"></div>
-                            <p id="strengthQuantity">Кількість можливих паролів</p>
                             <p id="strengthTime">Час для взлому</p>
                         </div>
                     </div>
@@ -175,9 +149,8 @@
                         <span id="close-modal-button" class="close-modal-button">&times;</span>
                         <form id="form">
                             <input type="hidden" name="generated_password" id="generated_password">
-                            <input type="hidden" name="input-mail-text" id="input-mail-text">
-                            <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
                             <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва додатку, для використання пароля">
+                            <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
                             <input type="text" name="url-mail-text" id="url-mail-text" class="url-mail-text" placeholder="Посилання на сайт">
                             <button type="submit" id="sendMailButton">Надіслати</button>
                         </form>
@@ -265,16 +238,10 @@
                             с, С  -  $
                         </h2>
                         <h2 class="symbols-list">
-                            і, І  -  !
-                        </h2>
-                        <h2 class="symbols-list">
                             ф, Ф -  %
                         </h2>
                         <h2 class="symbols-list">
                             ш, Ш  -  w, W
-                        </h2>
-                        <h2 class="symbols-list">
-                            н, Н  -  #
                         </h2>
                     </div>
                     <div class="text-data-numbers-list">
@@ -298,12 +265,6 @@
                         </h2>
                         <h2 class="numbers-list">
                             т, Т  -  7
-                        </h2>
-                        <h2 class="numbers-list">
-                            в, В  -  8
-                        </h2>
-                        <h2 class="numbers-list">
-                            я, Я  -  9
                         </h2>
                     </div>
                 </div>
@@ -397,14 +358,9 @@
     <script 
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
-
-
     <script>
         emailjs.init('A1vFINPNxYpferYaH')
     </script>
-
-
-
-    <script src="index-scripts.js"></script>
+    <script src="third-generator-scripts.js"></script>
 </body>
 </html>
