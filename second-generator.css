@@ -78,15 +78,15 @@ main {
     border-radius: 2em 2em 0 0;
     cursor: pointer;
 }
-#letter_number-button {
+#mneme-button {
     cursor: default;
 }
-#leetspeak-button, #mneme-button, #random-button {
+#leetspeak-button, #ukrainian-alike-button, #random-button {
     background-color: #16191f;
     background: linear-gradient(to bottom, #15171d, #16191f);
     transition: ease 0.2s;
 }
-#leetspeak-button:hover, #mneme-button:hover, #random-button:hover {
+#leetspeak-button:hover, #ukrainian-alike-button:hover, #random-button:hover {
     color: #c7d4ff;
 }
 
