@@ -40,7 +40,7 @@ document.getElementById("generateButton").addEventListener("click", function () 
 document.getElementById('leetspeak-button').addEventListener('click', function () {
     window.location.href = 'index.html';
 });
-document.getElementById('mneme-button').addEventListener('click', function () {
+document.getElementById('ukrainian-alike-button').addEventListener('click', function () {
     window.location.href = 'third-generator.html';
 });
 document.getElementById('random-button').addEventListener('click', function () {
