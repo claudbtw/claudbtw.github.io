@@ -55,10 +55,19 @@ function updatePassword() {
 document.getElementById("generateButton").addEventListener("click", updatePassword);
 document.getElementById("passwordLength").addEventListener("input", updatePassword);
 
-document.getElementById('letter_number-button').addEventListener('click', function () {
+// Додаємо слухачі подій для кожного елемента
+["includeUppercase", "includeNumbers", "includeSymbols", "includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", "includeW", 
+    "includeExclamationMark", "includeHashTag", "includeZero", "includeOne", "includeThree", "includeFour", "includeFive", "includeSix", 
+    "includeSeven", "includeEight", "includeNine", "includeDot", "includeMinus", "includePlus", "includeUnderscore", "includeColon", 
+    "includeSemicolon", "includeSlash", "includeAmbersant" ].forEach(id => {
+        document.getElementById(id).addEventListener("change", updatePassword);
+});
+
+
+document.getElementById('mneme-button').addEventListener('click', function () {
     window.location.href = 'second-generator.html';
 });
-document.getElementById('mneme-button').addEventListener('click', function () {
+document.getElementById('ukrainian-alike-button').addEventListener('click', function () {
     window.location.href = 'third-generator.html';
 });
 document.getElementById('random-button').addEventListener('click', function () {
@@ -72,11 +81,11 @@ function transliterate(text) {
         "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
         "з": "z", "и": "y", "і": "i", "ї": "yi", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", 
         "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "ts",
-        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya",
+        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya", "ь": "'",
         "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH",
         "З": "Z", "И": "Y", "І": "I", "Ї": "YI", "Й": "I", "К": "K", "Л": "L", "М": "M", "Н": "N",
         "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "TS",
-        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA"
+        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA", "Ь": "'"
     };
     return text.split("").map(char => transliterationMap[char] || char).join("");
 }
@@ -90,70 +99,24 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     const spaceReplacements = [];
 
     // Вибір цифр
-    if (includeZero) {
-        replacementsNumbers["o"] = "0";
-        replacementsNumbers["O"] = "0";
-    }
+    if (includeZero) replacementsNumbers["o"] = replacementsNumbers["O"] = "0";
+    if (includeOne) replacementsNumbers["i"] = replacementsNumbers["I"] = "1";
+    if (includeThree) replacementsNumbers["z"] = replacementsNumbers["Z"] = "3";
+    if (includeFour) replacementsNumbers["ch"] = replacementsNumbers["CH"] = "4";
+    if (includeFive) replacementsNumbers["s"] = replacementsNumbers["S"] = "5";
+    if (includeSix) replacementsNumbers["b"] = replacementsNumbers["B"] = "6";
+    if (includeSeven) replacementsNumbers["t"] = replacementsNumbers["T"] = "7";
+    if (includeEight) replacementsNumbers["v"] = replacementsNumbers["V"] = "8";
+    if (includeNine) replacementsNumbers["ya"] = replacementsNumbers["YA"] = "9";
     
-    if (includeOne) {
-        replacementsNumbers["i"] = "1";
-        replacementsNumbers["I"] = "1";
-    }
-    
-    if (includeThree) {
-        replacementsNumbers["z"] = "3";
-        replacementsNumbers["Z"] = "3";
-    }
-    if (includeFour) {
-        replacementsNumbers["ch"] = "4";
-        replacementsNumbers["CH"] = "4";
-    }
-    if (includeFive) {
-        replacementsNumbers["s"] = "5";
-        replacementsNumbers["S"] = "5";
-    }
-    if (includeSix) {
-        replacementsNumbers["b"] = "6";
-        replacementsNumbers["B"] = "6";
-    }
-    if (includeSeven) {
-        replacementsNumbers["t"] = "7";
-        replacementsNumbers["T"] = "7";
-    }
-    if (includeEight) {
-        replacementsNumbers["v"] = "8";
-        replacementsNumbers["V"] = "8";
-    }
-    if (includeNine) {
-        replacementsNumbers["ya"] = "9";
-        replacementsNumbers["YA"] = "9";
-    }
-
     // Вибір символів
-    if (includeAtSymbol) {
-        replacementsSymbols["a"] = "@";
-        replacementsSymbols["A"] = "@";
-    }
-    if (includeDollarSymbol) {
-        replacementsSymbols["s"] = "$";
-        replacementsSymbols["S"] = "$";
-    }
-    if (includePercentSymbol) {
-        replacementsSymbols["f"] = "%";
-        replacementsSymbols["F"] = "%";
-    }
-    if (includeW) {
-        replacementsSymbols["sh"] = "w";
-        replacementsSymbols["SH"] = "W";
-    }
-    if (includeExclamationMark) {
-        replacementsSymbols["i"] = "!";
-        replacementsSymbols["I"] = "!";
-    }
-    if (includeHashTag) {
-        replacementsSymbols["n"] = "#";
-        replacementsSymbols["N"] = "#";
-    }
+    if (includeAtSymbol) replacementsSymbols["a"] = replacementsSymbols["A"] = "@";
+    if (includeDollarSymbol) replacementsSymbols["s"] = replacementsSymbols["S"] = "$";
+    if (includePercentSymbol) replacementsSymbols["f"] = replacementsSymbols["F"] = "%";
+    if (includeW) replacementsSymbols["sh"] = "w", replacementsSymbols["SH"] = "W";
+    if (includeExclamationMark) replacementsSymbols["i"] = replacementsSymbols["I"] = "!";
+    if (includeHashTag) replacementsSymbols["n"] = replacementsSymbols["N"] = "#";
+    
 
     // Вибір символів-роздільників
     if (includeDot) spaceReplacements.push(".");
@@ -177,7 +140,6 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         crypto.getRandomValues(randomArray); 
         let randomNumber = randomArray[0] / 255;
         
-        // Обробка багатосимвольних замін
         if ((char + nextChar === "ch" || char + nextChar === "CH") && includeNumbers && replacementsNumbers["ch"] && randomNumber > 0.6) {
             password += replacementsNumbers["ch"];
             i += 2;
@@ -193,8 +155,8 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
             i += 2;
             continue;
         }
-        
-        // Обробка стандартних замін
+
+
         if (char === " " && !includeSpaceReplacements) {
             i++;
             continue;
@@ -216,34 +178,23 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         i++;
     }
 
-    while (password.length < length) {
-        let randomChar = "";
-        
-        crypto.getRandomValues(randomArray); 
-        let randomNumber = randomArray[0] / 255
-        
-        if (!includeUppercase && !includeNumbers && !includeSymbols) {
-            randomChar = String.fromCharCode(Math.floor(randomNumber * 26) + 97);
-        } else if (includeSymbols && randomNumber > 0.75) {
-            const symbols = Object.values(replacementsSymbols);
-            randomChar = symbols[Math.floor(randomNumber * symbols.length)];
-        } else if (includeNumbers && randomNumber < 0.25) {
-            randomChar = Math.floor(randomNumber * 10).toString();
-        } else {
-            randomChar = String.fromCharCode(Math.floor(randomNumber * 26) + 97);
-        }
     
-        password += randomChar;
-    }
     
     
     if (includeUppercase && password.length > 0) {
-        let firstLetter = password[0].toUpperCase();
-        let lastLetter = password.slice(-1).toUpperCase();
-        let middleSection = password.slice(1, -1);
-    
-        password = firstLetter + middleSection + lastLetter;
+        let words = password.split(' ');
+        
+        if (words.length === 1) {
+            let firstLetter = password[0].toUpperCase();
+            let lastLetter = password.slice(-1).toUpperCase();
+            let middleSection = password.slice(1, -1);
+
+            password = firstLetter + middleSection + lastLetter;
+        } else {
+            password = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
     }
+    
 
     return password;
 }
@@ -377,56 +328,43 @@ function updateCheckboxValues() {
         defaultOptions[checkbox.id] = checkbox.checked;
     });
 
-    if (!defaultOptions.includeNumbers) {
-        let mainCheckbox = document.getElementById("includeNumbers");
+    function uncheckOptions(mainId, subIds) {
+        let mainCheckbox = document.getElementById(mainId);
         if (mainCheckbox.checked) {
             mainCheckbox.checked = false;
             mainCheckbox.dispatchEvent(new Event("change"));
         }
     
-        ["includeZero", "includeOne", "includeThree", "includeFour", "includeFive", "includeSix", "includeSeven", "includeEight", "includeNine"]
-            .forEach(id => {
-                let checkbox = document.getElementById(id);
-                if (checkbox.checked) {
-                    checkbox.checked = false;
-                    checkbox.dispatchEvent(new Event("change"));
-                }
-            });
+        subIds.forEach(id => {
+            let checkbox = document.getElementById(id);
+            if (checkbox.checked) {
+                checkbox.checked = false;
+                checkbox.dispatchEvent(new Event("change"));
+            }
+        });
+    }
+    
+    if (!defaultOptions.includeNumbers) {
+        uncheckOptions("includeNumbers", [
+            "includeZero", "includeOne", "includeThree", "includeFour", 
+            "includeFive", "includeSix", "includeSeven", "includeEight", "includeNine"
+        ]);
     }
     
     if (!defaultOptions.includeSymbols) {
-        let mainCheckbox = document.getElementById("includeSymbols");
-        if (mainCheckbox.checked) {
-            mainCheckbox.checked = false;
-            mainCheckbox.dispatchEvent(new Event("change"));
-        }
-    
-        ["includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", "includeW", "includeExclamationMark", "includeHashTag"]
-            .forEach(id => {
-                let checkbox = document.getElementById(id);
-                if (checkbox.checked) {
-                    checkbox.checked = false;
-                    checkbox.dispatchEvent(new Event("change"));
-                }
-            });
+        uncheckOptions("includeSymbols", [
+            "includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", 
+            "includeW", "includeExclamationMark", "includeHashTag"
+        ]);
     }
     
     if (!defaultOptions.includeSpaceReplacements) {
-        let mainCheckbox = document.getElementById("includeSpaceReplacements");
-        if (mainCheckbox.checked) {
-            mainCheckbox.checked = false;
-            mainCheckbox.dispatchEvent(new Event("change"));
-        }
-    
-        ["includeDot", "includeMinus", "includePlus", "includeUnderscore", "includeColon", "includeSemicolon", "includeSlash", "includeAmbersant"]
-            .forEach(id => {
-                let checkbox = document.getElementById(id);
-                if (checkbox.checked) {
-                    checkbox.checked = false;
-                    checkbox.dispatchEvent(new Event("change"));
-                }
-            });
+        uncheckOptions("includeSpaceReplacements", [
+            "includeDot", "includeMinus", "includePlus", "includeUnderscore", 
+            "includeColon", "includeSemicolon", "includeSlash", "includeAmbersant"
+        ]);
     }
+    
 
     recalculateStrength();
 }
@@ -851,12 +789,23 @@ document.getElementById("inputText").addEventListener("input", function() {
     const passwordLength = transliteratedText.length;
 
     document.getElementById("passwordLength").value = passwordLength;
-    document.getElementById("lengthValue").textContent = passwordLength;
+
+    let lengthText = document.getElementById("lengthValue");
+
+    if (passwordLength == 0) {
+        lengthText.textContent = "";
+    } else if (passwordLength <= 6) {
+        lengthText.textContent = "Закоротка";
+    } else if (passwordLength <= 10) {
+        lengthText.textContent = "Середня";
+    } else if (passwordLength <= 15) {
+        lengthText.textContent = "Оптимальна";
+    } else {
+        lengthText.textContent = "Чудова";
+    }
 });
 
-document.getElementById("passwordLength").addEventListener("input", function() {
-    document.getElementById("lengthValue").textContent = this.value;
-});
+
 
 
 // Плавне проматування по сторінці
