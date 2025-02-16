@@ -111,12 +111,12 @@ main {
 #leetspeak-button {
     cursor: default;
 }
-#letter_number-button, #mneme-button, #random-button {
+#mneme-button, #ukrainian-alike-button, #random-button {
     background-color: #16191f;
     background: linear-gradient(to bottom, #15171d, #16191f);
     transition: ease 0.2s;
 }
-#letter_number-button:hover, #mneme-button:hover, #random-button:hover {
+#mneme-button:hover, #ukrainian-alike-button:hover, #random-button:hover {
     color: #c7d4ff;
 }
 
@@ -274,23 +274,25 @@ input[type="text"], input[type="range"] {
 
 
 
-#lengthValue {
-    position: absolute;
-    top: -2.5em;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    text-align: center;
-}
+
 .lengthValue {
     box-sizing: border-box;
+    position: absolute;
+    top: -3em;
+    width: 8em;
+    height: 2.5em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    width: 4.5em;
-    height: 1.7em;
-    padding: 0.3em auto;
     box-shadow: inset 0 0 0 1px #555;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 1em;
     color: aliceblue;
 }
 .password-length-text {
