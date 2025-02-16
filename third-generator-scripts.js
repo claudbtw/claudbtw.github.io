@@ -1,16 +1,7 @@
 function updatePassword() {
     const inputText = document.getElementById("inputText").value.trim();
     const passwordLength = document.getElementById("passwordLength").value;
-    const includeSymbols = document.getElementById("includeSymbols").checked;
     const includeSpaceReplacements = document.getElementById("includeSpaceReplacements").checked;
-
-    // Стан вибору кожного символа
-    const includeAtSymbol = document.getElementById("includeAtSymbol").checked;
-    const includeDollarSymbol = document.getElementById("includeDollarSymbol").checked;
-    const includePercentSymbol = document.getElementById("includePercentSymbol").checked;
-    const includeW = document.getElementById("includeW").checked;
-    const includeExclamationMark = document.getElementById("includeExclamationMark").checked;
-    const includeHashTag = document.getElementById("includeHashTag").checked;
 
     // Стан вибору кожного символу-роздільника
     const includeDot = document.getElementById("includeDot").checked;
@@ -29,8 +20,7 @@ function updatePassword() {
 
     const transliterated = transliterate(inputText);
     const password = generatePassword(
-        transliterated, passwordLength, includeSpaceReplacements, includeSymbols,
-        includeAtSymbol, includeDollarSymbol, includePercentSymbol, includeW, includeExclamationMark, includeHashTag,
+        transliterated, passwordLength, includeSpaceReplacements,
         includeDot, includeMinus, includePlus, includeUnderscore, includeColon, includeSemicolon, includeSlash, includeAmbersant
     );
 
@@ -38,20 +28,8 @@ function updatePassword() {
     document.getElementById("generated_password").value = password;
 }
 
-document.getElementById("generateButton").addEventListener("click", function () {
-    document.getElementById("outputPassword").textContent = "KoHKypc-3axucT/EKoco%T";
-});
-
-document.getElementById('leetspeak-button').addEventListener('click', function () {
-    window.location.href = 'index.html';
-});
-document.getElementById('letter_number-button').addEventListener('click', function () {
-    window.location.href = 'second-generator.html';
-});
-document.getElementById('random-button').addEventListener('click', function () {
-    window.location.href = 'forth-generator.html';
-});
-
+document.getElementById("generateButton").addEventListener("click", updatePassword);
+document.getElementById("passwordLength").addEventListener("input", updatePassword);
 
 // Функції транслітерації
 function transliterate(text) {
@@ -59,32 +37,68 @@ function transliterate(text) {
         "а": "a", "б": "6", "в": "B", "г": "r", "ґ": "r", "д": "q", "е": "e", "є": "e", "ж": "*",
         "з": "3", "и": "u", "і": "i", "ї": "i", "й": "u", "к": "K", "л": "/\\", "м": "M", "н": "H", 
         "о": "o", "п": "n", "р": "p", "с": "c", "т": "T", "у": "y", "ф": "%", "х": "x", "ц": "u,",
-        "ч": "4", "ш": "w", "щ": "w", "ю": "|o", "я": "9",
+        "ч": "4", "ш": "w", "щ": "w", "ю": "|o", "я": "9", "ь": "b",
         "А": "A", "Б": "6", "В": "D", "Г": "r", "Ґ": "r", "Д": "D", "Е": "E", "Є": "E", "Ж": "*",
         "З": "3", "И": "U", "І": "I", "Ї": "I", "Й": "U", "К": "K", "Л": "/\\", "М": "M", "Н": "H",
         "О": "O", "П": "N", "Р": "P", "С": "C", "Т": "T", "У": "Y", "Ф": "%", "Х": "x", "Ц": "U,",
-        "Ч": "4", "Ш": "W", "Щ": "W", "Ю": "|o", "Я": "9"
+        "Ч": "4", "Ш": "W", "Щ": "W", "Ю": "|o", "Я": "9", "Ь": "b"
     };
     return text.split("").map(char => transliterationMap[char] || char).join("");
 }
 
+function generatePassword(transliterated, length, includeSpaceReplacements,
+                          includeDot, includeMinus, includePlus, includeUnderscore, includeColon, includeSemicolon, includeSlash, includeAmbersant) {
+    const spaceReplacements = [];
+
+    // Вибір символів-роздільників
+    if (includeDot) spaceReplacements.push(".");
+    if (includeMinus) spaceReplacements.push("-");
+    if (includeUnderscore) spaceReplacements.push("_");
+    if (includeColon) spaceReplacements.push(":");
+    if (includeSemicolon) spaceReplacements.push(";");
+    if (includeSlash) spaceReplacements.push("/");
+    if (includeAmbersant) spaceReplacements.push("&");
+    if (includePlus) spaceReplacements.push("+");
+
+    let password = "";
+    let i = 0;
+    
+    const randomArray = new Uint8Array(1); 
+
+    while (i < transliterated.length && password.length < length) {
+        let char = transliterated[i];
+        
+        crypto.getRandomValues(randomArray); 
+        let randomNumber = randomArray[0] / 255;
+        
+        if (char === " ") {
+            if (includeSpaceReplacements && spaceReplacements.length > 0) {
+                password += spaceReplacements[Math.floor(randomNumber * spaceReplacements.length)];
+            }
+        } else {
+            password += char;
+        }
+
+        i++;
+    }
+
+    return password;
+}
+
+
+
+document.getElementById('leetspeak-button').addEventListener('click', function () {
+    window.location.href = 'index.html';
+});
+document.getElementById('mneme-button').addEventListener('click', function () {
+    window.location.href = 'second-generator.html';
+});
+document.getElementById('random-button').addEventListener('click', function () {
+    window.location.href = 'forth-generator.html';
+});
+
 
 // Виключення/включення чекбоксів
-const majorSymbolCheckbox = document.getElementById("includeSymbols");
-const minorSymbolCheckboxes = document.querySelectorAll(".symbols-dropdown-content input[type='checkbox']");
-majorSymbolCheckbox.addEventListener("change", function () {
-    const isChecked = this.checked;
-    minorSymbolCheckboxes.forEach(checkboxes => {
-        checkboxes.checked = isChecked;
-    });
-});
-minorSymbolCheckboxes.forEach(checkboxes => {
-    checkboxes.addEventListener("change", function () {
-        const anyChecked = Array.from(minorSymbolCheckboxes).some(checkbox => checkbox.checked);
-        majorSymbolCheckbox.checked = anyChecked;
-    });
-});
-
 const majorSymbolReplacementsCheckbox = document.getElementById("includeSpaceReplacements");
 const minorSymbolReplacementsCheckbox = document.querySelectorAll(".space-dropdown-content input[type='checkbox']");
 majorSymbolReplacementsCheckbox.addEventListener("change", function () {
@@ -102,23 +116,11 @@ minorSymbolReplacementsCheckbox.forEach(checkboxes => {
 
 
 // Дропдаун меню
-function toggleSymbolsDropdown() {
-  document.getElementById("symbols-dropdown-content").classList.toggle("showSymbols");
-}
 function toggleSpaceDropdown() {
     document.getElementById("space-dropdown-content").classList.toggle("showSpaceReplacements");
 }
 
 window.onclick = function(event) {
-    if (!event.target.matches(".toggleSymbols") && !event.target.closest(".symbols-dropdown-content")) {
-        let symbolsDropdowns = document.getElementsByClassName("symbols-dropdown-content");
-        for (let i = 0; i < symbolsDropdowns.length; i++) {
-            let openSymbolsDropdown = symbolsDropdowns[i];
-            if (openSymbolsDropdown.classList.contains("showSymbols")) {
-                openSymbolsDropdown.classList.remove("showSymbols");
-            }
-        }
-    }
     if (!event.target.matches(".toggleSpaceReplacements") && !event.target.closest(".space-dropdown-content")) {
         let spaceDropdowns = document.getElementsByClassName("space-dropdown-content");
         for (let i = 0; i < spaceDropdowns.length; i++) {
