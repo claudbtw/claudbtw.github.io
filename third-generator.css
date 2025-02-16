@@ -103,15 +103,15 @@ main {
     border-radius: 2em 2em 0 0;
     cursor: pointer;
 }
-#mneme-button {
+#ukrainian-alike-button {
     cursor: default;
 }
-#leetspeak-button, #letter_number-button, #random-button {
+#leetspeak-button, #mneme-button, #random-button {
     background-color: #16191f;
     background: linear-gradient(to bottom, #15171d, #16191f);
     transition: ease 0.2s;
 }
-#leetspeak-button:hover, #letter_number-button:hover, #random-button:hover {
+#leetspeak-button:hover, #mneme-button:hover, #random-button:hover {
     color: #c7d4ff;
 }
 
