@@ -24,10 +24,10 @@ document.getElementById("includeSymbols").addEventListener("change", updatePassw
 document.getElementById('leetspeak-button').addEventListener('click', function () {
     window.location.href = 'index.html';
 });
-document.getElementById('letter_number-button').addEventListener('click', function () {
+document.getElementById('mneme-button').addEventListener('click', function () {
     window.location.href = 'second-generator.html';
 });
-document.getElementById('mneme-button').addEventListener('click', function () {
+document.getElementById('ukrainian-alike-button').addEventListener('click', function () {
     window.location.href = 'third-generator.html';
 });
 
