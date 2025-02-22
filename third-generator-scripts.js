@@ -133,6 +133,82 @@ window.onclick = function(event) {
 };
 
 
+
+// Повзунок
+document.getElementById("inputText").addEventListener("input", function() {
+    const inputText = this.value.trim();
+    const transliteratedText = transliterate(inputText);
+    const passwordLength = transliteratedText.length;
+
+    let slider = document.getElementById("passwordLength");
+    let lengthText = document.getElementById("lengthValue");
+
+    let targetValue = passwordLength;
+    let color;
+
+    if (passwordLength === 0) {
+        color = "#555";
+    } else if (passwordLength <= 6) {
+        color = "red";
+    } else if (passwordLength <= 11) {
+        color = "#e77d22";
+    } else if (passwordLength <= 15) {
+        color = "#fce205";
+    } else {
+        color = "green";
+    }
+
+    function smoothSlide() {
+        let currentValue = parseInt(slider.value);
+        if (currentValue !== targetValue) {
+            let step = currentValue < targetValue ? 1 : -1;
+            let interval = setInterval(() => {
+                if (currentValue === targetValue) {
+                    clearInterval(interval);
+                } else {
+                    currentValue += step;
+                    slider.value = currentValue;
+                    updateSliderBackground(slider, color);
+                    lengthText.textContent = currentValue;
+                }
+            }, 15);
+        }
+    }
+
+    smoothSlide();
+    updateSliderBackground(slider, color);
+
+    slider.disabled = true;
+});
+
+function updateSliderBackground(slider, color) {
+    let min = slider.min || 0;
+    let max = slider.max || 25;
+    let value = (slider.value - min) / (max - min) * 100;
+
+    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ЗАГАЛЬНЕ
 
 // Відправка пароля на пошту
@@ -168,8 +244,16 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const passwordDiv = document.getElementById('outputPassword');
     const passwordText = passwordDiv.innerText;
-    document.getElementById('generated_password').value = passwordText;
-    console.log(passwordText)
+    const inputTextDiv = document.getElementById('inputText');
+    const inputTextValue = inputTextDiv.value;
+
+    const radioPassword = document.getElementById('radioPassword');
+    const selectedValue = radioPassword.checked ? passwordText : inputTextValue;
+
+    document.getElementById('generated_password').value = selectedValue;
+    document.getElementById('input-mail-text').value = selectedValue;
+
+    console.log(selectedValue);
 
     const serviceID = 'default_service';
     const templateID = 'template_6jdout7';
@@ -180,11 +264,10 @@ document.getElementById('form').addEventListener('submit', function(event) {
         modal.classList.remove('active');
     }, 
     (err) => {
-        sendEmailButton.value = 'Надіслати';
+        sendEmailButton.innerText = 'Надіслати';
         alert(JSON.stringify(err));
     });
 });
-
   
 
 // Копіювання пароля
@@ -246,11 +329,11 @@ function updateStrengthIndicator(entropy) {
         text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 34 && entropy <= 54) {
         width = "40%";
-        color = "yellow";
+        color = "#e77d22";
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 54 && entropy < 70) {
         width = "60%";
-        color = "yellow";
+        color = "#fce205";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
@@ -366,21 +449,6 @@ document.getElementById("inputText").addEventListener("input", function () {
 });
 
 
-
-
-// Повзунок
-document.getElementById("inputText").addEventListener("input", function() {
-    const inputText = this.value.trim();
-    const transliteratedText = transliterate(inputText);
-    const passwordLength = transliteratedText.length;
-
-    document.getElementById("passwordLength").value = passwordLength;
-    document.getElementById("lengthValue").textContent = passwordLength;
-});
-
-document.getElementById("passwordLength").addEventListener("input", function() {
-    document.getElementById("lengthValue").textContent = this.value;
-});
 
 
 // Плавне проматування по сторінці
