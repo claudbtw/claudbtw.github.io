@@ -123,7 +123,7 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
 }
 
 .inputs-box-container {
@@ -155,6 +155,9 @@ main {
     align-items: center;
     gap: 10px;
 }
+input[type="text"], input[type="range"] {
+    width: 90%
+}
 .button-container {
     display: flex;
     gap: 40px;
@@ -165,6 +168,9 @@ main {
 /* Поле введеня слів */
 #inputText, #inputNumber {
     -webkit-appearance: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
     outline: none;
     appearance: none;
     font-family: "Geologica", sans-serif;
@@ -255,11 +261,11 @@ main {
 
 /* Повзунок */
 .password-length-box {
-    margin-bottom: 2em;
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 1.5em;
+    margin-bottom: 2em;
     align-items: center;
     justify-content: center;
 }
@@ -277,6 +283,7 @@ main {
     justify-content: center;
     align-items: center;
     min-width: 100%;
+    margin-top: -2em;
 }
 .lime-svg-polygon {
     background-image: url(./fonts/lime-svg-polygon.svg);
@@ -442,25 +449,26 @@ main {
 }
 
 
-#lengthValue {
-    position: absolute;
-    top: -2.5em;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    text-align: center;
-}
 .lengthValue {
     box-sizing: border-box;
+    position: absolute;
+    top: -3.5em;
+    width: 8em;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    width: 4.5em;
-    height: 1.7em;
-    padding: 0.3em auto;
     box-shadow: inset 0 0 0 1px #555;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 1em;
     color: aliceblue;
 }
+
 .password-length-text {
     font-family: "Geologica";
     font-weight: 350;
@@ -830,7 +838,6 @@ li a {
     gap: 1.3em;
     padding-top: 1em;
 }
-/* Кнопка закриття */
 .close-modal-button {
     position: absolute;
     top: 2px;
@@ -840,7 +847,6 @@ li a {
     cursor: pointer;
 }
 
-/* Активний стан модального вікна */
 .modal-window-email.active {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
