@@ -56,7 +56,7 @@
         <div class="button-box-complexity">
             <button id="leetspeak-button">Leetspeak</button>
             <button id="mneme-button">Мнемонічний</button>
-            <button id="ukrainian-alike-button">Візуальна подібність</button>
+            <button id="ukrainian-alike-button">Маскувальний</button>
             <button id="random-button">Випадковий</button>
         </div>
         <div class="container">
@@ -79,7 +79,7 @@
 
                 <div class="upper-section">
                     <div class="upper-section-secondary">
-                        <input type="text" class="inputText" id="inputText" maxlength="25" placeholder="Введіть текст українською" value="" 
+                        <input type="text" class="inputText" id="inputText" maxlength="35" placeholder="Введіть текст українською" value="" 
                         spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
                         
                         <button id="generateButton">Згенерувати пароль</button>
@@ -90,8 +90,8 @@
                     <div class="password-length-box">
                         <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
                         <div class="slider-container">
-                            <span class="lengthValue" id="lengthValue"></span>
-                            <input type="range" id="passwordLength" min="6" max="25" value="6">
+                            <span class="lengthValue" id="lengthValue">0</span>
+                            <input type="range" id="passwordLength" min="0" max="35" value="0">
                         </div>
                     </div>
                     
@@ -193,10 +193,20 @@
                             <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
                             <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва додатку, для використання пароля">
                             <input type="text" name="url-mail-text" id="url-mail-text" class="url-mail-text" placeholder="Посилання на сайт">
+                            <div class="radio-buttons">
+                                <label>
+                                    <input id="radioSiteName" type="radio" name="radioEmailChoice"> Назва додатку
+                                </label>
+                                <label>
+                                    <input id="radioPassword" type="radio" name="radioEmailChoice"> Пароль
+                                </label>
+                            </div>
                             <button type="submit" id="sendMailButton">Надіслати</button>
                         </form>
                     </div>
                 </div>
+
+
             </div>
         </div>
     
@@ -261,10 +271,17 @@
                         Генерування символів та цифр відбувається шляхом транслітерації українських літер на схожі за видом, тобто аналогічні символи та цифри.
                     </h2> 
                     <h2>
-                        <strong>Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$".</strong>
+                        <strong>
+                            Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$". З повною таблицею усіх символів для транслітерації ви можете ознайомитись нижче.
+                        </strong>
                     </h2> 
                     <h2>Вибір цифр та символів, які можна використовувати алгоритму, можна налаштувати в спадному меню біля вибору символів.</h2> 
-                    <h2>Ви можете налаштовувати довжину пароля та інші параметри для збільшення його надійності.</h2>
+                    <h2>Ви можете налаштовувати довжину пароля шляхом збільшення довжини вашої фрази.</h2>
+                    <h2>
+                        <strong>
+                            Ви також можете вручну змінити згенерований алгоритмом пароль відповідно до ваших особистих потреб.
+                        </strong>
+                    </h2>
                 </div>
 
                 <div id="symbols-transliterate-list" class="text-data-header-grid">
@@ -340,18 +357,18 @@
                     </h2>
                     <h2 style="margin-bottom: 60px;">
                         Учень 11 класу Наукового ліцею "Політ" при Обласному коледжі "Кременчуцької
-                        гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради
+                        гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради.
                     </h2>
                     <h2>
                         <strong>
-                            Консультант
+                            Науковий керівник
                         </strong>
                     </h2>
                     <h2>
                         Лисенко Тетяна Іванівна
                     </h2>
                     <h2>
-                        Викладач з програмування Обласного коледжу "Кременчуцької гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради
+                        Викладач Обласного коледжу "Кременчуцької гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради.
                     </h2>
                 </div>
             </div>
