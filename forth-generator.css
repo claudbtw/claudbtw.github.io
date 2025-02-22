@@ -490,7 +490,7 @@ button {
     gap: 1.3em;
     padding-top: 1em;
 }
-/* Кнопка закриття */
+
 .close-modal-button {
     position: absolute;
     top: 2px;
@@ -500,7 +500,6 @@ button {
     cursor: pointer;
 }
 
-/* Активний стан модального вікна */
 .modal-window-email.active {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
@@ -512,6 +511,7 @@ button {
     justify-content: center;
     align-items: center;
     min-width: 100%;
+    margin-top: -2em;
 }
 .lime-svg-polygon {
     background-image: url(./fonts/lime-svg-polygon.svg);
