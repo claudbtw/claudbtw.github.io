@@ -370,10 +370,11 @@ button {
 /* Виведення пароля */
 #outputPassword {
     -webkit-appearance: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
     outline: none;
     appearance: none;
-    overflow: hidden;
-    white-space: nowrap;
     letter-spacing: 0.07em;
     display: flex;
     text-align: center;
@@ -381,8 +382,8 @@ button {
     flex-direction: column;
     font-family: "Geologica", sans-serif;
     font-weight: bold;
-    font-size: 1.4em;
-    width: 24em;
+    font-size: 1.3em;
+    width: 25em;
     min-height: 1.7em;
     max-width: 100%;
     padding: 0.5em 1.7em 0.6em 1.7em;
