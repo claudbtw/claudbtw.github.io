@@ -3,7 +3,6 @@ document.getElementById("generateButton").addEventListener("click", function () 
     const inputText = document.getElementById("inputText").value.trim();
     const includeUppercase = document.getElementById("includeUppercase").checked;
     const includeNumbers = document.getElementById("includeNumbers").checked;
-    const includeSymbols = document.getElementById("includeSymbols").checked;
     const passwordLength = document.getElementById("passwordLength").value;
     const inputNumber = document.getElementById("inputNumber").value.trim();
 
@@ -23,9 +22,6 @@ document.getElementById("generateButton").addEventListener("click", function () 
         password = applyUppercase(password);
     }
 
-    if (includeSymbols) {
-        password = addRandomSymbols(password);
-    }
 
     password = password.substring(0, passwordLength);
 
@@ -75,10 +71,10 @@ function transliterateFirstLetters(text) {
 }
 
 
-function insertNumbersBetween(password, numbers, includeSymbols) {
+function insertNumbersBetween(password, numbers) {
     let result = "";
     const chars = password.split('');
-    const nums = numbers.split('');
+    const nums = numbers.replace(/\s/g, '').split('');
     const extraNumbers = [];
 
     for (let i = 0; i < chars.length; i++) {
@@ -88,8 +84,6 @@ function insertNumbersBetween(password, numbers, includeSymbols) {
         }
     }
 
-
-
     if (nums.length > chars.length) {
         let extraNums = nums.slice(chars.length);
         for (let i = 0; i < extraNums.length; i++) {
@@ -98,14 +92,11 @@ function insertNumbersBetween(password, numbers, includeSymbols) {
     }
     if (extraNumbers.length > 0) {
         const extraNumbersStr = extraNumbers.join('');
-        if (includeSymbols && Math.random() >= 0.5) {
-            result = result.replace(/([!@#$%*\[\]_+;:,.]+)$/, `${extraNumbersStr}$1`);
-        } else {
-            result += extraNumbersStr;
-        }
+        result += extraNumbersStr;
     }
     return result;
 }
+
 
 function applyUppercase(letters) {
     const lettersArray = Array.from(letters);
@@ -118,17 +109,6 @@ function applyUppercase(letters) {
     return lettersArray.join('');
 }
 
-
-function addRandomSymbols(password) {
-    const symbols = "!@#$%&*_+;:,.<>?";
-    const randomSymbols = symbols.charAt(Math.floor(Math.random() * symbols.length)) +
-        symbols.charAt(Math.floor(Math.random() * symbols.length));
-
-    if (Math.random() < 1) {
-        return password + randomSymbols;
-    }
-}
-
 // Відстежуємо зміни в полях і оновлюємо повзунок
 let previousInputNumberLength = 0;
 
@@ -136,30 +116,68 @@ function updateSlider() {
     const inputText = document.getElementById("inputText").value.trim();
     const includeNumbers = document.getElementById("includeNumbers").checked;
     const inputNumber = document.getElementById("inputNumber").value.trim();
-    const includeSymbols = document.getElementById("includeSymbols").checked;
+    
+    let slider = document.getElementById("passwordLength");
+    let lengthText = document.getElementById("lengthValue");
 
-    let sliderValue = 0;
-
-    if (inputText) {
-        const words = inputText.split(' ').filter(word => word.length > 0);
-        sliderValue += words.length;
-    }
+    const words = inputText.split(/\s+/).filter(word => word.length > 0);
+    let sliderValue = words.length; 
 
     if (includeNumbers) {
         sliderValue += inputNumber.length;
     }
 
-    if (includeSymbols) {
-        sliderValue += 2;
+    let targetValue = sliderValue;
+    let color;
+
+    if (sliderValue === 0) {
+        color = "#555";
+    } else if (sliderValue <= 2) {
+        color = "red";
+    } else if (sliderValue <= 4) {
+        color = "#e77d22";
+    } else if (sliderValue <= 6) {
+        color = "#fce205";
+    } else {
+        color = "green";
     }
 
-    document.getElementById("passwordLength").value = sliderValue;
-    document.getElementById("lengthValue").textContent = sliderValue;
+    function smoothSlide() {
+        let currentValue = parseInt(slider.value);
+        if (currentValue !== targetValue) {
+            let step = currentValue < targetValue ? 1 : -1;
+            let interval = setInterval(() => {
+                if (currentValue === targetValue) {
+                    clearInterval(interval);
+                } else {
+                    currentValue += step;
+                    slider.value = currentValue;
+                    updateSliderBackground(slider, color);
+                    lengthText.textContent = currentValue;
+                }
+            }, 15);
+        }
+    }
+
+    smoothSlide();
+    updateSliderBackground(slider, color);
+
+    slider.disabled = true;
 
     previousInputNumberLength = inputNumber.length;
 }
 
-// Обробка зміни стану чекбокса includeNumbers
+
+
+function updateSliderBackground(slider, color) {
+    let min = slider.min || 0;
+    let max = slider.max || 10;
+    let value = (slider.value - min) / (max - min) * 100;
+
+    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
+}
+
+
 function handleIncludeNumbersChange() {
     const includeNumbers = document.getElementById("includeNumbers").checked;
     const inputNumber = document.getElementById("inputNumber").value.trim();
@@ -176,7 +194,6 @@ function handleIncludeNumbersChange() {
 document.getElementById("inputText").addEventListener("input", updateSlider);
 document.getElementById("inputNumber").addEventListener("input", updateSlider);
 document.getElementById("includeNumbers").addEventListener("change", handleIncludeNumbersChange);
-document.getElementById("includeSymbols").addEventListener("change", updateSlider);
 
 
 
@@ -213,8 +230,16 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const passwordDiv = document.getElementById('outputPassword');
     const passwordText = passwordDiv.innerText;
-    document.getElementById('generated_password').value = passwordText;
-    console.log(passwordText)
+    const inputTextDiv = document.getElementById('inputText');
+    const inputTextValue = inputTextDiv.value;
+
+    const radioPassword = document.getElementById('radioPassword');
+    const selectedValue = radioPassword.checked ? passwordText : inputTextValue;
+
+    document.getElementById('generated_password').value = selectedValue;
+    document.getElementById('input-mail-text').value = selectedValue;
+
+    console.log(selectedValue);
 
     const serviceID = 'default_service';
     const templateID = 'template_6jdout7';
@@ -225,7 +250,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
         modal.classList.remove('active');
     }, 
     (err) => {
-        sendEmailButton.value = 'Надіслати';
+        sendEmailButton.innerText = 'Надіслати';
         alert(JSON.stringify(err));
     });
 });
@@ -293,11 +318,11 @@ function updateStrengthIndicator(entropy) {
         text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 34 && entropy <= 54) {
         width = "40%";
-        color = "yellow";
+        color = "#e77d22";
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 54 && entropy < 70) {
         width = "60%";
-        color = "yellow";
+        color = "#fce205";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
