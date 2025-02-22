@@ -187,7 +187,6 @@ function updateStrengthIndicator(entropy) {
     const strengthBar = document.getElementById("strengthBar");
     const strengthMessage = document.getElementById("strengthMessage");
     const strengthTime = document.getElementById("strengthTime");
-    const strengthQuantity = document.getElementById("strengthQuantity");
 
     let color, width, text = "Кількість можливих паролів";
 
@@ -201,11 +200,11 @@ function updateStrengthIndicator(entropy) {
         text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 34 && entropy <= 54) {
         width = "40%";
-        color = "yellow";
+        color = "#e77d22";
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 54 && entropy < 70) {
         width = "60%";
-        color = "yellow";
+        color = "#fce205";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
