@@ -126,7 +126,7 @@ main {
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
 }
 
 .inputs-box-container {
@@ -181,10 +181,10 @@ input[type="text"], input[type="range"] {
     word-break: break-all;
     font-family: "Geologica", sans-serif;
     font-size: 1rem;
-    width: 20em;
+    width: 21em;
     min-height: 2em;
     max-width: 100%;
-    padding: 0.4em 2em 0.7em 2em;
+    padding: 0.4em 1em 0.7em 1em;
     text-align: center;
     border: none;
     box-shadow: inset 0 0 0 1px #555;
@@ -255,11 +255,11 @@ input[type="text"], input[type="range"] {
 
 /* Повзунок */
 .password-length-box {
-    margin-bottom: 3em;
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 1.5em;
+    margin-bottom: 2em;
     align-items: center;
     justify-content: center;
 }
@@ -273,15 +273,33 @@ input[type="text"], input[type="range"] {
 }
 
 
-
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    width: 100%;
+    background: #555;
+    border-radius: 5px;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #A4FFA4;
+    cursor: pointer;
+}
+#passwordLength {
+    transition: all 2s ease-in-out;
+}
 
 .lengthValue {
     box-sizing: border-box;
     position: absolute;
-    top: -3em;
+    top: -3.5em;
     width: 8em;
     height: 2.5em;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -303,33 +321,14 @@ input[type="text"], input[type="range"] {
     letter-spacing: 0.5px;
 }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    width: 100%;
-    background: #555;
-    border-radius: 5px;
-    outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #A4FFA4;
-    cursor: pointer;
-}
-
 
 
 .checkbox-complexity {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: auto;
-    grid-gap: 1.5em;
-    column-gap: 2em;
+    row-gap: 1.5em;
+    column-gap: 0.5em;
     justify-items: start;
     margin-bottom: 2em;
 }
@@ -385,10 +384,11 @@ button {
 /* Виведення пароля */
 #outputPassword {
     -webkit-appearance: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
     outline: none;
     appearance: none;
-    overflow: hidden;
-    white-space: nowrap;
     letter-spacing: 0.07em;
     display: flex;
     text-align: center;
@@ -396,8 +396,8 @@ button {
     flex-direction: column;
     font-family: "Geologica", sans-serif;
     font-weight: bold;
-    font-size: 1.4em;
-    width: 24em;
+    font-size: 1.3em;
+    width: 25em;
     min-height: 1.7em;
     max-width: 100%;
     padding: 0.5em 1.7em 0.6em 1.7em;
@@ -565,7 +565,7 @@ button {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 26em;
-    height: 16.5em;
+    height: 19em;
     text-align: center;
 }
 #form {
@@ -576,7 +576,6 @@ button {
     gap: 1.3em;
     padding-top: 1em;
 }
-/* Кнопка закриття */
 .close-modal-button {
     position: absolute;
     top: 2px;
@@ -586,12 +585,33 @@ button {
     cursor: pointer;
 }
 
-/* Активний стан модального вікна */
 .modal-window-email.active {
     display: block;
     background-color: rgba(0, 0, 0, 0.5);
 }
+.radio-buttons {
+    font-family: "Geologica";
+    display: flex;
+    flex-direction: row;
+    gap: 5em;
+}
+input[type="radio"] {
+    appearance: none;
+    --s: 1em;
+    --c: #84bae3;
+    height: calc(var(--s) * 1.5);
+    aspect-ratio: 1;
+    border: calc(var(--s) / 6) solid #617ea8;
+    padding: calc(var(--s) / 8);
+    border-radius: 50%;
+    background: #0000;
+}
 
+input[type=radio]:checked {
+    border-color: var(--c);
+    background-size: 100% 100%;
+    background: radial-gradient(farthest-side, var(--c) 92%, #0000) 50% / 100% content-box;
+}
 
 
 
@@ -602,6 +622,7 @@ button {
     justify-content: center;
     align-items: center;
     min-width: 100%;
+    margin-top: -2em;
 }
 .lime-svg-polygon {
     background-image: url(./fonts/lime-svg-polygon.svg);
