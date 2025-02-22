@@ -55,7 +55,6 @@ function updatePassword() {
 document.getElementById("generateButton").addEventListener("click", updatePassword);
 document.getElementById("passwordLength").addEventListener("input", updatePassword);
 
-// Додаємо слухачі подій для кожного елемента
 ["includeUppercase", "includeNumbers", "includeSymbols", "includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", "includeW", 
     "includeExclamationMark", "includeHashTag", "includeZero", "includeOne", "includeThree", "includeFour", "includeFive", "includeSix", 
     "includeSeven", "includeEight", "includeNine", "includeDot", "includeMinus", "includePlus", "includeUnderscore", "includeColon", 
@@ -81,11 +80,11 @@ function transliterate(text) {
         "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
         "з": "z", "и": "y", "і": "i", "ї": "yi", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", 
         "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "ts",
-        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya", "ь": "'",
+        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya", "ь": "'", "ы": "", "ъ": "", "э": "",
         "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH",
         "З": "Z", "И": "Y", "І": "I", "Ї": "YI", "Й": "I", "К": "K", "Л": "L", "М": "M", "Н": "N",
         "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "TS",
-        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA", "Ь": "'"
+        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA", "Ь": "'", "Ы": "", "Ъ": "", "Э": ""
     };
     return text.split("").map(char => transliterationMap[char] || char).join("");
 }
@@ -117,7 +116,6 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     if (includeExclamationMark) replacementsSymbols["i"] = replacementsSymbols["I"] = "!";
     if (includeHashTag) replacementsSymbols["n"] = replacementsSymbols["N"] = "#";
     
-
     // Вибір символів-роздільників
     if (includeDot) spaceReplacements.push(".");
     if (includeMinus) spaceReplacements.push("-");
@@ -136,26 +134,33 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
     while (i < transliterated.length && password.length < length) {
         let char = transliterated[i];
         let nextChar = transliterated[i + 1] || "";
+        let nextNextChar = transliterated[i + 2] || "";
+        let nextNextNextChar = transliterated[i + 3] || "";
         
         crypto.getRandomValues(randomArray); 
         let randomNumber = randomArray[0] / 255;
-        
-        if ((char + nextChar === "ch" || char + nextChar === "CH") && includeNumbers && replacementsNumbers["ch"] && randomNumber > 0.6) {
+
+        if ((char + nextChar + nextNextChar + nextNextNextChar).toLowerCase() === "shch") {
+            password += "shch";
+            i += 4;
+            continue;
+        }
+
+        if ((char + nextChar).toLowerCase() === "ch" && includeNumbers && replacementsNumbers["ch"] && randomNumber > 0.6) {
             password += replacementsNumbers["ch"];
             i += 2;
             continue;
         }
-        if ((char + nextChar === "sh" || char + nextChar === "SH") && includeSymbols && replacementsSymbols["sh"] && randomNumber > 0.6) {
+        if ((char + nextChar).toLowerCase() === "sh" && includeSymbols && replacementsSymbols["sh"] && randomNumber > 0.6) {
             password += replacementsSymbols["sh"];
             i += 2;
             continue;
         }
-        if ((char + nextChar === "ya" || char + nextChar === "YA") && includeSymbols && replacementsSymbols["ya"] && randomNumber > 0.6) {
+        if ((char + nextChar).toLowerCase() === "ya" && includeSymbols && replacementsSymbols["ya"] && randomNumber > 0.6) {
             password += replacementsSymbols["ya"];
             i += 2;
             continue;
         }
-
 
         if (char === " " && !includeSpaceReplacements) {
             i++;
@@ -178,9 +183,6 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
         i++;
     }
 
-    
-    
-    
     if (includeUppercase && password.length > 0) {
         let words = password.split(' ');
         
@@ -194,10 +196,10 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
             password = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         }
     }
-    
 
     return password;
 }
+
 
 
 
@@ -512,6 +514,61 @@ function countPasswordVariants(phrase) {
 
 
 
+// Повзунок
+document.getElementById("inputText").addEventListener("input", function() {
+    const inputText = this.value.trim();
+    const transliteratedText = transliterate(inputText);
+    const passwordLength = transliteratedText.length;
+
+    let slider = document.getElementById("passwordLength");
+    let lengthText = document.getElementById("lengthValue");
+
+    let targetValue = passwordLength;
+    let color;
+
+    if (passwordLength === 0) {
+        color = "#555";
+    } else if (passwordLength <= 6) {
+        color = "red";
+    } else if (passwordLength <= 11) {
+        color = "#e77d22";
+    } else if (passwordLength <= 15) {
+        color = "#fce205";
+    } else {
+        color = "green";
+    }
+
+    function smoothSlide() {
+        let currentValue = parseInt(slider.value);
+        if (currentValue !== targetValue) {
+            let step = currentValue < targetValue ? 1 : -1;
+            let interval = setInterval(() => {
+                if (currentValue === targetValue) {
+                    clearInterval(interval);
+                } else {
+                    currentValue += step;
+                    slider.value = currentValue;
+                    updateSliderBackground(slider, color);
+                    lengthText.textContent = currentValue;
+                }
+            }, 15);
+        }
+    }
+
+    smoothSlide();
+    updateSliderBackground(slider, color);
+
+    slider.disabled = true;
+});
+
+function updateSliderBackground(slider, color) {
+    let min = slider.min || 0;
+    let max = slider.max || 25;
+    let value = (slider.value - min) / (max - min) * 100;
+
+    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
+}
+
 
 
 
@@ -571,13 +628,16 @@ document.getElementById('form').addEventListener('submit', function(event) {
 
     const passwordDiv = document.getElementById('outputPassword');
     const passwordText = passwordDiv.innerText;
-    document.getElementById('generated_password').value = passwordText;
-    console.log(passwordText)
-
-    const inputTextDiv = document.getElementById("inputText")
+    const inputTextDiv = document.getElementById('inputText');
     const inputTextValue = inputTextDiv.value;
-    document.getElementById("input-mail-text").value = inputTextValue;
-    console.log(inputTextValue);
+
+    const radioPassword = document.getElementById('radioPassword');
+    const selectedValue = radioPassword.checked ? passwordText : inputTextValue;
+
+    document.getElementById('generated_password').value = selectedValue;
+    document.getElementById('input-mail-text').value = selectedValue;
+
+    console.log(selectedValue);
 
     const serviceID = 'default_service';
     const templateID = 'template_6jdout7';
@@ -588,10 +648,11 @@ document.getElementById('form').addEventListener('submit', function(event) {
         modal.classList.remove('active');
     }, 
     (err) => {
-        sendEmailButton.value = 'Надіслати';
+        sendEmailButton.innerText = 'Надіслати';
         alert(JSON.stringify(err));
     });
 });
+
 
   
 
@@ -656,11 +717,11 @@ function updateStrengthIndicator(entropy) {
         text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 34 && entropy <= 54) {
         width = "40%";
-        color = "yellow";
+        color = "#e77d22";
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 54 && entropy < 70) {
         width = "60%";
-        color = "yellow";
+        color = "#fce205";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
@@ -779,31 +840,6 @@ document.getElementById("inputText").addEventListener("input", function () {
     }
 });
 
-
-
-
-// Повзунок
-document.getElementById("inputText").addEventListener("input", function() {
-    const inputText = this.value.trim();
-    const transliteratedText = transliterate(inputText);
-    const passwordLength = transliteratedText.length;
-
-    document.getElementById("passwordLength").value = passwordLength;
-
-    let lengthText = document.getElementById("lengthValue");
-
-    if (passwordLength == 0) {
-        lengthText.textContent = "";
-    } else if (passwordLength <= 6) {
-        lengthText.textContent = "Закоротка";
-    } else if (passwordLength <= 10) {
-        lengthText.textContent = "Середня";
-    } else if (passwordLength <= 15) {
-        lengthText.textContent = "Оптимальна";
-    } else {
-        lengthText.textContent = "Чудова";
-    }
-});
 
 
 
