@@ -1,585 +1,227 @@
-/* Основні стилі */
-* {
-    margin: 0;
-    padding: 0;
-}
-@font-face {
-    font-family: "Inter";
-    src: url("./fonts/Inter-VariableFont_opsz,wght.ttf");
-}
-html {
-    scroll-behavior: smooth;
-    text-rendering: geometricPrecision;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-}
-body {
-    font-family: "Geologica", sans-serif;
-    position: relative;
-    min-height: 100vh;
-    min-width: 100%;
-}
-body::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url(./fonts/greenbg2.svg);
-    background-size: cover;
-    background-position: center;
-    filter: contrast(0.95);
-    z-index: -1;
-}
-nav {
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: "Geologica", sans-serif;
-    font-size: 1.2rem;
-    box-sizing: border-box;
-    top: 0;
-    height: 50px;
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0 0.1rem #ADF0B4;
-    z-index: 1000;
-    gap: 5.5em;
-}
-
-.text-main-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 7em;
-    margin-bottom: 1.5em;
-}
-.text-main-header-primary {
-    font-family: "Geologica";
-    text-align: center;
-    font-weight: 600;
-    font-size: 3rem;
-    color: #000000;
-}
-.text-main-header-secondary {
-    font-family: "Geologica";
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 300;
-    color: #000000;
-}
-.text-main-header-link a {
-    font-family: "Geologica";
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: 650;
-    color: #809ac3;
-    text-decoration: underline;
-    transition: color 0.3s ease;
-}
-.text-main-header-link a:hover {
-    color: #b7ccf6;
-
-}
-.yellow-Translit {
-    color: #FFF600;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-weight: 450;
-}
-.blue-Pass {
-    color: #B0D9FF;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    font-weight: 450;
-}
-
-main {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    min-width: 100%;
-}
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #fffffc;
-    width: 90%;
-    height: auto;
-    min-width: 320px;
-    border-radius: 2em;
-    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
-}
-.button-box-complexity {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    min-width: 100%;
-    margin-bottom: 4em;
-}
-.button-box-complexity button {
-    position: relative;
-    padding: 0.7em 0 0.5em 0em;
-    color: #76B27D;
-    background-color: #fffffc;
-    border: none;
-    cursor: pointer;
-    border-radius: 1.5em 1.5em 0 0;
-}
-.button-box-complexity button:not(:last-child)::after {
-    content: "";
-    display: block;
-    width: 1px;
-    height: 70%;
-    background-color: #E1E1E1;
-    position: absolute;
-    right: -5px;
-    top: 15%;
-    z-index: 500;
-}
-#leetspeak-button p, #mneme-button p, #ukrainian-alike-button p, #random-button p {
-    font-family: "Geologica";
-    font-weight: 350;
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
-}
-#leetspeak-button p {
-    cursor: default;
-    text-shadow: 0px 0px 15px #8fdb98, 0px 0px 35px #7ebf86;
-}
-#mneme-button, #ukrainian-alike-button, #random-button {
-    transition: ease 0.2s;
-}
-#mneme-button:hover, #ukrainian-alike-button:hover, #random-button:hover {
-    color: #a8dfb5;
-}
-
-.inputText-box-wrap {
-    display: flex;
-    justify-items: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    width: 90%;
-    min-height: 3em;
-    max-width: 100%;
-    padding: 0.5em;
-    margin-bottom: 2em;
-    text-align: center;
-    border: none;
-    outline: 1px solid #C5C5C5;
-    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.25);
-    border-radius: 1em;
-    background-color: #F7F7F7;
-}
-#inputText {
-    width: 70%;
-    background-color: #fffffc;
-    -webkit-appearance: none;
-    outline: none;
-    background-color: #F7F7F7;
-    padding-left: 1em;
-    border: none;
-    appearance: none;
-    word-break: break-all;
-    font-family: "Geologica", sans-serif;
-    font-size: 1.4rem;
-}
-#generateButton {
-    font-family: "Geologica", sans-serif;
-    -webkit-appearance: none;
-    appearance: none;
-    font-size: 1.2rem;
-    padding: 0.8em 1em 0.8em 1em;
-    width: 30%;
-    word-break: keep-all;
-    text-align: center;
-    border: none;
-    box-shadow: inset 0 0 0 2px #ADF0B4;
-    border-radius: 2em;
-    background-color: rgba(162, 162, 162, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-#generateButton:hover {
-    transform: scale(1.02);
-    color: #121419;
-    background-color: #ADF0B4;
-}
-
-.password-container {
-    width: 90%;
-    padding: 0.5em;
-}
-#outputPassword {
-    -webkit-appearance: none;
-    box-sizing: border-box;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-    appearance: none;
-    letter-spacing: 0.05em;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    font-family: "Geologica", sans-serif;
-    font-size: 1.6rem;
-    min-height: 1.5em;
-    outline: 1px solid #C5C5C5;
-    box-shadow: 0px 3px 15px 0px rgba(0, 0, 0, 0.25);
-    padding: 0.8em 1.7em 0.8em 1.7em;
-    border-radius: 1em 1em 0 0;
-    background-color: #F7F7F7;
-    color: #000000;
-}
-#strengthBarContainer {
-    height: 5px;
-    min-width: 100%;
-    background-color: rgba(80, 80, 80, 0.25);
-    border-radius: 0 0 8px 8px;
-}
-#strengthBar {
-    height: 100%;
-    width: 0;
-    border-radius: 0 0 8px 8px;
-    background-color: red;
-    transition: width 0.3s ease, background-color 0.3s ease;
-}
-#strengthMessage {
-    margin-top: 7px;
-    font-family: "Geologica", sans-serif;
-    color: rgba(60, 60, 60, 0.4);
-    font-size: 1rem;
-    text-align: center;
-}
-#strengthQuantity {
-    margin-top: 7px;
-    font-family: "Geologica", sans-serif;
-    color: rgba(60, 60, 60, 0.4);
-    font-size: 1rem;
-    text-align: center;
-}
-#strengthTime {
-    margin-top: 7px;
-    margin-bottom: 5px;
-    font-family: "Geologica", sans-serif;
-    color: rgba(60, 60, 60, 0.4);
-    font-size: 1rem;
-    text-align: center;
-}
-
-.settings-box-wrap {
-    width: 90%;
-    color: #000000;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3em;
-}
-.hide-settings-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    color: #000000;
-    width: 90%;
-    margin-bottom: 1em;
-}
-.hide-settings-container label {
-    font-family: "Geologica", sans-serif;
-    font-weight: 400;
-    font-size: 1.3rem;
-}
-.hide-settings-box {
-    width: 22%;
-}
-.hide-settings-container-horizontal-line {
-    width: 78%;
-    height: 2px;
-    background-color: #E1E1E1;
-}
-.slider-container {
-    font-family: "Geologica", sans-serif;
-    font-weight: 450;
-    font-size: 1.4rem;
-    color: #888888;
-    width: 30%;
-    display: flex;
-    flex-direction: row;
-}
-.password-length-value {
-    margin-left: 1em;
-}
-#passwordLength {
-    visibility: hidden;
-}
-.checkbox-complexity {
-    box-sizing: border-box;
-    padding-right: 6em;
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-}
-.checkbox-complexity label {
-    box-sizing: border-box;
-    width: auto;
-}
-input[type="checkbox"] {
-    box-sizing: border-box;
-    appearance: none;
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
-    margin-top: 0;
-    outline: 0.1em solid #A4FFA4;
-    border-radius: 7px;
-    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.15);
-    position: relative;
-    cursor: pointer;
-}
-input[type="checkbox"]:checked::before {
-    content: '';
-    position: absolute;
-    top: 1px;
-    left: 2px;
-    width: 28px;
-    height: 28px;
-    background-color: #000;
-    clip-path: path("M20.6097 5.20743C21.0475 5.54416 21.1294 6.17201 20.7926 6.60976L10.7926 19.6098C10.6172 19.8378 10.352 19.9793 10.0648 19.9979C9.77765 20.0166 9.49637 19.9106 9.29289 19.7072L4.29289 14.7072C3.90237 14.3166 3.90237 13.6835 4.29289 13.2929C4.68342 12.9024 5.31658 12.9024 5.70711 13.2929L9.90178 17.4876L19.2074 5.39034C19.5441 4.95258 20.172 4.87069 20.6097 5.20743Z");
-}
-.includeUppercase, .includeSpaceReplacements, .includeNumbers, .includeSymbols {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-    font-family: "Geologica";
-    font-weight: 350;
-    color: #000000;
-}
-.password-option-text {
-    font-family: "Geologica", sans-serif;
-    font-weight: 450;
-    font-size: 1.4rem;
-    margin-left: 0.8em;
-}
-/* Дроп-даун меню */
-.toggleSymbols, .toggleSpaceReplacements, .toggleNumbers, .hide-settings-button {
-    background-color: #fffffc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0.5em;
-    width: 2em;
-    height: 2em;
-    outline: none;
-    display: flex;
-    border: none;
-    cursor: pointer;
-}
-.hide-settings-button {
-    transform: rotate(180deg);
-    display: inline-block;
-}
-.arrow-down-svg {
-    width: 16px;
-    height: 16px;
-    pointer-events: none;
-    transition: transform 0.2s ease;
-}
-
-.numbers-dropdown-menu, .symbols-dropdown-menu, .space-dropdown-menu {
-    position: relative;
-    display: inline-block;
-}
-.numbers-dropdown-content, .symbols-dropdown-content, .space-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
-    min-width: 180px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    top: 100%;
-    border-radius: 0.7em;
-    z-index: 500
-}
-.numbers-dropdown-content label, .symbols-dropdown-content label, .space-dropdown-content label {
-    box-sizing: border-box;
-    text-align: center;
-    appearance: none;
-    color: #000000;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-    border-radius: 0.7em;;
-}
-.numbers-dropdown-content label:hover, .symbols-dropdown-content label:hover, .space-dropdown-content label:hover {
-    background-color: #a3a3a3;
-    color:#121419;
-}
-.symbols-dropdown-content-inside, .space-dropdown-content-inside {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-}
-.numbers-dropdown-content {
-    min-width: 250px;
-}
-.numbers-dropdown-content-inside {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-.numbers-dropdown-content-inside label, .symbols-dropdown-content-inside label, .space-dropdown-content-inside label  {
-    width: auto;
-    text-align: left;
-}
-.showNumbers, .showSymbols, .showSpaceReplacements {
-    display: block;
-}
-
-.button-container {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 16em;
-    margin-bottom: 3.5em;
-}
-#copyButton, #mailButton, #sendMailButton {
-    font-family: "Geologica", sans-serif;
-    -webkit-appearance: none;
-    appearance: none;
-    font-size: 1.2rem;
-    padding: 0.8em 1em 0.8em 1em;
-    width: 15em;
-    text-align: center;
-    border: none;
-    outline: 2px solid #ADF0B4;
-    box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.35);
-    border-radius: 2em;
-    background-color: rgba(162, 162, 162, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-#sendMailButton {
-    box-shadow: inset 0 0 0 2px #435a72;
-    transition: background-color 0.2s ease-in-out;
-}
-#copyButton:hover, #mailButton:hover {
-    transform: scale(1.02);
-    color: #121419;
-    background-color: #ADF0B4;
-}
-#sendMailButton:hover {
-    background-color: #2a3f53;
-}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Wproverka-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
+    <title>Генератор паролів "TranslitPass"</title>
+    <style>
+    </style>
+</head>
+<body>
+    <nav>
+        <p class="text-fixed-header">
+            <a href="#header" id="scroll-link">
+                Головна сторінка
+            </a>
+        </p>
 
 
-.email-mail-text, .site-mail-text, .url-mail-text {
-    -webkit-appearance: none;
-    outline: none;
-    appearance: none;
-    word-break: break-all;
-    font-family: "Geologica", sans-serif;
-    font-size: 1rem;
-    width: 90%;
-    min-height: 1.8em;
-    padding: 0.4em 0em 0.7em 0em;
-    text-align: center;
-    border: none;
-    box-shadow: inset 0 0 0 1px #555;
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);;
-    color: aliceblue;
-}
-.email-mail-text:focus, .site-mail-text:focus, .url-mail-text:focus {
-    box-shadow: inset 0 0 0 1px #739fca;
-}
-.modal-window-email {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
+        <p class="text-fixed-header">
+            <a href="#symbols-transliterate-list" id="scroll-link">
+                Список символів транслітерації
+            </a>
+        </p>
+        <p class="text-fixed-header">
+            <a href="#author-information">
+                Про автора
+            </a>
+        </p>
 
-.modal-window-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: url("./fonts/modal-blue-box.svg") no-repeat center center;
-    background-size: cover;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 26em;
-    height: 19em;
-    text-align: center;
-}
-#form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.3em;
-    padding-top: 1em;
-}
-.close-modal-button {
-    position: absolute;
-    top: 2px;
-    right: 12px;
-    font-size: 2rem;
-    color: #fffffc;
-    cursor: pointer;
-}
 
-.modal-window-email.active {
-    display: block;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-.radio-buttons {
-    font-family: "Geologica";
-    display: flex;
-    flex-direction: row;
-    gap: 5em;
-}
-input[type="radio"] {
-    appearance: none;
-    --s: 1em;
-    --c: #84bae3;
-    height: calc(var(--s) * 1.5);
-    aspect-ratio: 1;
-    border: calc(var(--s) / 6) solid #617ea8;
-    padding: calc(var(--s) / 8);
-    border-radius: 50%;
-    background: #0000;
-}
+        <p class="text-fixed-header-page">
+            <a href="password-importance.html">
+                Важливість надійного пароля
+            </a>
+        </p>
+    </nav>
+    <main>
+        <div id="text-main-header" class="text-main-header">
+            <h1 class="text-main-header-primary">Генератор паролів <strong><span class="yellow-Translit">Translit</span><span class="blue-Pass">Pass</span></strong></h1>
+            <h2 class="text-main-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
+            <h3 class="text-main-header-link">
+                <a href="#section-nav-two" id="scroll-link">
+                    Як це працює?
+                </a>
+        </div>
+        <div class="main-container">
+            <div class="button-box-complexity">
+                <button id="leetspeak-button">
+                    <p>
+                        Leetspeak
+                    </p>
+                </button>
+                <button id="mneme-button">
+                    <p>
+                        Мнемонічний
+                    </p>
+                </button>
+                <button id="ukrainian-alike-button">
+                    <p>
+                        Маскувальний
+                    </p>
+                </button>
+                <button id="random-button">
+                    <p>
+                        Випадковий
+                    </p>
+                </button>
+            </div>
 
-input[type=radio]:checked {
-    border-color: var(--c);
-    background-size: 100% 100%;
-    background: radial-gradient(farthest-side, var(--c) 92%, #0000) 50% / 100% content-box;
-}
+            <div class="inputText-box-wrap">
+                <input type="text" class="inputText" id="inputText" maxlength="50" placeholder="Введіть текст українською" value="" 
+                   spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
+                <button id="generateButton">Згенерувати пароль</button>
+            </div>
+
+            <div class="password-container">
+                <div id="outputPassword" contenteditable="true"></div>
+                <div id="strengthBarContainer">
+                    <div id="strengthBar"></div>
+                </div>
+                <div id="strengthValueContainer">
+                    <p id="strengthMessage">Сила пароля</p>
+                    <div class="horizontal-line"></div>
+                    <p id="strengthQuantity">Кількість можливих паролів</p>
+                    <p id="strengthTime">Час для взлому</p>
+                </div>
+            </div>
+
+            <div class="hide-settings-container">
+                <div class="hide-settings-box">
+                    <label for="hide-settings-button"> Приховати налаштування
+                        <button class="hide-settings-button">
+                            <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                        </button>
+                    </label>
+                </div>
+                <div class="hide-settings-container-horizontal-line"></div>
+            </div>
+            
+            <div class="settings-box-wrap">
+                <div class="slider-container">
+                    <label class="password-length-text" id="passwordLengthText" for="passwordLength">Довжина пароля:</label>
+                    <span class="password-length-value" id="lengthValue">0</span>
+                    <input type="range" id="passwordLength" min="0" max="35" value="0">
+                </div>
+                
+                <div class="checkbox-complexity">
+                    <label class="includeUppercase" for="includeUppercase">
+                        <input type="checkbox" id="includeUppercase" checked> 
+                        <h2 class="password-option-text">Великі літери</h2>
+                    </label>
+                    
+                    <label class="includeSpaceReplacements" for="includeSpaceReplacements">
+                        <input type="checkbox" class="password-option" id="includeSpaceReplacements" checked> 
+                        <h2 class="password-option-text">Символи-роздільники</h2>
+                        <button onclick="toggleSpaceDropdown()" class="toggleSpaceReplacements">
+                            <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                        </button>
+                        <div class="space-dropdown-menu">
+                            <div id="space-dropdown-content" class="space-dropdown-content">
+                                <div class="space-dropdown-content-inside">
+                                    <label><input type="checkbox" id="includeDot" class="includeDot password-option" checked> .</label>
+                                    <label><input type="checkbox" id="includeMinus" class="includeMinus password-option" checked> -</label>
+                                    <label><input type="checkbox" id="includePlus" class="includePlus password-option" checked> +</label>
+                                    <label><input type="checkbox" id="includeUnderscore" class="includeUnderscore password-option" checked> _</label>
+                                    <label><input type="checkbox" id="includeColon" class="includeColon password-option" checked> :</label>
+                                    <label><input type="checkbox" id="includeSemicolon" class="includeSemicolon password-option" checked> ;</label>
+                                    <label><input type="checkbox" id="includeSlash" class="includeSlash password-option" checked> /</label>
+                                    <label><input type="checkbox" id="includeAmbersant" class="includeAmbersant password-option" checked> &</label>
+                                </div>
+                            </div>
+                        </div>                                
+                    </label>
+
+                    <label class="includeNumbers" for="includeNumbers">
+                        <input type="checkbox" class="password-option" id="includeNumbers" checked> 
+                        <h2 class="password-option-text">Цифри</h2>
+                        <div class="numbers-dropdown-menu">
+                            <button onclick="toggleNumbersDropdown()" class="toggleNumbers">
+                                <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                            </button>
+                            <div id="numbers-dropdown-content" class="numbers-dropdown-content">
+                                <div class="numbers-dropdown-content-inside">
+                                    <label><input type="checkbox" id="includeZero" class="includeZero password-option" checked> 0</label>
+                                    <label><input type="checkbox" id="includeOne" class="includeOne password-option" checked> 1</label>
+                                    <label><input type="checkbox" id="includeThree" class="includeThree password-option" checked> 3</label>
+                                    <label><input type="checkbox" id="includeFour" class="includeFour password-option" checked> 4</label>
+                                    <label><input type="checkbox" id="includeFive" class="includeFive password-option" checked> 5</label>
+                                    <label><input type="checkbox" id="includeSix" class="includeSix password-option" checked> 6</label>
+                                    <label><input type="checkbox" id="includeSeven" class="includeSeven password-option" checked> 7</label>
+                                    <label><input type="checkbox" id="includeEight" class="includeEight password-option" checked> 8</label>
+                                    <label><input type="checkbox" id="includeNine" class="includeNine password-option" checked> 9</label>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="includeSymbols" for="includeSymbols">
+                        <input type="checkbox" class="password-option" id="includeSymbols" checked> 
+                        <h2 class="password-option-text">Символи</h2>
+                        <div class="symbols-dropdown-menu">
+                            <button onclick="toggleSymbolsDropdown()" class="toggleSymbols">
+                                <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
+                            </button>
+                            <div id="symbols-dropdown-content" class="symbols-dropdown-content">
+                                <div class="symbols-dropdown-content-inside">
+                                    <label><input type="checkbox" id="includeAtSymbol" class="includeAtSymbol password-option" checked> @</label>
+                                    <label><input type="checkbox" id="includeDollarSymbol" class="includeDollarSymbol password-option" checked> $</label>
+                                    <label><input type="checkbox" id="includePercentSymbol" class="includePercentSymbol password-option" checked> %</label>
+                                    <label><input type="checkbox" id="includeW" class="includeW password-option" checked> W</label>
+                                    <label><input type="checkbox" id="includeExclamationMark" class="includeExclamationMark password-option" checked> !</label>
+                                    <label><input type="checkbox" id="includeHashTag" class="includeHashTag password-option" checked> #</label>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="copyButton">Копіювати</button>
+                <button id="mailButton">Відіслати на пошту</button>
+            </div>
+
+            <div id="modal-window-email" class="modal-window-email">
+                <div class="modal-window-content">
+                    <span id="close-modal-button" class="close-modal-button">&times;</span>
+                    <form id="form">
+                        <input type="hidden" name="generated_password" id="generated_password">
+                        <input type="hidden" name="input-mail-text" id="input-mail-text">
+                        <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
+                        <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва додатку, для використання пароля">
+                        <input type="text" name="url-mail-text" id="url-mail-text" class="url-mail-text" placeholder="Посилання на сайт">
+                        <div class="radio-buttons">
+                            <label>
+                                <input id="radioSiteName" type="radio" name="radioEmailChoice"> Назва додатку
+                            </label>
+                            <label>
+                                <input id="radioPassword" type="radio" name="radioEmailChoice"> Пароль
+                            </label>
+                        </div>
+                        <button type="submit" id="sendMailButton">Надіслати</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
 
 
 
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
 
+    <script>
+        emailjs.init('A1vFINPNxYpferYaH')
+    </script>
 
-
-a {
-    text-decoration: none;
-    color: #888888;
-    transition: color 0.3s ease;
-}
-a:hover {
-    color: #7cd3a4;
-}
-.hidden {
-    display: none;
-}
-.rotate {
-    transform: rotate(180deg);
-}
+    <script src="Wproverka-scripts.js"></script>
+</body>
+</html>
