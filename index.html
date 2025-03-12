@@ -1,441 +1,882 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index-main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@100..900&display=swap" rel="stylesheet">
-    <title>Генератор паролів</title>
-    <style>
-    </style>
-</head>
-<body>
-    <div class="fixed-header">
-        <p class="text-fixed-header">
-            <a href="#header" id="scroll-link">
-                Головна сторінка
-            </a>
-        </p>
-        <p class="text-fixed-header-page">
-            <a href="password-importance.html">
-                Важливість надійного пароля
-            </a>
-        </p>
-        <p class="text-fixed-header">
-            <a href="#symbols-transliterate-list" id="scroll-link">
-                Список символів транслітерації
-            </a>
-        </p>
-        <p class="text-fixed-header">
-            <a href="#author-information">
-                Про автора
-            </a>
-        </p>
-   <!-- <svg class="moon-icon" height="25px" width="25px" viewBox="0 0 47.539 47.539">
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier"> 
-                        <g>
-                            <g>
-                                <path style="fill:#d2cfe7;" d="M24.997,47.511C11.214,47.511,0,36.298,0,22.515C0,12.969,5.314,4.392,13.869,0.132 
-                                    c0.385-0.191,0.848-0.117,1.151,0.186s0.381,0.766,0.192,1.15C13.651,4.64,12.86,8.05,12.86,11.601 
-                                    c0,12.681,10.316,22.997,22.997,22.997c3.59,0,7.033-0.809,10.236-2.403c0.386-0.191,0.848-0.117,1.151,0.186 
-                                    c0.304,0.303,0.381,0.766,0.192,1.15C43.196,42.153,34.597,47.511,24.997,47.511z M12.248,3.372C5.862,7.608,2,14.709,2,22.515 
-                                    c0,12.68,10.316,22.996,22.997,22.996c7.854,0,14.981-3.898,19.207-10.343c-2.668,0.95-5.464,1.43-8.346,1.43 
-                                    c-13.783,0-24.997-11.214-24.997-24.997C10.861,8.761,11.327,6.005,12.248,3.372z">
-                                </path> 
-                            </g> 
-                        </g> 
-                    </g>
-        </svg> -->
-    </div>
+/* Основні стилі */
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("./fonts/Inter-VariableFont_opsz,wght.ttf");
+}
+html {
+    scroll-behavior: smooth;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    font-family: "Oswald", sans-serif;
+    position: relative;
+    background: #121419;
+    color: #FFFFFF;
+    min-height: 100vh;
+    min-width: 100%;
+    overflow-x: hidden;
+}
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.fixed-header {
+    font-family: "Geologica", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    font-size: 1.15em;
+    box-sizing: border-box;
+    top: 0;
+    height: 55px;
+    width: 100%;
+    background: #121419;
+    box-shadow: 0 0.1em #223446;
+    z-index: 1000;
+    gap: 5.5em;
+}
 
-    <main>
-        <div class="button-box-complexity">
-            <button id="leetspeak-button">Leetspeak</button>
-            <button id="mneme-button">Мнемонічний</button>
-            <button id="ukrainian-alike-button">Маскувальний</button>
-            <button id="random-button">Випадковий</button>
-        </div>
-        <div class="container">
-            
-            <div id="header" class="text-box-container">
-                <h1 class="text-header">Генератор паролів <strong>TranslitPass</strong></h1>
-                <h2 class="text-header-secondary">Отримайте надійний пароль, який буде <strong>легко запам’ятати</strong></h2>
-                <h3 class="text-header-paragraph">
-                    <a href="#section-nav-two" id="scroll-link">
-                        Як це працює?
-                    </a>
-                </h3>
-                <!-- <h3 class="text-header-paragraph">За допомогою багатого вибору умов та правил, алгоритми транслітерації зможуть перетворити ваші слова на надійний та сильний пароль, який буде легко запам'ятати
-                </h3> -->
-            </div>
-            
+.text-header {
+    font-family: "Geologica";
+    text-align: center;
+    font-weight: 550;
+    font-size: 2em;
+    color: #FFFFFF;
+}
 
+.text-header-secondary {
+    font-family: "Inter";
+    text-align: center;
+    margin-top: 0.35em;
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    font-weight: 250;
+}
 
-            <div class="inputs-box-container">
+/* .text-header-paragraph {
+    width: 25em;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFFFFF;
+    font-weight: 200;
+    text-decoration: underline;
+} */
 
-                <div class="upper-section">
-                    <div class="upper-section-secondary">
-                        <input type="text" class="inputText" id="inputText" maxlength="35" placeholder="Введіть текст українською" value="" 
-                        spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off">
-                        
-                        <button id="generateButton">Згенерувати пароль</button>
-                    </div>
-                </div>
+.text-header, .text-header-secondary, .text-header-paragraph {
+    letter-spacing: 0.5px;
+}
 
-                <div class="middle-section">
-                    <div class="password-length-box">
-                        <label class="password-length-text" for="passwordLength">Довжина пароля:</label>
-                        <div class="slider-container">
-                            <span class="lengthValue" id="lengthValue">0</span>
-                            <input type="range" id="passwordLength" min="0" max="35" value="0">
-                        </div>
-                    </div>
-                    
-                    <div class="checkbox-complexity">
-                        <label class="includeUppercase" for="includeUppercase">
-                            <input type="checkbox" id="includeUppercase" checked> Великі літери
-                        </label>
-                        
-                        <label class="includeSpaceReplacements" for="includeSpaceReplacements">
-                            <input type="checkbox" class="password-option" id="includeSpaceReplacements" checked> Символи-роздільники
-                            <div class="space-dropdown-menu">
-                                <button onclick="toggleSpaceDropdown()" class="toggleSpaceReplacements">
-                                    <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
-                                </button>
-                                <div id="space-dropdown-content" class="space-dropdown-content">
-                                    <div class="space-dropdown-content-inside">
-                                        <label><input type="checkbox" id="includeDot" class="includeDot password-option" checked> .</label>
-                                        <label><input type="checkbox" id="includeMinus" class="includeMinus password-option" checked> -</label>
-                                        <label><input type="checkbox" id="includePlus" class="includePlus password-option" checked> +</label>
-                                        <label><input type="checkbox" id="includeUnderscore" class="includeUnderscore password-option" checked> _</label>
-                                        <label><input type="checkbox" id="includeColon" class="includeColon password-option" checked> :</label>
-                                        <label><input type="checkbox" id="includeSemicolon" class="includeSemicolon password-option" checked> ;</label>
-                                        <label><input type="checkbox" id="includeSlash" class="includeSlash password-option" checked> /</label>
-                                        <label><input type="checkbox" id="includeAmbersant" class="includeAmbersant password-option" checked> &</label>
-                                    </div>
-                                </div>
-                            </div>                                
-                        </label>
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #20232c;
+    width: 90%;
+    max-width: 960px;
+    min-width: 320px;
+    padding: 1em 0 2em 0;
+    border-radius: 0 0 2em 2em;
+}
+.button-box-complexity {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 6em;
+    width: 90%;
+    max-width: 960px;
+}
+.button-box-complexity button {
+    font-family: "Geologica";
+    font-weight: 350;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
+    padding: 0.75rem;
+    background-color: #20232c;
+    background: linear-gradient(to bottom, #171920, #20232c);
+    color: white;
+    border: none;
+    border-radius: 2em 2em 0 0;
+    cursor: pointer;
+}
+#leetspeak-button {
+    cursor: default;
+}
+#mneme-button, #ukrainian-alike-button, #random-button {
+    background-color: #16191f;
+    background: linear-gradient(to bottom, #15171d, #16191f);
+    transition: ease 0.2s;
+}
+#mneme-button:hover, #ukrainian-alike-button:hover, #random-button:hover {
+    color: #c7d4ff;
+}
 
-                        <label class="includeNumbers" for="includeNumbers">
-                            <input type="checkbox" class="password-option" id="includeNumbers" checked> Цифри
-                            <div class="numbers-dropdown-menu">
-                                <button onclick="toggleNumbersDropdown()" class="toggleNumbers">
-                                    <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
-                                </button>
-                                <div id="numbers-dropdown-content" class="numbers-dropdown-content">
-                                    <div class="numbers-dropdown-content-inside">
-                                        <label><input type="checkbox" id="includeZero" class="includeZero password-option" checked> 0</label>
-                                        <label><input type="checkbox" id="includeOne" class="includeOne password-option" checked> 1</label>
-                                        <label><input type="checkbox" id="includeThree" class="includeThree password-option" checked> 3</label>
-                                        <label><input type="checkbox" id="includeFour" class="includeFour password-option" checked> 4</label>
-                                        <label><input type="checkbox" id="includeFive" class="includeFive password-option" checked> 5</label>
-                                        <label><input type="checkbox" id="includeSix" class="includeSix password-option" checked> 6</label>
-                                        <label><input type="checkbox" id="includeSeven" class="includeSeven password-option" checked> 7</label>
-                                        <label><input type="checkbox" id="includeEight" class="includeEight password-option" checked> 8</label>
-                                        <label><input type="checkbox" id="includeNine" class="includeNine password-option" checked> 9</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
+.text-box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3em;
+}
 
-                        <label class="includeSymbols password-option" for="includeSymbols">
-                            <input type="checkbox" class="password-option" id="includeSymbols" checked> Символи
-                            <div class="symbols-dropdown-menu">
-                                <button onclick="toggleSymbolsDropdown()" class="toggleSymbols">
-                                    <img class="arrow-down-svg" src="./fonts/arrow-down-339-svgrepo-com.svg">
-                                </button>
-                                <div id="symbols-dropdown-content" class="symbols-dropdown-content">
-                                    <div class="symbols-dropdown-content-inside">
-                                        <label><input type="checkbox" id="includeAtSymbol" class="includeAtSymbol password-option" checked> @</label>
-                                        <label><input type="checkbox" id="includeDollarSymbol" class="includeDollarSymbol password-option" checked> $</label>
-                                        <label><input type="checkbox" id="includePercentSymbol" class="includePercentSymbol password-option" checked> %</label>
-                                        <label><input type="checkbox" id="includeW" class="includeW password-option" checked> W</label>
-                                        <label><input type="checkbox" id="includeExclamationMark" class="includeExclamationMark password-option" checked> !</label>
-                                        <label><input type="checkbox" id="includeHashTag" class="includeHashTag password-option" checked> #</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                        
-                    </div>
-                </div>
-            
-                <div class="bottom-section">
-                    <div class="password-container">
-                        <div id="outputPassword" contenteditable="true"></div>
-                        <div id="strengthBarContainer">
-                            <div id="strengthBar"></div>
-                        </div>
-                        <div id="strengthValueContainer">
-                            <p id="strengthMessage">Сила пароля</p>
-                            <div class="horizontal-line"></div>
-                            <p id="strengthQuantity">Кількість можливих паролів</p>
-                            <p id="strengthTime">Час для взлому</p>
-                        </div>
-                    </div>
-                    <div class="button-container">
-                        <button id="copyButton">Копіювати</button>
-                        <button id="mailButton">Відіслати на пошту</button>
-                    </div>
-                </div>
-                
-                <div id="modal-window-email" class="modal-window-email">
-                    <div class="modal-content">
-                        <span id="close-modal-button" class="close-modal-button">&times;</span>
-                        <form id="form">
-                            <input type="hidden" name="generated_password" id="generated_password">
-                            <input type="hidden" name="input-mail-text" id="input-mail-text">
-                            <input type="text" name="email-mail-text" id="email-mail-text" class="email-mail-text" placeholder="Ваша електронна пошта">
-                            <input type="text" name="site-mail-text" id="site-mail-text" class="site-mail-text" placeholder="Назва додатку, для використання пароля">
-                            <input type="text" name="url-mail-text" id="url-mail-text" class="url-mail-text" placeholder="Посилання на сайт">
-                            <div class="radio-buttons">
-                                <label>
-                                    <input id="radioSiteName" type="radio" name="radioEmailChoice"> Назва додатку
-                                </label>
-                                <label>
-                                    <input id="radioPassword" type="radio" name="radioEmailChoice"> Пароль
-                                </label>
-                            </div>
-                            <button type="submit" id="sendMailButton">Надіслати</button>
-                        </form>
-                    </div>
-                </div>
+.inputs-box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+.upper-section, .middle-section, .bottom-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.upper-section-secondary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+    margin-bottom: 4em;
+}
+.middle-section {
+    width: 100%;
+}
+.bottom-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.button-container {
+    display: flex;
+    gap: 40px;
+}
+
+input[type="text"], input[type="range"] {
+    width: 90%
+}
+#ul-strong-password {
+    font-size: 0.9em;
+    margin-left: 2em;
+}
+
+/* Поле введеня слів */
+#inputText {
+    -webkit-appearance: none;
+    outline: none;
+    appearance: none;
+    word-break: break-all;
+    font-family: "Geologica", sans-serif;
+    font-size: 1rem;
+    width: 21em;
+    min-height: 2em;
+    max-width: 100%;
+    padding: 0.4em 1em 0.7em 1em;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);;
+    color: aliceblue;
+}
 
 
-            </div>
-        </div>
-    
-        <div class="polygon-wrap">
-            <div class="lime-svg-polygon">
-                <div class="data-cards-complexity">
-                    
-                    <a class="card" id="card-one" href="https://www.eset.com/ua/home/generator-paroley/?srsltid=AfmBOooAYyHSWmLRiwNkODiCisl1h4qzR_2vEAg18taG3oWdBWRlDE2m">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NOSVxIzCCcajA4maAJ53ObJ7hggReDUh2w&s">
-                        <div class="card-text">
-                            <h4>Eset</h4>
-                            <p>Відвідати...</p>
-                        </div>
-                    </a>
-                    <a class="card" id="card-two" href="https://www.avast.ua/random-password-generator#pc">
-                        <img src="https://1000logos.net/wp-content/uploads/2020/09/Avast-Logo-2014.png">
-                        <div class="card-text">
-                            <h4>Avast</h4>
-                            <p>Відвідати...</p>
-                        </div>
-                    </a>
-                    <a class="card" id="card-three" href="https://www.expressvpn.com/ua/password-generator">
-                        <img src="https://i.pcmag.com/imagery/reviews/017J2F0SqocSaCiuU25mVZe-46.fit_lim.size_1050x591.v1701449178.png">
-                        <div class="card-text">
-                            <h4>Express VPN</h4>
-                            <p>Відвідати...</p>
-                        </div>
-                    </a>
-                    <a class="card" id="card-four" href="https://proton.me/pass/password-generator">
-                        <img src="https://i.pcmag.com/imagery/reviews/066pfhdQmzHcmyEMaZtToWq-77..v1653509931.jpg">
-                        <div class="card-text">
-                            <h4>Proton VPN</h4>
-                            <p>Відвідати...</p>
-                        </div>
-                    </a>
-                    
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="triangle-wrap">
-            <span style="visibility: hidden;">TEXT</span>
-        </div>
-        <div class="container-secondary">
-            
-            <div id="section-nav-two" class="data-container-generator-info">
-                <div class="text-data-header">
-                    <h1>Як працює цей алгоритм генерації паролів?</h1>
-                </div>
-                <div class="text-data-main">
-                    <h2>
-                        Алгоритм створення пароля використовує різні правила, такі як використання великих літер, цифр та спеціальних символів.
-                    </h2> 
-                    <h2>
-                        Великі літери завжди будуть на початку кожного слова, а якщо ви ввели лише одне слово, то на початку та в кінці. Це полегшить їхнє запам'ятовування.
-                        <strong>
-                            Великі літери, які ви вводите, зберігатимуть свій регістр при транслітерації їх у пароль.
-                        </strong>
-                    </h2> 
-                    <h2>
-                        Генерування символів та цифр відбувається шляхом транслітерації українських літер на схожі за видом, тобто аналогічні символи та цифри.
-                    </h2> 
-                    <h2>
-                        <strong>
-                            Для прикладу: буква "а" схожа на "@" або "4"; Буква "с" схожа на "s" або "$". З повною таблицею усіх символів для транслітерації ви можете ознайомитись нижче.
-                        </strong>
-                    </h2> 
-                    <h2>Вибір цифр та символів, які можна використовувати алгоритму, можна налаштувати в спадному меню біля вибору символів.</h2> 
-                    <h2>Ви можете налаштовувати довжину пароля шляхом збільшення довжини вашої фрази.</h2>
-                    <h2>
-                        <strong>
-                            Ви також можете вручну змінити згенерований алгоритмом пароль відповідно до ваших особистих потреб.
-                        </strong>
-                    </h2>
-                </div>
-
-                <div id="symbols-transliterate-list" class="text-data-header-grid">
-                    <h1>Список символів та чисел для транслітерації</h1>
-                </div>
-                <div class="grid-symbols-numbers">
-                    <div class="text-data-symbols-list">
-                        <h2 class="symbols-list">
-                            а, А  -  @
-                        </h2>
-                        <h2 class="symbols-list">
-                            с, С  -  $
-                        </h2>
-                        <h2 class="symbols-list">
-                            і, І  -  !
-                        </h2>
-                        <h2 class="symbols-list">
-                            ф, Ф -  %
-                        </h2>
-                        <h2 class="symbols-list">
-                            ш, Ш  -  w, W
-                        </h2>
-                        <h2 class="symbols-list">
-                            н, Н  -  #
-                        </h2>
-                    </div>
-                    <div class="text-data-numbers-list">
-                        <h2 class="numbers-list">
-                            о, О  -  0
-                        </h2>
-                        <h2 class="numbers-list">
-                            і, І  -  1
-                        </h2>
-                        <h2 class="numbers-list">
-                            з, З  -  3
-                        </h2>
-                        <h2 class="numbers-list">
-                            ч, Ч  -  4
-                        </h2>
-                        <h2 class="numbers-list">
-                            с, С  -  5
-                        </h2>
-                        <h2 class="numbers-list">
-                            б, Б  -  6
-                        </h2>
-                        <h2 class="numbers-list">
-                            т, Т  -  7
-                        </h2>
-                        <h2 class="numbers-list">
-                            в, В  -  8
-                        </h2>
-                        <h2 class="numbers-list">
-                            я, Я  -  9
-                        </h2>
-                    </div>
-                </div>
-                    
-                
-                
-
-
-                <div id="author-information" class="text-data-header">
-                    <h1>Про автора сайту</h1>
-                </div>
-                <div class="text-data-main">
-                    <h2>
-                        <strong>
-                            Автор сайту
-                        </strong>
-                    </h2>
-                    <h2>
-                        Максим Драгомарецький
-                    </h2>
-                    <h2 style="margin-bottom: 60px;">
-                        Учень 11 класу Наукового ліцею "Політ" при Обласному коледжі "Кременчуцької
-                        гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради.
-                    </h2>
-                    <h2>
-                        <strong>
-                            Науковий керівник
-                        </strong>
-                    </h2>
-                    <h2>
-                        Лисенко Тетяна Іванівна
-                    </h2>
-                    <h2>
-                        Викладач Обласного коледжу "Кременчуцької гуманітарно-технологічної академії імені А.С. Макаренка" Полтавської обласної ради.
-                    </h2>
-                </div>
-            </div>
-            
-            
-        </div>
-
-        <footer id="footer">
-            <div class="footer-block-text-main">
-                <h2>
-                    <strong class="strong-h2" style="color: aliceblue;">
-                        Генератор паролів
-                    </strong>
-                </h2>
-            </div>
-            <div class="footer-block-text-secondary">
-                <p>
-                    +380-50-808-1116
-                </p>
-                <p>
-                    prostoribamaxam@gmail.com
-                </p>
-            </div>
-    
-            <div class="footer-block-text-one">
-                <p class="text-footer">
-                    <a href="#header" id="scroll-link">
-                        Головна сторінка
-                    </a>
-                </p>
-                <p class="text-footer">
-                    <a href="password-importance.html">
-                        Важливість надійного пароля
-                    </a>
-                </p>
-            </div>
-    
-            <div class="footer-block-text-two">
-                <p class="text-footer" style="margin-right: -2em">
-                    <a href="#symbols-transliterate-list" id="scroll-link">
-                        Список символів транслітерації
-                    </a>
-                </p>
-                <p class="text-footer">
-                    <a href="#author-information">
-                        Про автора
-                    </a>
-                </p>
-            </div>
-        </footer>
-    </main>
+#strengthBarContainer {
+    height: 5px;
+    width: 38.em;
+    background-color: rgba(80, 80, 80, 0.25);
+    border-radius: 0 0 8px 8px;
+}
+#strengthBar {
+    height: 100%;
+    width: 0;
+    border-radius: 0 0 8px 8px;
+    background-color: red;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+#strengthMessage {
+    margin-top: 7px;
+    font-family: "Geologica", sans-serif;
+    color: rgba(180, 180, 180, 0.4);
+    font-size: 16px;
+    text-align: center;
+}
+#strengthQuantity {
+    margin-top: 7px;
+    font-family: "Geologica", sans-serif;
+    color: rgba(180, 180, 180, 0.4);
+    font-size: 16px;
+    text-align: center;
+}
+#strengthTime {
+    margin-top: 7px;
+    margin-bottom: 5px;
+    font-family: "Geologica", sans-serif;
+    color: rgba(180, 180, 180, 0.4);
+    font-size: 16px;
+    text-align: center;
+}
 
 
 
+#generateButton {
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 1.1rem;
+    padding: 0.6em 2em 0.6em 2em;
+    width: 20em;
+    word-break: keep-all;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 1px #A4FFA4;
+    border-radius: 3em;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #E0E0E0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+#generateButton:hover {
+    transform: scale(1.02);
+    color: #121419;
+    background-color: #A4FFA4;
+}
+
+/* Повзунок */
+.password-length-box {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5em;
+    margin-bottom: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-container {
+    position: relative;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 
-    <script 
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    width: 100%;
+    background: #555;
+    border-radius: 5px;
+    outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #A4FFA4;
+    cursor: pointer;
+}
+#passwordLength {
+    transition: all 2s ease-in-out;
+}
+
+.lengthValue {
+    box-sizing: border-box;
+    position: absolute;
+    top: -3.5em;
+    width: 8em;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    font-family: "Geologica";
+    font-weight: 300;
+    font-size: 1em;
+    color: aliceblue;
+}
+.password-length-text {
+    font-family: "Geologica";
+    font-weight: 350;
+    font-size: 1.3em;
+    margin-right: 1em;
+    letter-spacing: 0.5px;
+}
 
 
-    <script>
-        emailjs.init('A1vFINPNxYpferYaH')
-    </script>
+
+.checkbox-complexity {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    row-gap: 1.5em;
+    column-gap: 0.5em;
+    justify-items: start;
+    margin-bottom: 2em;
+}
+.checkbox-complexity label {
+    box-sizing: border-box;
+    width: auto;
+}
+
+input[type="checkbox"] {
+    box-sizing: border-box;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-top: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 0.1em solid #A4FFA4;
+    border-radius: 7px;
+    box-shadow: 0px 2px 4px 0px rgba(7, 29, 43, 0.12) inset;
+    position: relative;
+    cursor: pointer;
+}
+input[type="checkbox"]:checked::before {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    width: 28px;
+    height: 28px;
+    background-color: white;
+    clip-path: path("M20.6097 5.20743C21.0475 5.54416 21.1294 6.17201 20.7926 6.60976L10.7926 19.6098C10.6172 19.8378 10.352 19.9793 10.0648 19.9979C9.77765 20.0166 9.49637 19.9106 9.29289 19.7072L4.29289 14.7072C3.90237 14.3166 3.90237 13.6835 4.29289 13.2929C4.68342 12.9024 5.31658 12.9024 5.70711 13.2929L9.90178 17.4876L19.2074 5.39034C19.5441 4.95258 20.172 4.87069 20.6097 5.20743Z");
+}
+.includeUppercase, .includeSpaceReplacements, .includeNumbers, .includeSymbols {
+    user-select: none;
+    font-family: "Geologica";
+    font-weight: 350;
+}
+
+/* Кнопка генерації пароля */
+button {
+    font-family: "Geologica";
+    font-weight: 350;
+    font-size: 1.3em;
+    letter-spacing: 0.5px;
+    padding: 0.75rem;
+    background-color: #223446;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Виведення пароля */
+#outputPassword {
+    -webkit-appearance: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    outline: none;
+    appearance: none;
+    letter-spacing: 0.07em;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "Geologica", sans-serif;
+    font-weight: bold;
+    font-size: 1.3em;
+    width: 25em;
+    min-height: 1.7em;
+    max-width: 100%;
+    padding: 0.5em 1.7em 0.6em 1.7em;
+    border: none;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 8px 8px 0 0;
+    background-color: rgba(0, 0, 0, 0.2);;
+    color: aliceblue;
+}
+.outputPassword-inner-text {
+    font-family: "Geologica", sans-serif;
+    font-weight: 300;
+    font-size: 0.95em;
+    letter-spacing: -0.5px;
+    color:rgba(165, 165, 165, 0.6)
+}
+#copyButton, #mailButton, #sendMailButton {
+    -webkit-appearance: none;
+    appearance: none;
+    font-size: 1.1rem;
+    padding: 0.6em 1.5em 0.6em 1.5em;
+    width: 12em;
+    word-break: keep-all;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 2px #223446;
+    border-radius: 3em;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #E0E0E0;
+    transition: transform 0.3s ease, background-color 0.3s ease-in-out;
+}
+#sendMailButton {
+    box-shadow: inset 0 0 0 2px #435a72;
+    transition: background-color 0.2s ease-in-out;
+}
+#copyButton:hover, #mailButton:hover {
+    transform: scale(1.02);
+    color: #223446;
+    background-color: #89acce;
+}
+#sendMailButton:hover {
+    background-color: #2a3f53;
+}
+#mailButton {
+    width: 14em;
+}
+/* Дроп-даун меню */
+.toggleSymbols, .toggleSpaceReplacements, .toggleNumbers {
+    margin-left: 0.7em;
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 0 1px #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    width: 34px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.arrow-down-svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+
+.numbers-dropdown-menu, .symbols-dropdown-menu, .space-dropdown-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.numbers-dropdown-content, .symbols-dropdown-content, .space-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-width: 180px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    top: 100%;
+    border-radius: 0.7em;
+}
+
+.numbers-dropdown-content label, .symbols-dropdown-content label, .space-dropdown-content label {
+    box-sizing: border-box;
+    text-align: center;
+    appearance: none;
+    color: aliceblue;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    border-radius: 0.7em;
+}
+
+.numbers-dropdown-content label:hover, .symbols-dropdown-content label:hover, .space-dropdown-content label:hover {
+    background-color: #a3a3a3;
+    color:#121419;
+}
+
+.symbols-dropdown-content-inside, .space-dropdown-content-inside {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.numbers-dropdown-content {
+    min-width: 250px;
+}
+.numbers-dropdown-content-inside {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.numbers-dropdown-content-inside label, .symbols-dropdown-content-inside label, .space-dropdown-content-inside label  {
+    width: auto;
+    text-align: left;
+}
+
+.showNumbers, .showSymbols, .showSpaceReplacements {
+    display: block;
+}
+
+.text-generated-password, .password-length-text {
+    margin-bottom: 0.2em;
+}
+
+
+.email-mail-text, .site-mail-text, .url-mail-text {
+    -webkit-appearance: none;
+    outline: none;
+    appearance: none;
+    word-break: break-all;
+    font-family: "Geologica", sans-serif;
+    font-size: 1rem;
+    width: 14em;
+    min-height: 1.8em;
+    padding: 0.4em 0em 0.7em 0em;
+    text-align: center;
+    border: none;
+    box-shadow: inset 0 0 0 1px #555;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.2);;
+    color: aliceblue;
+}
+.email-mail-text:focus, .site-mail-text:focus, .url-mail-text:focus {
+    box-shadow: inset 0 0 0 1px #739fca;
+}
+.modal-window-email {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("./fonts/modal-blue-box.svg") no-repeat center center;
+    background-size: cover;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 26em;
+    height: 19em;
+    text-align: center;
+}
+#form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.3em;
+    padding-top: 1em;
+}
+.close-modal-button {
+    position: absolute;
+    top: 2px;
+    right: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-window-email.active {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.radio-buttons {
+    font-family: "Geologica";
+    display: flex;
+    flex-direction: row;
+    gap: 5em;
+}
+input[type="radio"] {
+    appearance: none;
+    --s: 1em;
+    --c: #84bae3;
+    height: calc(var(--s) * 1.5);
+    aspect-ratio: 1;
+    border: calc(var(--s) / 6) solid #617ea8;
+    padding: calc(var(--s) / 8);
+    border-radius: 50%;
+    background: #0000;
+}
+
+input[type=radio]:checked {
+    border-color: var(--c);
+    background-size: 100% 100%;
+    background: radial-gradient(farthest-side, var(--c) 92%, #0000) 50% / 100% content-box;
+}
 
 
 
-    <script src="index-scripts.js"></script>
-</body>
-</html>
+
+
+.polygon-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    margin-top: -2em;
+}
+.lime-svg-polygon {
+    background-image: url(./fonts/lime-svg-polygon.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 5em;
+    padding-bottom: 7.5em;
+    height: auto;
+    min-width: 100%;
+}
+.triangle-wrap {
+    background-image: url(./fonts/blue-triangle-container.svg);
+    min-width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 6.2em;
+    margin-top: -3em;
+}
+.data-cards-complexity {
+    display: flex;
+    flex-direction: row;
+    gap: 5.5em;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    position: relative;
+    text-decoration: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: start;
+    width: 17.5em;
+    height: 24em;
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 4px 2px 20px 0px rgba(0, 0, 0, 0.35);
+    outline: none;
+    outline-width: 0;
+    outline-style: solid;
+    outline-color: #A4FFA4;
+    transition: outline-width 0.1s ease-in-out, box-shadow 0.1s ease-out;
+}
+.card:hover {
+    outline-width: 3px;
+    box-shadow: 4px 2px 20px 0px rgba(0, 0, 0, 0.63);
+}
+.card h4, .card p {
+    color: black;
+    font-family: Geologica, sans-serif;
+}
+.card h4 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+.card p {
+    margin-top: 5.5em;
+    font-weight: 400;
+}
+.card-text {
+    padding-top: 1.35em;
+    width: 13.5em;
+    box-shadow: 0 -1px 0 #949494;
+}
+.card::after {
+    content: '➔';
+    position: absolute;
+    right: 1.5em;
+    bottom: 1.5em;
+    font-size: 24px;
+    color: black;
+    transition: transform 0.3s;
+}
+
+.card:hover::after {
+    transform: translateX(15px);
+}
+.data-cards-complexity img {
+    padding: 0 0.5em;
+    box-sizing: border-box;
+    width: 100%;
+    height: 45%;
+    border-radius: 1em 1em 0 0;
+}
+
+.container-secondary {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 7em;
+}
+.data-container-generator-info {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: auto;
+    background: #181A21;
+    text-align: start
+}
+.text-data-header{
+    text-align: center;
+    width: 50%;
+    margin-bottom: 2.3em;
+}
+
+.text-data-header h1, .text-data-header-grid h1 {
+    width: 100%;
+    font-family: "Geologica", sans-serif;
+    font-size: 3.3em;
+    font-weight: 550;
+}
+.text-data-main {
+    text-align: start;
+    width: 45vw;
+    margin-bottom: 4em;
+}
+.text-data-main h2 {
+    margin-bottom: 1.4em;
+    font-family: "Geologica", sans-serif;
+    font-size: 1.2em;
+    font-weight: 100;
+}
+
+.text-data-header-grid {
+    text-align: center;
+    width: 50%;
+    margin-bottom: 2.3em;
+}
+.text-data-header-grid:target {
+    scroll-margin-top: 100px;
+}
+.grid-symbols-numbers {
+    width: 35%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4em;
+    margin-bottom: 4em;
+}
+.text-data-symbols-list,  .text-data-numbers-list{
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 25px rgba(0, 0, 0, 0.75);
+    border: 1px solid white;
+    border-radius: 2em;
+    text-align: start;
+    margin-bottom: 5.5em;
+    grid-column: 1/2;
+    padding-bottom: 1em;
+}
+.text-data-numbers-list {
+    grid-column: 2/3;
+}
+.text-data-symbols-list .symbols-list, .text-data-numbers-list .numbers-list {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 1em;
+    font-family: "Geologica", sans-serif;
+    font-size: 1.3em;
+    font-weight: 450;
+}
+
+
+
+.text-footer {
+    margin-bottom: 1em;
+}
+
+footer {
+    font-family: "Geologica", sans-serif;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: 1fr 1fr;
+    padding: 1em 0;
+    align-items: center;
+    position: absolute;
+    box-sizing: border-box;
+    bottom: 0;
+    height: 8em;
+    width: 100%;
+    background: #0e1014;
+    box-shadow: 0 -1px #223446;
+    z-index: 1000;
+}
+.footer-block-text-main {
+    grid-column: span 8;
+    grid-row: 1/2;
+    text-align: center;
+}
+.footer-block-text-secondary {
+    font-weight: 400;
+    font-size: 1em;
+    grid-column: 2/4;
+    grid-row: 2/3;
+}
+.footer-block-text-one {
+    grid-column: span 2;
+    grid-row: 1/3;
+    text-align: left;
+}
+.footer-block-text-two {
+    grid-column: span 2;
+    grid-row: 1/3;
+    text-align: left;
+}
+
+
+
+
+label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #E0E0E0;
+    font-weight: 500;
+    font-size: 1.1em;
+    cursor: pointer;
+    gap: 0.5rem;
+}
+
+h2 {
+    color: aliceblue;
+}
+a {
+    text-decoration: none;
+    color: #bfd3e6;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #A0A0B0;
+}
+a:active {
+    color: #acbffc;
+}
+li a {
+    color: #d4ebff;
+    text-decoration: underline;
+}
+
+
+
+
+
+.moon-icon {
+    display: flex;
+    position: absolute;
+    right: 12em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.moon-icon:hover {
+    transform: rotate(45deg);
+}
