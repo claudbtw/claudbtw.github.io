@@ -55,7 +55,8 @@ function updatePassword() {
 document.getElementById("generateButton").addEventListener("click", updatePassword);
 document.getElementById("passwordLength").addEventListener("input", updatePassword);
 
-["includeUppercase", "includeNumbers", "includeSymbols", "includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", "includeW", 
+
+["includeUppercase", "includeNumbers", "includeSymbols", "includeSpaceReplacements", "includeAtSymbol", "includeDollarSymbol", "includePercentSymbol", "includeW", 
     "includeExclamationMark", "includeHashTag", "includeZero", "includeOne", "includeThree", "includeFour", "includeFive", "includeSix", 
     "includeSeven", "includeEight", "includeNine", "includeDot", "includeMinus", "includePlus", "includeUnderscore", "includeColon", 
     "includeSemicolon", "includeSlash", "includeAmbersant" ].forEach(id => {
@@ -185,18 +186,22 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
 
     if (includeUppercase && password.length > 0) {
         let words = password.split(' ');
-        
+    
         if (words.length === 1) {
-            let firstLetter = password[0].toUpperCase();
-            let lastLetter = password.slice(-1).toUpperCase();
-            let middleSection = password.slice(1, -1);
-
-            password = firstLetter + middleSection + lastLetter;
+            if (password.length === 1) {
+                password = password.toUpperCase();
+            } else {
+                let firstLetter = password[0].toUpperCase();
+                let lastLetter = password.slice(-1).toUpperCase();
+                let middleSection = password.slice(1, -1);
+    
+                password = firstLetter + middleSection + lastLetter;
+            }
         } else {
             password = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
         }
     }
-
+    
     return password;
 }
 
@@ -208,7 +213,30 @@ function generatePassword(transliterated, length, includeUppercase, includeSpace
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const hideButton = document.querySelector(".hide-settings-button");
+    const settingsBox = document.querySelector(".settings-box-wrap");
+    const arrowIcon = document.querySelector(".arrow-down-svg");
 
+    hideButton.addEventListener("click", function () {
+        settingsBox.classList.toggle("hidden");
+
+        arrowIcon.classList.toggle("rotate");
+    });
+});
+
+document.getElementById("copyButton").addEventListener("click", function() {
+    const password = document.getElementById('outputPassword').innerText;
+
+    if (!password) {
+        alert("Пароль не згенеровано.");
+        return;
+    }
+
+    navigator.clipboard.writeText(password).then(() => {
+        alert("Пароль успішно скопійовано!");
+    })
+});
 
 // Виключення/включення чекбоксів
 function handleCheckboxGroup(majorCheckboxId, minorCheckboxSelector) {
@@ -394,15 +422,15 @@ document.getElementById("inputText").addEventListener("input", recalculateStreng
 
 
 function countPasswordVariants(phrase) {
-    const transliterationMap = { 
-        "а": "a", "б": "b", "в": "v", "г": "h", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
+    const transliterationMap = {
+        "а": "a", "б": "b", "в": "v", "г": "g", "ґ": "g", "д": "d", "е": "e", "є": "ie", "ж": "zh",
         "з": "z", "и": "y", "і": "i", "ї": "yi", "й": "i", "к": "k", "л": "l", "м": "m", "н": "n", 
-        "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "kh", "ц": "ts",
-        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya",
-        "А": "A", "Б": "B", "В": "V", "Г": "H", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH",
+        "о": "o", "п": "p", "р": "r", "с": "s", "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "ts",
+        "ч": "ch", "ш": "sh", "щ": "shch", "ю": "yu", "я": "ya", "ь": "'", "ы": "", "ъ": "", "э": "",
+        "А": "A", "Б": "B", "В": "V", "Г": "G", "Ґ": "G", "Д": "D", "Е": "E", "Є": "IE", "Ж": "ZH",
         "З": "Z", "И": "Y", "І": "I", "Ї": "YI", "Й": "I", "К": "K", "Л": "L", "М": "M", "Н": "N",
-        "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "KH", "Ц": "TS",
-        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA"
+        "О": "O", "П": "P", "Р": "R", "С": "S", "Т": "T", "У": "U", "Ф": "F", "Х": "H", "Ц": "TS",
+        "Ч": "CH", "Ш": "SH", "Щ": "SHCH", "Ю": "YU", "Я": "YA", "Ь": "'", "Ы": "", "Ъ": "", "Э": ""
     };
 
     const replacementsNumbers = {};
@@ -521,54 +549,31 @@ document.getElementById("inputText").addEventListener("input", function() {
     const passwordLength = transliteratedText.length;
 
     let slider = document.getElementById("passwordLength");
+    let passwordLengthText = document.getElementById("passwordLengthText");
     let lengthText = document.getElementById("lengthValue");
 
-    let targetValue = passwordLength;
     let color;
 
     if (passwordLength === 0) {
         color = "#555";
     } else if (passwordLength <= 6) {
         color = "red";
-    } else if (passwordLength <= 11) {
+    } else if (passwordLength <= 9) {
         color = "#e77d22";
-    } else if (passwordLength <= 15) {
-        color = "#fce205";
+    } else if (passwordLength <= 12) {
+        color = "#ecd823";
+    } else if (passwordLength <= 16) {
+        color = "#5dc566";
     } else {
         color = "green";
     }
 
-    function smoothSlide() {
-        let currentValue = parseInt(slider.value);
-        if (currentValue !== targetValue) {
-            let step = currentValue < targetValue ? 1 : -1;
-            let interval = setInterval(() => {
-                if (currentValue === targetValue) {
-                    clearInterval(interval);
-                } else {
-                    currentValue += step;
-                    slider.value = currentValue;
-                    updateSliderBackground(slider, color);
-                    lengthText.textContent = currentValue;
-                }
-            }, 15);
-        }
-    }
+    passwordLengthText.style.color = color
+    lengthValue.style.color = color
 
-    smoothSlide();
-    updateSliderBackground(slider, color);
-
-    slider.disabled = true;
+    slider.value = passwordLength;
+    lengthText.textContent = passwordLength;
 });
-
-function updateSliderBackground(slider, color) {
-    let min = slider.min || 0;
-    let max = slider.max || 25;
-    let value = (slider.value - min) / (max - min) * 100;
-
-    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
-}
-
 
 
 
@@ -654,25 +659,11 @@ document.getElementById('form').addEventListener('submit', function(event) {
 });
 
 
-  
+
 
 
 // Копіювання пароля
-document.getElementById("copyButton").addEventListener("click", function() {
-    const password = document.getElementById('outputPassword').innerText;
 
-    if (!password) {
-        alert("Пароль не згенеровано.");
-        return;
-    }
-
-    navigator.clipboard.writeText(password).then(() => {
-        alert("Пароль успішно скопійовано!");
-    }).catch(err => {
-        console.error("Failed to copy password:", err);
-        alert("Не вдалося скопіювати пароль. Зпробуйте ще раз, будь ласка.");
-    });
-});
 
 const passwordDiv = document.getElementById('outputPassword');
 const passwordText = passwordDiv.innerText;
@@ -685,7 +676,6 @@ const charSets = {
     digits: 10,
     special: 32,
 };
-
 function calculateEntropy(generated_password) {
     let length = generated_password.length;
     if (length === 0) return 0;
@@ -698,52 +688,6 @@ function calculateEntropy(generated_password) {
 
     return length * Math.log2(charPool);
 }
-
-function updateStrengthIndicator(entropy) {
-    const strengthBar = document.getElementById("strengthBar");
-    const strengthMessage = document.getElementById("strengthMessage");
-    const strengthTime = document.getElementById("strengthTime");
-    const strengthQuantity = document.getElementById("strengthQuantity");
-
-    let color, width, text = "Кількість можливих паролів";
-
-    if (entropy <= 1) {
-        width = "0%";
-        color = "rgba(180, 180, 180, 0.5)";
-        text = "Сила пароля";
-    } else if (entropy > 1 && entropy <= 34) {
-        width = "20%";
-        color = "red";
-        text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy > 34 && entropy <= 54) {
-        width = "40%";
-        color = "#e77d22";
-        text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy > 54 && entropy < 70) {
-        width = "60%";
-        color = "#fce205";
-        text = `Середній, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy >= 70 && entropy < 96) {
-        width = "80%";
-        color = "lightgreen";
-        text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
-    } else if (entropy >= 96) {
-        width = "100%";
-        color = "green";
-        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
-    }
-
-    strengthBar.style.width = width;
-    strengthBar.style.backgroundColor = color;
-
-    strengthMessage.textContent = text;
-    strengthMessage.style.color = color;
-
-    strengthQuantity.style.color = color;
-    
-    strengthTime.style.color = color;
-}
-
 
 function calculateCrackTime(entropy, attemptsPerSecond = 1e12, algorithmSlowdownFactor = 1) {
     if (entropy <= 0) return "Пароль неможливо зламати.";
@@ -781,11 +725,11 @@ function calculateCrackTime(entropy, attemptsPerSecond = 1e12, algorithmSlowdown
             return "тисячоліття";
         } else if (timeInYears < 1e9) {
             return "мільйони років";
-        } else if (timeInYears < 1e12) {
+        } else if (timeInYears < 1e14) {
             return "мільярди років";
-        } else if (timeInYears < 1e15) {
+        } else if (timeInYears < 1e17) {
             return "трильйони років";
-        } else if (timeInYears < 1e18) {
+        } else if (timeInYears < 1e21) {
             return "квадрильйони років";
         } else {
             return "квінтільйони років";
@@ -793,9 +737,55 @@ function calculateCrackTime(entropy, attemptsPerSecond = 1e12, algorithmSlowdown
     }
 }
 
+function updateStrengthIndicator(entropy) {
+    const strengthBar = document.getElementById("strengthBar");
+    const strengthMessage = document.getElementById("strengthMessage");
+    const strengthTime = document.getElementById("strengthTime");
+    const strengthQuantity = document.getElementById("strengthQuantity");
+
+    let color, width, text = "Кількість можливих паролів";
+
+    if (entropy <= 1) {
+        width = "0%";
+        color = "rgba(180, 180, 180, 0.5)";
+        text = "Сила пароля";
+    } else if (entropy > 1 && entropy <= 34) {
+        width = "20%";
+        color = "red";
+        text = `Дуже слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 34 && entropy <= 54) {
+        width = "40%";
+        color = "#e77d22";
+        text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy > 54 && entropy < 70) {
+        width = "60%";
+        color = "#ecd823";
+        text = `Середній, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 70 && entropy < 96) {
+        width = "80%";
+        color = "#5dc566";
+        text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
+    } else if (entropy >= 96) {
+        width = "100%";
+        color = "green";
+        text = `Дуже сильний, ентропія: ${Math.round(entropy)} біт`;
+    }
+
+    strengthBar.style.width = width;
+    strengthBar.style.backgroundColor = color;
+
+    strengthMessage.textContent = text;
+    strengthMessage.style.color = color;
+
+    strengthQuantity.style.color = color;
+    
+    strengthTime.style.color = color;
+}
+
+
+
 
 const outputPasswordElement = document.getElementById("outputPassword");
-
 function updatePasswordEntropy() {
     const password = outputPasswordElement.innerText.trim();
     if (password) {
