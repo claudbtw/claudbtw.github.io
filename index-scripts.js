@@ -676,6 +676,7 @@ const charSets = {
     digits: 10,
     special: 32,
 };
+
 function calculateEntropy(generated_password) {
     let length = generated_password.length;
     if (length === 0) return 0;
@@ -689,59 +690,10 @@ function calculateEntropy(generated_password) {
     return length * Math.log2(charPool);
 }
 
-function calculateCrackTime(entropy, attemptsPerSecond = 1e12, algorithmSlowdownFactor = 1) {
-    if (entropy <= 0) return "Пароль неможливо зламати.";
-
-    const combinations = Math.pow(2, entropy);
-
-    const adjustedAttemptsPerSecond = attemptsPerSecond / algorithmSlowdownFactor;
-
-    const timeInSeconds = combinations / adjustedAttemptsPerSecond;
-
-    const secondsInMinute = 60;
-    const secondsInHour = secondsInMinute * 60;
-    const secondsInDay = secondsInHour * 24;
-    const secondsInMonth = secondsInDay * 30;
-    const secondsInYear = secondsInDay * 365;
-
-    if (timeInSeconds < secondsInMinute) {
-        return "секунди";
-    } else if (timeInSeconds < secondsInHour) {
-        return "хвилини";
-    } else if (timeInSeconds < secondsInDay) {
-        return "години";
-    } else if (timeInSeconds < secondsInMonth) {
-        return "дні";
-    } else if (timeInSeconds < secondsInYear) {
-        return "місяці";
-    } else {
-        const timeInYears = timeInSeconds / secondsInYear;
-
-        if (timeInYears < 100) {
-            return "роки";
-        } else if (timeInYears < 1000) {
-            return "століття";
-        } else if (timeInYears < 1e6) {
-            return "тисячоліття";
-        } else if (timeInYears < 1e9) {
-            return "мільйони років";
-        } else if (timeInYears < 1e14) {
-            return "мільярди років";
-        } else if (timeInYears < 1e17) {
-            return "трильйони років";
-        } else if (timeInYears < 1e21) {
-            return "квадрильйони років";
-        } else {
-            return "квінтільйони років";
-        }
-    }
-}
-
 function updateStrengthIndicator(entropy) {
     const strengthBar = document.getElementById("strengthBar");
     const strengthMessage = document.getElementById("strengthMessage");
     const strengthTime = document.getElementById("strengthTime");
-    const strengthQuantity = document.getElementById("strengthQuantity");
 
     let color, width, text = "Кількість можливих паролів";
 
@@ -759,11 +711,11 @@ function updateStrengthIndicator(entropy) {
         text = `Слабкий, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy > 54 && entropy < 70) {
         width = "60%";
-        color = "#ecd823";
+        color = "#fce205";
         text = `Середній, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 70 && entropy < 96) {
         width = "80%";
-        color = "#5dc566";
+        color = "lightgreen";
         text = `Сильний, ентропія: ${Math.round(entropy)} біт`;
     } else if (entropy >= 96) {
         width = "100%";
@@ -776,16 +728,62 @@ function updateStrengthIndicator(entropy) {
 
     strengthMessage.textContent = text;
     strengthMessage.style.color = color;
-
-    strengthQuantity.style.color = color;
     
     strengthTime.style.color = color;
 }
 
 
+function calculateCrackTime(entropy, attemptsPerSecond = 1e12, algorithmSlowdownFactor = 1) {
+    if (entropy <= 0) return "Пароль неможливо зламати.";
+
+    const combinations = Math.pow(2, entropy);
+
+    const adjustedAttemptsPerSecond = attemptsPerSecond / algorithmSlowdownFactor;
+
+    const timeInSeconds = combinations / adjustedAttemptsPerSecond;
+
+    const secondsInMinute = 60;
+    const secondsInHour = secondsInMinute * 60;
+    const secondsInDay = secondsInHour * 24;
+    const secondsInMonth = secondsInDay * 30;
+    const secondsInYear = secondsInDay * 365;
+
+    if (timeInSeconds < secondsInMinute) {
+        return `${Math.floor(timeInSeconds)} секунд`;
+    } else if (timeInSeconds < secondsInHour) {
+        return `${Math.floor(timeInSeconds / secondsInMinute)} хвилин`;
+    } else if (timeInSeconds < secondsInDay) {
+        return `${Math.floor(timeInSeconds / secondsInHour)} годин`;
+    } else if (timeInSeconds < secondsInMonth) {
+        return `${Math.floor(timeInSeconds / secondsInDay)} днів`;
+    } else if (timeInSeconds < secondsInYear) {
+        return `${Math.floor(timeInSeconds / secondsInMonth)} місяців`;
+    } else {
+        const timeInYears = timeInSeconds / secondsInYear;
+
+        if (timeInYears < 1) {
+            return "менше року";
+        } else if (timeInYears < 100) {
+            return `${Math.floor(timeInYears)} років`;
+        } else if (timeInYears < 1000) {
+            return `${Math.floor(timeInYears / 100)} століть`;
+        } else if (timeInYears < 1e6) {
+            return `${Math.floor(timeInYears / 1000)} тисячоліть`;
+        } else if (timeInYears < 1e9) {
+            return `${Math.floor(timeInYears / 1e6)} мільйонів років`;
+        } else if (timeInYears < 1e12) {
+            return `${Math.floor(timeInYears / 1e9)} мільярдів років`;
+        } else if (timeInYears < 1e15) {
+            return `${Math.floor(timeInYears / 1e12)} трильйонів років`;
+        } else {
+            return `${Math.floor(timeInYears / 1e15)} квадрильйонів років`;
+        }
+    }
+}
 
 
 const outputPasswordElement = document.getElementById("outputPassword");
+
 function updatePasswordEntropy() {
     const password = outputPasswordElement.innerText.trim();
     if (password) {
@@ -815,6 +813,18 @@ const entropyObserver = new MutationObserver(() => {
 
 entropyObserver.observe(outputPasswordElement, { childList: true, subtree: true, characterData: true });
 
+document.getElementById("inputText").addEventListener("input", function () {
+    const inputText = document.getElementById("inputText").value.trim();
+    const transliterated = transliterate(inputText);
+    let password = transliterated;
+
+    if (inputText == "") {
+        document.getElementById("outputPassword").textContent = "";
+        password = "";
+
+        return
+    }
+});
 
 
 document.getElementById("inputText").addEventListener("input", function () {
