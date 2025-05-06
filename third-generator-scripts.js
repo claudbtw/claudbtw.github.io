@@ -141,53 +141,31 @@ document.getElementById("inputText").addEventListener("input", function() {
     const passwordLength = transliteratedText.length;
 
     let slider = document.getElementById("passwordLength");
+    let passwordLengthText = document.getElementById("passwordLengthText");
     let lengthText = document.getElementById("lengthValue");
 
-    let targetValue = passwordLength;
     let color;
 
     if (passwordLength === 0) {
         color = "#555";
     } else if (passwordLength <= 6) {
         color = "red";
-    } else if (passwordLength <= 11) {
+    } else if (passwordLength <= 9) {
         color = "#e77d22";
-    } else if (passwordLength <= 15) {
-        color = "#fce205";
+    } else if (passwordLength <= 12) {
+        color = "#ecd823";
+    } else if (passwordLength <= 16) {
+        color = "#5dc566";
     } else {
         color = "green";
     }
 
-    function smoothSlide() {
-        let currentValue = parseInt(slider.value);
-        if (currentValue !== targetValue) {
-            let step = currentValue < targetValue ? 1 : -1;
-            let interval = setInterval(() => {
-                if (currentValue === targetValue) {
-                    clearInterval(interval);
-                } else {
-                    currentValue += step;
-                    slider.value = currentValue;
-                    updateSliderBackground(slider, color);
-                    lengthText.textContent = currentValue;
-                }
-            }, 15);
-        }
-    }
+    passwordLengthText.style.color = color
+    lengthValue.style.color = color
 
-    smoothSlide();
-    updateSliderBackground(slider, color);
-
-    slider.disabled = true;
+    slider.value = passwordLength;
+    lengthText.textContent = passwordLength;
 });
-
-function updateSliderBackground(slider, color) {
-    let min = slider.min || 0;
-    let max = slider.max || 25;
-    let value = (slider.value - min) / (max - min) * 100;
-
-    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
-}
 
 
 
