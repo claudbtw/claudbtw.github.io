@@ -304,7 +304,7 @@ main {
     margin-left: 1em;
 }
 #passwordLength {
-    width: 70%;
+    visibility: hidden;
 }
 .checkbox-complexity {
     box-sizing: border-box;
