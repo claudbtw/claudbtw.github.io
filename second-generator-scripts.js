@@ -109,17 +109,13 @@ function applyUppercase(letters) {
     return lettersArray.join('');
 }
 
-// Відстежуємо зміни в полях і оновлюємо повзунок
-let previousInputNumberLength = 0;
+// Повзунок
 
 function updateSlider() {
     const inputText = document.getElementById("inputText").value.trim();
     const includeNumbers = document.getElementById("includeNumbers").checked;
     const inputNumber = document.getElementById("inputNumber").value.trim();
     
-    let slider = document.getElementById("passwordLength");
-    let lengthText = document.getElementById("lengthValue");
-
     const words = inputText.split(/\s+/).filter(word => word.length > 0);
     let sliderValue = words.length; 
 
@@ -127,7 +123,11 @@ function updateSlider() {
         sliderValue += inputNumber.length;
     }
 
-    let targetValue = sliderValue;
+    const passwordLength = sliderValue;
+    
+    let slider = document.getElementById("passwordLength");
+    let passwordLengthText = document.getElementById("passwordLengthText");
+    let lengthText = document.getElementById("lengthValue");
     let color;
 
     if (sliderValue === 0) {
@@ -142,39 +142,11 @@ function updateSlider() {
         color = "green";
     }
 
-    function smoothSlide() {
-        let currentValue = parseInt(slider.value);
-        if (currentValue !== targetValue) {
-            let step = currentValue < targetValue ? 1 : -1;
-            let interval = setInterval(() => {
-                if (currentValue === targetValue) {
-                    clearInterval(interval);
-                } else {
-                    currentValue += step;
-                    slider.value = currentValue;
-                    updateSliderBackground(slider, color);
-                    lengthText.textContent = currentValue;
-                }
-            }, 15);
-        }
-    }
+    passwordLengthText.style.color = color;
+    lengthText.style.color = color;
 
-    smoothSlide();
-    updateSliderBackground(slider, color);
-
-    slider.disabled = true;
-
-    previousInputNumberLength = inputNumber.length;
-}
-
-
-
-function updateSliderBackground(slider, color) {
-    let min = slider.min || 0;
-    let max = slider.max || 10;
-    let value = (slider.value - min) / (max - min) * 100;
-
-    slider.style.background = `linear-gradient(to right, ${color} ${value}%, #555 ${value}%)`;
+    slider.value = passwordLength;
+    lengthText.textContent = passwordLength;
 }
 
 
@@ -191,11 +163,17 @@ function handleIncludeNumbersChange() {
     updateSlider();
 }
 
+
 document.getElementById("inputText").addEventListener("input", updateSlider);
 document.getElementById("inputNumber").addEventListener("input", updateSlider);
 document.getElementById("includeNumbers").addEventListener("change", handleIncludeNumbersChange);
 
 
+
+
+
+
+// Загальне
 
 // Відправка пароля на пошту
 const mailButton = document.getElementById('mailButton');
@@ -305,8 +283,6 @@ function updateStrengthIndicator(entropy) {
     const strengthBar = document.getElementById("strengthBar");
     const strengthMessage = document.getElementById("strengthMessage");
     const strengthTime = document.getElementById("strengthTime");
-
-    let color, width, text = "Кількість можливих паролів";
 
     if (entropy <= 1) {
         width = "0%";
